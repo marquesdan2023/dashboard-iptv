@@ -985,7 +985,7 @@ let compras    = loadOrSeed(CP_KEY, []);
 let pagamentos = loadOrSeed(PG_KEY, []);
 let bonusList    = loadOrSeed(BN_KEY, []);
 let saldoInicial = parseFloat(localStorage.getItem(SI_KEY)||'0');
-let chartMes, chartValor;
+let chartMes, chartValor, chartCustoReceita;
 
 // ============================================================
 // UTILS
@@ -1831,7 +1831,6 @@ function renderDetalhamentoCreditos() {
 // ============================================================
 // GRÁFICO CUSTO x RECEITA
 // ============================================================
-let chartCustoReceita;
 
 function updateCharts() {
   // Gráfico 1: vencimentos por mês
