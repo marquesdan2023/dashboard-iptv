@@ -986,6 +986,9 @@ let pagamentos = loadOrSeed(PG_KEY, []);
 let bonusList    = loadOrSeed(BN_KEY, []);
 let saldoInicial = parseFloat(localStorage.getItem(SI_KEY)||'0');
 let chartMes, chartValor, chartCustoReceita;
+let sortState = { col: 'venc', dir: 'asc' };
+let selecionados = new Set();
+let kpiModalLista = [];
 
 // ============================================================
 // UTILS
@@ -1899,8 +1902,6 @@ function atualizarAutocompleteApp() {
 // ============================================================
 // RENOVAÇÃO EM MASSA
 // ============================================================
-let selecionados = new Set();
-
 function toggleSelecao(idx, checked) {
   if (checked) selecionados.add(idx);
   else selecionados.delete(idx);
@@ -2078,7 +2079,6 @@ function abrirWhats(idx) {
 // ============================================================
 // ORDENAÇÃO DE COLUNAS
 // ============================================================
-let sortState = { col: 'venc', dir: 'asc' };
 function ordenarPor(col) {
   if (sortState.col === col) {
     sortState.dir = sortState.dir === 'asc' ? 'desc' : 'asc';
