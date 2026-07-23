@@ -2653,8 +2653,6 @@ function renderHistoricoCreditos() {
 function refreshAll() { updateKPIs(); updateCharts(); renderClientes(); renderAlertBanner(); atualizarAutocompleteApp(); renderCreditos(); renderDetalhamentoCreditos(); renderHistoricoCreditos(); renderBonus(); renderProjecao(); renderControle(); renderPrevisao(); }
 
 (async () => {
-checarSenhaInicio();
-carregarTema();
   document.getElementById('sync-status').textContent = '🔄 Sincronizando...';
   try {
     const cl = await fbLoad('clientes');
@@ -2679,6 +2677,8 @@ carregarTema();
   } finally {
     refreshAll();
     renderDns();
+    carregarTema();
+    checarSenhaInicio();
   }
 })();
 </script>
