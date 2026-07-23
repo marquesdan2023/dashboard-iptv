@@ -1764,6 +1764,12 @@ function renderKpiModal(lista) {
   }).join('');
 }
 
+function filtrarKpiModal() {
+  const busca = document.getElementById('kpi-modal-busca').value.toLowerCase().trim();
+  const filtrada = busca ? kpiModalLista.filter(function(c) { return c.cliente.toLowerCase().includes(busca); }) : kpiModalLista;
+  renderKpiModal(filtrada);
+}
+
 window.abrirKpiModal = abrirKpiModal;
 window.filtrarKpiModal = filtrarKpiModal;
 window.verificarSenha = verificarSenha;
