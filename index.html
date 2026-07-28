@@ -1422,10 +1422,10 @@ function salvarEdicaoCliente() {
     cliente: nome,
     venc:    document.getElementById('ec-venc').value,
     valor:   +document.getElementById('ec-valor').value||0,
-    app:     document.getElementById('ec-app').value.trim(),
+    app:     document.getElementById('ec-app').value,
     tec:     document.getElementById('ec-tec').value,
     meses:   +document.getElementById('ec-meses').value||1,
-    fone:    document.getElementById('ec-fone').value.trim(),
+    fone:    clientes[editIdx].fone||'',
     obs:     document.getElementById('ec-obs').value.trim(),
   };
   saveC(); refreshAll(); fecharModal('modal-cliente');
