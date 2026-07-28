@@ -1110,34 +1110,7 @@ function updateKPIs() {
   verificarLembrete();
 }
 
-function updateCharts() {
-  if (!document.getElementById('chartMes')) return;
-  const now = new Date(today()+'T00:00:00');
-  const buckets = {};
-  for(let i=0;i<6;i++){
-    const d = new Date(now.getFullYear(), now.getMonth()+i, 1);
-    buckets[d.toLocaleDateString('pt-BR',{month:'short',year:'2-digit'})] = 0;
-  }
-  clientes.forEach(c => {
-    const key = new Date(c.venc+'T00:00:00').toLocaleDateString('pt-BR',{month:'short',year:'2-digit'});
-    if(key in buckets) buckets[key]++;
-  });
-  if(chartMes) chartMes.destroy();
-  chartMes = new Chart(document.getElementById('chartMes'), {
-    type:'bar',
-    data:{labels:Object.keys(buckets),datasets:[{label:'Clientes',data:Object.values(buckets),backgroundColor:'#3b82f6',borderRadius:6}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{x:{ticks:{color:'#94a3b8'},grid:{display:false}},y:{ticks:{color:'#94a3b8'},grid:{color:'#334155'},beginAtZero:true}}}
-  });
-  const vb = {'R$ 0':0,'R$ 1-30':0,'R$ 31-40':0,'R$ 41+':0};
-  clientes.forEach(c=>{const v=+c.valor||0; if(v===0)vb['R$ 0']++; else if(v<=30)vb['R$ 1-30']++; else if(v<=40)vb['R$ 31-40']++; else vb['R$ 41+']++;});
-  if(chartValor) chartValor.destroy();
-  chartValor = new Chart(document.getElementById('chartValor'), {
-    type:'doughnut',
-    data:{labels:Object.keys(vb),datasets:[{data:Object.values(vb),backgroundColor:['#64748b','#f59e0b','#3b82f6','#10b981'],borderColor:'#1e293b',borderWidth:2}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#cbd5e1',font:{size:11}}}}}
-  });
-}
+
 
 // ============================================================
 // CLIENTES — TABELA
@@ -1891,15 +1864,15 @@ function renderDetalhamentoCreditos() {
 // ============================================================
 
 function updateCharts() {
-  // Gráfico 1: vencimentos por mês
+  // Gráfico 1: vencimentos por mês — a partir de agosto/2026
   if (!document.getElementById('chartMes')) return;
-  const now = new Date(today()+'T00:00:00');
+  const inicio = new Date(2026, 7, 1); // agosto 2026
   const buckets = {};
-  for(let i=0;i<6;i++){
-    const d = new Date(now.getFullYear(), now.getMonth()+i, 1);
+  for(let i=0;i<8;i++){
+    const d = new Date(inicio.getFullYear(), inicio.getMonth()+i, 1);
     buckets[d.toLocaleDateString('pt-BR',{month:'short',year:'2-digit'})] = 0;
   }
-  clientes.forEach(c => {
+  clientes.forEach(function(c) {
     const key = new Date(c.venc+'T00:00:00').toLocaleDateString('pt-BR',{month:'short',year:'2-digit'});
     if(key in buckets) buckets[key]++;
   });
@@ -1908,11 +1881,12 @@ function updateCharts() {
     type:'bar',
     data:{labels:Object.keys(buckets),datasets:[{label:'Clientes',data:Object.values(buckets),backgroundColor:'#3b82f6',borderRadius:6}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{x:{ticks:{color:'#94a3b8'},grid:{display:false}},y:{ticks:{color:'#94a3b8'},grid:{color:'#334155'},beginAtZero:true}}}
+      scales:{x:{ticks:{color:'#94a3b8',font:{size:10}},grid:{display:false}},y:{ticks:{color:'#94a3b8'},grid:{color:'#334155'},beginAtZero:true}}}
   });
 
-  // Gráfico 2: Receita vs Custo últimos 6 meses
+  // Gráfico 2: Receita x Custo x Lucro — tabela simples
   if (!document.getElementById('chartCustoReceita')) return;
+  const now = new Date(today()+'T00:00:00');
   const meses6 = [];
   const labels6 = [];
   for(let i=5;i>=0;i--){
@@ -1921,26 +1895,30 @@ function updateCharts() {
     meses6.push(key);
     labels6.push(d.toLocaleDateString('pt-BR',{month:'short',year:'2-digit'}));
   }
-  const receitas = meses6.map(m => pagamentos.filter(p => p.data.slice(0,7) === m).reduce((s,p) => s + (+p.valor||0), 0));
-  const custos   = meses6.map(m => {
-    const cred = pagamentos.filter(p => p.data.slice(0,7) === m).reduce((s,p) => s + (p.creditos !== undefined ? +p.creditos : creditosPorMeses(p.meses||1)), 0);
+  const receitas = meses6.map(function(m){ return pagamentos.filter(function(p){ return p.data.slice(0,7)===m; }).reduce(function(s,p){ return s+(+p.valor||0); },0); });
+  const custos = meses6.map(function(m){
+    const cred = pagamentos.filter(function(p){ return p.data.slice(0,7)===m; }).reduce(function(s,p){ return s+(p.creditos!==undefined?+p.creditos:creditosPorMeses(p.meses||1)); },0);
     return cred * CUSTO_CREDITO;
   });
-  const lucros = receitas.map((r,i) => r - custos[i]);
+  const lucros = receitas.map(function(r,i){ return r - custos[i]; });
   if(chartCustoReceita) chartCustoReceita.destroy();
   chartCustoReceita = new Chart(document.getElementById('chartCustoReceita'), {
     type:'bar',
     data:{
       labels: labels6,
       datasets:[
-        {label:'Receita',data:receitas,backgroundColor:'#10b981',borderRadius:4},
-        {label:'Custo',data:custos,backgroundColor:'#ef4444',borderRadius:4},
+        {label:'Recebido',data:receitas,backgroundColor:'#10b981',borderRadius:4},
+        {label:'Gasto',data:custos,backgroundColor:'#ef4444',borderRadius:4},
         {label:'Lucro',data:lucros,backgroundColor:'#3b82f6',borderRadius:4},
       ]
     },
     options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{labels:{color:'#cbd5e1',font:{size:11}}}},
-      scales:{x:{ticks:{color:'#94a3b8'},grid:{display:false}},y:{ticks:{color:'#94a3b8',callback: v => 'R$'+v},grid:{color:'#334155'},beginAtZero:true}}}
+      plugins:{legend:{labels:{color:'#cbd5e1',font:{size:10}}}},
+      scales:{
+        x:{ticks:{color:'#94a3b8',font:{size:10}},grid:{display:false}},
+        y:{ticks:{color:'#94a3b8',font:{size:10},callback:function(v){ return 'R$'+v; }},grid:{color:'#334155'},beginAtZero:true}
+      }
+    }
   });
 }
 
