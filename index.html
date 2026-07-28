@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard IPTV</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script>
@@ -664,14 +665,29 @@ tr:hover td { background: #0f172a55; }
 <!-- MODAL IMPORTAÇÃO EM MASSA -->
 <div class="modal-overlay" id="modal-importar">
   <div class="modal" style="border-top-color:#10b981;max-width:680px">
-    <h3>📥 Importar Clientes em Massa</h3>
-    <p style="font-size:13px;color:#94a3b8;margin-bottom:10px">
-      Cole um cliente por linha, separando os campos por <strong>ponto e vírgula ( ; )</strong> ou <strong>Tab</strong> (colar do Excel funciona):<br>
-      <code style="color:#fbbf24;font-size:12px">Nome ; Vencimento (dd/mm/aaaa) ; Valor ; WhatsApp ; Observações</code><br>
-      <span style="font-size:12px;color:#64748b">Só Nome e Vencimento são obrigatórios. Valor sem preencher = R$ 40,00.</span>
-    </p>
-    <textarea id="imp-texto" rows="10" style="width:100%;font-family:monospace;font-size:12px" placeholder="Gustavo Zeni ; 27/12/2026 ; 40 ; 11999999999 ; Cliente novo&#10;Maria Silva ; 10/08/2026 ; 35"></textarea>
-    <div id="imp-preview" style="font-size:13px;color:#94a3b8;margin-top:10px"></div>
+    <h3>📥 Importar Clientes</h3>
+
+    <!-- Opção 1: Excel -->
+    <div style="background:#0f172a;border-radius:8px;padding:14px;margin-bottom:14px">
+      <div style="font-weight:600;color:#10b981;margin-bottom:8px">📊 Opção 1 — Arquivo Excel (.xlsx)</div>
+      <p style="font-size:12px;color:#94a3b8;margin-bottom:10px">
+        O arquivo deve ter as colunas: <strong style="color:#fbbf24">Nome</strong>, <strong style="color:#fbbf24">Vencimento</strong>, <strong style="color:#fbbf24">Valor</strong> (com cabeçalho na 1ª linha).<br>
+        A data pode estar no formato dd/mm/aaaa ou como data do Excel.
+      </p>
+      <input type="file" id="imp-excel" accept=".xlsx,.xls" onchange="lerExcel(this)" style="font-size:13px">
+    </div>
+
+    <!-- Opção 2: Texto -->
+    <div style="background:#0f172a;border-radius:8px;padding:14px;margin-bottom:14px">
+      <div style="font-weight:600;color:#3b82f6;margin-bottom:8px">✏️ Opção 2 — Colar texto (um por linha)</div>
+      <p style="font-size:12px;color:#94a3b8;margin-bottom:8px">
+        Formato: <code style="color:#fbbf24">Nome ; dd/mm/aaaa ; Valor ; WhatsApp ; Obs</code><br>
+        <span style="font-size:11px;color:#64748b">Só Nome e Vencimento são obrigatórios. Valor padrão: R$ 40,00</span>
+      </p>
+      <textarea id="imp-texto" rows="6" style="width:100%;font-family:monospace;font-size:12px" placeholder="João Silva ; 20/08/2026 ; 40&#10;Maria Santos ; 10/09/2026 ; 35 ; 11999999999"></textarea>
+    </div>
+
+    <div id="imp-preview" style="font-size:13px;color:#94a3b8;margin-bottom:12px"></div>
     <div class="modal-actions">
       <button class="btn btn-blue" onclick="previewImportacao()">👁 Pré-visualizar</button>
       <button class="btn btn-green" onclick="confirmarImportacao()">💾 Importar</button>
@@ -2125,39 +2141,115 @@ function filtrarPorBanner(filtro) {
 }
 
 // ============================================================
-// IMPORTAÇÃO EM MASSA
+// IMPORTAÇÃO EXCEL
 // ============================================================
+let dadosExcel = [];
+
+function lerExcel(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const wb = XLSX.read(e.target.result, { type: 'binary', cellDates: true });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
+
+      dadosExcel = [];
+      const erros = [];
+
+      rows.forEach(function(row, i) {
+        // Detectar colunas (case-insensitive)
+        const keys = Object.keys(row);
+        const getCol = function(nomes) {
+          for (var n of nomes) {
+            const k = keys.find(function(k) { return k.toLowerCase().includes(n.toLowerCase()); });
+            if (k) return row[k];
+          }
+          return '';
+        };
+
+        const nome = String(getCol(['nome','client','name'])||'').trim();
+        const vencRaw = getCol(['venc','validade','expir','data']);
+        const valorRaw = getCol(['valor','value','preco','preço','mensalidade']);
+
+        if (!nome) { erros.push('Linha '+(i+2)+': nome vazio'); return; }
+
+        // Converter data
+        let venc = '';
+        if (vencRaw instanceof Date) {
+          venc = vencRaw.toISOString().slice(0,10);
+        } else {
+          const s = String(vencRaw).trim();
+          const m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+          if (m) {
+            const ano = m[3].length === 2 ? '20'+m[3] : m[3];
+            venc = ano+'-'+m[2].padStart(2,'0')+'-'+m[1].padStart(2,'0');
+          } else if (s.match(/^\d{5}$/)) {
+            // Número serial do Excel
+            const d = new Date(Math.round((+s - 25569)*86400*1000));
+            venc = d.toISOString().slice(0,10);
+          } else {
+            erros.push('Linha '+(i+2)+' ('+nome+'): data "'+s+'" inválida'); return;
+          }
+        }
+
+        const valor = valorRaw !== '' ? (parseFloat(String(valorRaw).replace(',','.').replace('R$','').trim())||0) : 40;
+
+        dadosExcel.push({ cliente: nome, venc, valor, app: '', tec: 'IPTV', meses: 1, fone: '', obs: '' });
+      });
+
+      const preview = document.getElementById('imp-preview');
+      let html = '✅ <strong>'+dadosExcel.length+'</strong> cliente(s) lidos do Excel';
+      if (erros.length > 0) html += '<br>❌ <span style="color:#fca5a5">'+erros.join('<br>')+'</span>';
+      if (dadosExcel.length > 0) {
+        html += '<br><span style="color:#94a3b8;font-size:12px">Primeiros: '+dadosExcel.slice(0,3).map(function(c){return c.cliente+' ('+c.venc+')';}).join(', ')+'...</span>';
+      }
+      preview.innerHTML = html;
+
+    } catch(err) {
+      document.getElementById('imp-preview').innerHTML = '❌ Erro ao ler o arquivo: ' + err.message;
+    }
+  };
+  reader.readAsBinaryString(file);
+}
+
 function abrirImportacao() {
+  dadosExcel = [];
   document.getElementById('imp-texto').value = '';
   document.getElementById('imp-preview').innerHTML = '';
+  const fi = document.getElementById('imp-excel');
+  if (fi) fi.value = '';
   document.getElementById('modal-importar').classList.add('open');
 }
 
 function parseImportacao() {
+  // Se tem dados do Excel, usa eles
+  if (dadosExcel.length > 0) return { ok: dadosExcel, erros: [] };
+
+  // Senão, usa o texto colado
   const texto = document.getElementById('imp-texto').value.trim();
-  if (!texto) return { ok: [], erros: ['Nenhum texto colado.'] };
+  if (!texto) return { ok: [], erros: ['Nenhum texto colado e nenhum arquivo selecionado.'] };
   const ok = [], erros = [];
-  texto.split('\n').forEach((linha, i) => {
+  texto.split('\n').forEach(function(linha, i) {
     const l = linha.trim();
     if (!l) return;
     const partes = l.includes('\t') ? l.split('\t') : l.split(';');
     const nome = (partes[0]||'').trim();
     const vencBr = (partes[1]||'').trim();
-    if (!nome || !vencBr) { erros.push(`Linha ${i+1}: falta nome ou vencimento`); return; }
+    if (!nome || !vencBr) { erros.push('Linha '+(i+1)+': falta nome ou vencimento'); return; }
     const m = vencBr.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-    if (!m) { erros.push(`Linha ${i+1} (${nome}): data "${vencBr}" inválida — use dd/mm/aaaa`); return; }
-    const venc = `${m[3]}-${m[2]}-${m[1]}`;
+    if (!m) { erros.push('Linha '+(i+1)+' ('+nome+'): data "'+vencBr+'" inválida'); return; }
+    const venc = m[3]+'-'+m[2]+'-'+m[1];
     const valorStr = (partes[2]||'').trim().replace('R$','').replace(',','.');
-    const valor = valorStr === '' ? 40 : (+valorStr || 0);
-    ok.push({
-      cliente: nome, venc, valor,
-      app: '', tec: 'IPTV', meses: 1,
-      fone: (partes[3]||'').trim(),
-      obs: (partes[4]||'').trim()
-    });
+    const valor = valorStr === '' ? 40 : (+valorStr||0);
+    ok.push({ cliente: nome, venc, valor, app: '', tec: 'IPTV', meses: 1, fone: (partes[3]||'').trim(), obs: (partes[4]||'').trim() });
   });
   return { ok, erros };
 }
+
+window.lerExcel = lerExcel;
+window.abrirImportacao = abrirImportacao;
 
 function previewImportacao() {
   const { ok, erros } = parseImportacao();
