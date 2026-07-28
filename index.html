@@ -259,7 +259,17 @@ tr:hover td { background: #0f172a55; }
           <input type="text" id="f-nome" placeholder="Nome do cliente *">
           <input type="date" id="f-venc">
           <input type="number" id="f-valor" placeholder="Valor Cobrado R$" step="0.01" min="0">
-          <input type="text" id="f-app" placeholder="Aplicativo" list="apps-sugestoes" autocomplete="off">
+          <select id="f-app">
+            <option value="">Aplicativo</option>
+            <option value="Ultra Player">Ultra Player</option>
+            <option value="Xcloud">Xcloud</option>
+            <option value="Quick Player">Quick Player</option>
+            <option value="Duplecast">Duplecast</option>
+            <option value="Ibo Player">Ibo Player</option>
+            <option value="Bay IPTV">Bay IPTV</option>
+            <option value="Player Pro">Player Pro</option>
+            <option value="Fusion XC">Fusion XC</option>
+          </select>
           <datalist id="apps-sugestoes"></datalist>
           <select id="f-tec"><option>IPTV</option><option>Quick Player</option><option>Streaming</option><option>Outro</option></select>
         </div>
@@ -300,6 +310,14 @@ tr:hover td { background: #0f172a55; }
         </select>
         <select id="filter-app" onchange="renderClientes()">
           <option value="">Todos os apps</option>
+          <option value="Ultra Player">Ultra Player</option>
+          <option value="Xcloud">Xcloud</option>
+          <option value="Quick Player">Quick Player</option>
+          <option value="Duplecast">Duplecast</option>
+          <option value="Ibo Player">Ibo Player</option>
+          <option value="Bay IPTV">Bay IPTV</option>
+          <option value="Player Pro">Player Pro</option>
+          <option value="Fusion XC">Fusion XC</option>
         </select>
       </div>
       <div class="table-wrap">
@@ -802,7 +820,17 @@ tr:hover td { background: #0f172a55; }
       <input type="text" id="ec-nome" placeholder="Nome *">
       <input type="date" id="ec-venc" title="Vencimento">
       <input type="number" id="ec-valor" placeholder="Valor Cobrado R$" step="0.01" min="0">
-      <input type="text" id="ec-app" placeholder="Aplicativo">
+      <select id="ec-app">
+        <option value="">Aplicativo</option>
+        <option value="Ultra Player">Ultra Player</option>
+        <option value="Xcloud">Xcloud</option>
+        <option value="Quick Player">Quick Player</option>
+        <option value="Duplecast">Duplecast</option>
+        <option value="Ibo Player">Ibo Player</option>
+        <option value="Bay IPTV">Bay IPTV</option>
+        <option value="Player Pro">Player Pro</option>
+        <option value="Fusion XC">Fusion XC</option>
+      </select>
       <select id="ec-tec"><option>IPTV</option><option>Quick Player</option><option>Streaming</option><option>Outro</option></select>
       <select id="ec-meses">
         <option value="1">Mensal (1 crédito)</option>
@@ -810,7 +838,6 @@ tr:hover td { background: #0f172a55; }
         <option value="6">Semestral (5 créditos)</option>
         <option value="12">Anual (10 créditos)</option>
       </select>
-      <input type="text" id="ec-fone" placeholder="WhatsApp (ex: 11999999999)">
       <input type="text" id="ec-obs" placeholder="Observações" style="grid-column:span 2">
     </div>
     <div class="modal-actions">
