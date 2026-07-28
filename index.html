@@ -688,16 +688,16 @@ tr:hover td { background: #0f172a55; }
 
 <!-- MODAL RELATÓRIO MENSAL -->
 <div class="modal-overlay" id="modal-relatorio">
-  <div class="modal" style="border-top-color:#6366f1;max-width:700px">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+  <div class="modal" style="border-top-color:#6366f1;max-width:700px;max-height:90vh;display:flex;flex-direction:column">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-shrink:0">
       <h3>📊 Relatório Mensal</h3>
       <div style="display:flex;gap:8px;align-items:center">
         <select id="rel-mes" onchange="renderRelatorio()" style="width:180px"></select>
-        <button class="btn btn-blue" onclick="exportarRelatorio()">⬇ Exportar PDF</button>
+        <button class="btn btn-blue" onclick="exportarRelatorio()">⬇ PDF</button>
       </div>
     </div>
-    <div id="rel-conteudo"></div>
-    <div class="modal-actions">
+    <div id="rel-conteudo" style="overflow-y:auto;flex:1;padding-right:4px"></div>
+    <div class="modal-actions" style="flex-shrink:0;margin-top:12px">
       <button class="btn btn-gray" onclick="fecharModal('modal-relatorio')">Fechar</button>
     </div>
   </div>
