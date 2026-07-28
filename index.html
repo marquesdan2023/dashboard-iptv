@@ -49,18 +49,42 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 body.tema-claro { background: #f1f5f9; color: #1e293b; }
 body.tema-claro .card { background: #ffffff; border-color: #e2e8f0; }
 body.tema-claro .kpi { background: #ffffff; }
-body.tema-claro input, body.tema-claro select, body.tema-claro textarea { background: #f8fafc; color: #1e293b; border-color: #cbd5e1; }
+body.tema-claro .kpi-value { color: #1e293b; }
+body.tema-claro .kpi-label { color: #475569; }
+body.tema-claro .kpi-sub { color: #475569; }
+body.tema-claro input, body.tema-claro select, body.tema-claro textarea { background: #f8fafc; color: #1e293b; border-color: #94a3b8; }
+body.tema-claro input::placeholder { color: #64748b; }
 body.tema-claro table { background: #ffffff; }
-body.tema-claro th { background: #f1f5f9; color: #475569; }
-body.tema-claro tr:hover { background: #f8fafc; }
-body.tema-claro .modal { background: #ffffff; }
+body.tema-claro th { background: #e2e8f0; color: #1e293b; border-color: #cbd5e1; }
+body.tema-claro td { color: #1e293b; border-color: #e2e8f0; }
+body.tema-claro tr:hover { background: #f1f5f9; }
+body.tema-claro .modal { background: #ffffff; color: #1e293b; }
+body.tema-claro .modal h3 { color: #1e293b; }
+body.tema-claro .modal p { color: #475569; }
 body.tema-claro .modal-overlay { background: rgba(0,0,0,0.5); }
 body.tema-claro .tabs { background: #e2e8f0; }
 body.tema-claro .tab { color: #475569; }
 body.tema-claro .tab.active { background: #ffffff; color: #1e293b; }
-body.tema-claro .kpi-label { color: #64748b; }
-body.tema-claro .kpi-sub { color: #94a3b8; }
-body.tema-claro #tela-senha { background: #f1f5f9; }
+body.tema-claro .topbar h2 { color: #1e293b; }
+body.tema-claro .subtitle { color: #475569; }
+body.tema-claro .btn-gray { background: #64748b; color: #ffffff; }
+body.tema-claro .tag-ok { background: #bfdbfe; color: #1e40af; }
+body.tema-claro .tag-vencido { background: #fecaca; color: #991b1b; }
+body.tema-claro .tag-hoje { background: #a7f3d0; color: #065f46; }
+body.tema-claro .tag-semana { background: #fde68a; color: #92400e; }
+body.tema-claro .tag-yellow { background: #fde68a; color: #92400e; }
+body.tema-claro .tag-green { background: #a7f3d0; color: #065f46; }
+body.tema-claro .tag-blue { background: #bfdbfe; color: #1e40af; }
+body.tema-claro .tag-purple { background: #e9d5ff; color: #6b21a8; }
+body.tema-claro .tag-red { background: #fecaca; color: #991b1b; }
+body.tema-claro #alert-banner { background: #fff7ed; border-left-color: #ea580c; color: #1e293b; }
+body.tema-claro #tela-senha { background: #f1f5f9; color: #1e293b; }
+body.tema-claro #tela-senha h2 { color: #1e293b; }
+body.tema-claro #tela-senha p { color: #475569; }
+body.tema-claro code { background: #e2e8f0; color: #1e293b; }
+body.tema-claro strong { color: #1e293b; }
+body.tema-claro .form-box { background: #f8fafc; border-color: #cbd5e1; }
+body.tema-claro .table-wrap { background: #ffffff; }
 .container { max-width: 1400px; margin: 0 auto; }
 h1 { font-size: 28px; margin-bottom: 4px; background: linear-gradient(90deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .subtitle { color: #94a3b8; margin-bottom: 20px; font-size: 14px; }
@@ -258,7 +282,6 @@ tr:hover td { background: #0f172a55; }
       <div class="topbar">
         <h2>📋 Lista de Clientes (<span id="count-clientes">0</span>)</h2>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn btn-yellow" onclick="abrirCobranca()">📢 Cobrar Vencidos</button>
           <button class="btn btn-green" onclick="abrirImportacao()">📥 Importar</button>
           <button class="btn btn-blue" id="btn-renovar-massa" onclick="abrirRenovarMassa()" style="display:none">🔄 Renovar Selecionados (<span id="count-selecionados">0</span>)</button>
           <button class="btn btn-blue" onclick="exportPDF()">⬇ Exportar PDF</button>
