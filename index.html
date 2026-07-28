@@ -2059,13 +2059,29 @@ function renderRelatorio() {
 
   document.getElementById('rel-conteudo').innerHTML = `
     <div style="font-size:13px;color:#94a3b8;margin-bottom:14px">Relatório de <strong style="color:#cbd5e1">${label.charAt(0).toUpperCase()+label.slice(1)}</strong></div>
-    <div class="kpis" style="margin-bottom:16px">
-      <div class="kpi green"><div class="kpi-label">💰 Receita</div><div class="kpi-value" style="font-size:22px">${brl(receita)}</div><div class="kpi-sub">${renovacoes} renovações</div></div>
-      <div class="kpi red"><div class="kpi-label">📤 Custo Créditos</div><div class="kpi-value" style="font-size:22px">${brl(custo)}</div><div class="kpi-sub">${credUsados.toFixed(1)} créditos</div></div>
-      <div class="kpi blue"><div class="kpi-label">📈 Lucro</div><div class="kpi-value" style="font-size:22px;color:${lucro>=0?'#10b981':'#ef4444'}">${brl(lucro)}</div><div class="kpi-sub">margem ${receita>0?(lucro/receita*100).toFixed(1):0}%</div></div>
-      <div class="kpi yellow"><div class="kpi-label">🎫 Ticket Médio</div><div class="kpi-value" style="font-size:22px">${brl(ticketMedio)}</div><div class="kpi-sub">por renovação</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+      <div style="background:#0f172a;border-radius:8px;padding:14px;border-left:3px solid #10b981">
+        <div style="font-size:11px;color:#94a3b8;margin-bottom:4px">💰 RECEITA</div>
+        <div style="font-size:22px;font-weight:700;color:#10b981">${brl(receita)}</div>
+        <div style="font-size:11px;color:#64748b">${renovacoes} renovações</div>
+      </div>
+      <div style="background:#0f172a;border-radius:8px;padding:14px;border-left:3px solid #ef4444">
+        <div style="font-size:11px;color:#94a3b8;margin-bottom:4px">📤 CUSTO CRÉDITOS</div>
+        <div style="font-size:22px;font-weight:700;color:#ef4444">${brl(custo)}</div>
+        <div style="font-size:11px;color:#64748b">${credUsados.toFixed(1)} créditos</div>
+      </div>
+      <div style="background:#0f172a;border-radius:8px;padding:14px;border-left:3px solid #3b82f6">
+        <div style="font-size:11px;color:#94a3b8;margin-bottom:4px">📈 LUCRO</div>
+        <div style="font-size:22px;font-weight:700;color:${lucro>=0?'#10b981':'#ef4444'}">${brl(lucro)}</div>
+        <div style="font-size:11px;color:#64748b">margem ${receita>0?(lucro/receita*100).toFixed(1):0}%</div>
+      </div>
+      <div style="background:#0f172a;border-radius:8px;padding:14px;border-left:3px solid #f59e0b">
+        <div style="font-size:11px;color:#94a3b8;margin-bottom:4px">🎫 TICKET MÉDIO</div>
+        <div style="font-size:22px;font-weight:700;color:#f59e0b">${brl(ticketMedio)}</div>
+        <div style="font-size:11px;color:#64748b">por renovação</div>
+      </div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;font-size:13px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;font-size:13px">
       <div style="background:#0f172a;border-radius:8px;padding:12px">
         <div style="color:#94a3b8;margin-bottom:8px;font-weight:600">🪙 Créditos</div>
         <div>Comprados: <strong style="color:#8b5cf6">${credComp.toFixed(1)}</strong></div>
@@ -2084,7 +2100,7 @@ function renderRelatorio() {
     <div style="background:#0f172a;border-radius:8px;padding:12px;font-size:13px">
       <div style="color:#ef4444;font-weight:600;margin-bottom:8px">❌ Não renovaram (${naoRenovaram.length})</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px">
-        ${naoRenovaram.map(c => `<span style="background:#1e293b;padding:3px 10px;border-radius:4px;font-size:12px">${c.cliente}</span>`).join('')}
+        ${naoRenovaram.map(function(c) { return '<span style="background:#1e293b;padding:3px 10px;border-radius:4px;font-size:12px">'+c.cliente+'</span>'; }).join('')}
       </div>
     </div>` : '<div style="background:#064e3b;border-radius:8px;padding:12px;font-size:13px;color:#a7f3d0">🎉 Todos os clientes com vencimento neste mês renovaram!</div>'}
   `;
