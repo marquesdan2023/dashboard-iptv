@@ -62,9 +62,9 @@ body.tema-claro .modal { background: #ffffff; color: #1e293b; }
 body.tema-claro .modal h3 { color: #1e293b; }
 body.tema-claro .modal p { color: #475569; }
 body.tema-claro .modal-overlay { background: rgba(0,0,0,0.5); }
-body.tema-claro .tabs { background: #e2e8f0; }
-body.tema-claro .tab { color: #475569; }
-body.tema-claro .tab.active { background: #ffffff; color: #1e293b; }
+body.tema-claro .tab { background: #e2e8f0; color: #1e293b; }
+body.tema-claro .tab.active { background: #3b82f6; color: #ffffff; }
+body.tema-claro .tab:hover { background: #cbd5e1; color: #1e293b; }
 body.tema-claro .topbar h2 { color: #1e293b; }
 body.tema-claro .subtitle { color: #475569; }
 body.tema-claro .btn-gray { background: #64748b; color: #ffffff; }
@@ -736,22 +736,6 @@ tr:hover td { background: #0f172a55; }
   </div>
 </div>
 
-<!-- MODAL COBRANÇA EM MASSA -->
-<div class="modal-overlay" id="modal-cobranca">
-  <div class="modal" style="border-top-color:#f59e0b;max-width:640px">
-    <h3>📢 Cobrar Clientes Vencidos</h3>
-    <p style="font-size:13px;color:#94a3b8;margin-bottom:12px">Clique em <strong>Enviar</strong> em cada cliente — abre o WhatsApp com a mensagem pronta. Enviados ficam marcados ✅.</p>
-    <div class="table-wrap" style="max-height:340px">
-      <table>
-        <thead><tr><th>Cliente</th><th>Venceu em</th><th>Valor</th><th>Ação</th></tr></thead>
-        <tbody id="tbody-cobranca"></tbody>
-      </table>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-gray" onclick="fecharModal('modal-cobranca')">Fechar</button>
-    </div>
-  </div>
-</div>
 
 <!-- MODAL TEMPLATE WHATSAPP -->
 <div class="modal-overlay" id="modal-template">
