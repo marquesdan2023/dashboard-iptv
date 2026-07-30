@@ -771,6 +771,19 @@ tr:hover td { background: #0f172a55; }
     <h3>🔄 Renovar Cliente</h3>
     <p style="font-size:13px;color:#94a3b8;margin-bottom:14px" id="renovar-nome"></p>
     <div style="margin-bottom:14px">
+      <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Plano</label>
+      <select id="renovar-meses" style="width:100%" onchange="atualizarInfoRenovar()">
+        <option value="1">Mensal — 1 crédito</option>
+        <option value="3">Trimestral — 2.5 créditos</option>
+        <option value="6">Semestral — 5 créditos</option>
+        <option value="12">Anual — 10 créditos</option>
+      </select>
+    </div>
+    <div style="margin-bottom:14px;padding:10px;background:#0f172a;border-radius:8px;font-size:13px" id="renovar-info">
+      <span style="color:#94a3b8">Créditos a descontar: </span><strong id="renovar-creditos-info" style="color:#ef4444">1</strong>
+      <span style="color:#94a3b8;margin-left:12px">Disponível após: </span><strong id="renovar-saldo-info" style="color:#10b981">0</strong>
+    </div>
+    <div style="margin-bottom:14px">
       <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Data do pagamento</label>
       <input type="date" id="renovar-pgto" style="width:100%">
     </div>
@@ -1143,7 +1156,22 @@ function abrirRenovar(idx) {
   document.getElementById('renovar-nome').textContent = c.cliente + ' — vence ' + fmtDate(c.venc);
   document.getElementById('renovar-data').value = '';
   document.getElementById('renovar-pgto').value = today();
+  document.getElementById('renovar-meses').value = c.meses || 1;
+  atualizarInfoRenovar();
   document.getElementById('modal-renovar').classList.add('open');
+}
+
+function atualizarInfoRenovar() {
+  const meses = +document.getElementById('renovar-meses').value || 1;
+  const cred = creditosPorMeses(meses);
+  const mesKey = new Date(today()+'T00:00:00').toISOString().slice(0,7);
+  const compradosMes = compras.filter(function(c){ return c.data.slice(0,7)===mesKey; }).reduce(function(s,c){ return s+(+c.creditos||0); },0);
+  const renovacoesMes = pagamentos.filter(function(p){ return p.data.slice(0,7)===mesKey; }).reduce(function(s,p){ return s+(p.creditos!==undefined?+p.creditos:creditosPorMeses(p.meses||1)); },0);
+  const dispAtual = parseFloat((saldoInicial + compradosMes - renovacoesMes).toFixed(2));
+  const apos = parseFloat((dispAtual - cred).toFixed(2));
+  document.getElementById('renovar-creditos-info').textContent = cred;
+  document.getElementById('renovar-saldo-info').textContent = apos.toFixed(2);
+  document.getElementById('renovar-saldo-info').style.color = apos >= 0 ? '#10b981' : '#ef4444';
 }
 
 function confirmarRenovar() {
@@ -1152,17 +1180,18 @@ function confirmarRenovar() {
   if (!novaData) return alert('Informe a nova data de vencimento!');
   const c = clientes[renovarIdx];
   const dataPgto = document.getElementById('renovar-pgto').value || today();
-  // Registra pagamento
+  const meses = +document.getElementById('renovar-meses').value || c.meses || 1;
+  const cred = creditosPorMeses(meses);
   pagamentos.push({
     data: dataPgto,
     cliente: c.cliente,
     valor: +c.valor||0,
-    meses: c.meses||1,
-    creditos: creditosPorMeses(c.meses||1)
+    meses: meses,
+    creditos: cred
   });
   savePG();
-  // Atualiza vencimento com data informada
   clientes[renovarIdx].venc = novaData;
+  clientes[renovarIdx].meses = meses;
   saveC();
   fecharModal('modal-renovar');
   refreshAll();
@@ -1766,6 +1795,7 @@ function filtrarKpiModal() {
 
 window.abrirKpiModal = abrirKpiModal;
 window.filtrarKpiModal = filtrarKpiModal;
+window.atualizarInfoRenovar = atualizarInfoRenovar;
 window.verificarSenha = verificarSenha;
 window.abrirSenha = abrirSenha;
 window.salvarSenha = salvarSenha;
