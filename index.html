@@ -1464,15 +1464,15 @@ function renderCreditos() {
   // Usados = renovações + bônus (bônus foram créditos recebidos e usados)
   const usadosMes = renovacoesMes + bonusMes;
 
-  // Disponíveis no mês = comprados + bônus - renovações
-  const disponiveis = saldoInicial + compradosMes + bonusMes - renovacoesMes;
+  // Disponíveis no mês = saldo inicial + comprados + bônus - renovações
+  const disponiveis = parseFloat((saldoInicial + compradosMes + bonusMes - renovacoesMes).toFixed(2));
 
   const _sc = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
-  _sc('cr-comprados', compradosMes.toFixed(1));
+  _sc('cr-comprados', compradosMes.toFixed(2));
   _sc('cr-comprados-val', brl(compradosMes * CUSTO_CREDITO));
-  _sc('cr-usados-mes', usadosMes.toFixed(1));
+  _sc('cr-usados-mes', usadosMes.toFixed(2));
   _sc('cr-usados-mes-val', brl(usadosMes * CUSTO_CREDITO));
-  _sc('cr-disponiveis', disponiveis.toFixed(1));
+  _sc('cr-disponiveis', disponiveis.toFixed(2));
   _sc('cr-disponiveis-val', brl(disponiveis * CUSTO_CREDITO));
 
   // Tabela de compras
