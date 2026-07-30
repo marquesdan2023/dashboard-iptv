@@ -462,34 +462,6 @@ tr:hover td { background: #0f172a55; }
       </div>
     </div>
 
-    <!-- Bônus da Trilha -->
-    <div class="card" style="border-top:3px solid #f59e0b">
-      <div class="topbar">
-        <h2>🏆 Bônus da Trilha</h2>
-        <button class="btn btn-yellow" onclick="toggleForm('form-bonus')">➕ Registrar Bônus</button>
-      </div>
-      <div id="form-bonus" class="form-box" style="display:none">
-        <div class="form-row" style="grid-template-columns:1fr 1fr 1fr auto">
-          <input type="date" id="bn-data">
-          <input type="number" id="bn-renovacoes" placeholder="Renovações *" min="1" step="1">
-          <input type="number" id="bn-pontos" placeholder="Pontos *" min="100" step="100">
-          <button class="btn btn-green" onclick="addBonus()">💾 Salvar</button>
-        </div>
-        <p style="font-size:12px;color:#64748b;margin-top:4px">A cada 100 pontos = 1 crédito bônus (máx 1000 pontos/dia)</p>
-      </div>
-      <div id="trilha-info" style="margin-bottom:16px;padding:12px;background:#0f172a;border-radius:8px;font-size:13px;color:#94a3b8">
-        Calculando pontos...
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr>
-            <th>Data</th><th>Renovações</th><th>Pontos</th><th>Créditos Bônus</th><th>Ação</th>
-          </tr></thead>
-          <tbody id="tbody-bonus"></tbody>
-        </table>
-      </div>
-    </div>
-
   </div>
 
 
@@ -2429,67 +2401,6 @@ function calcularERegistrarBonus() {
   }
 }
 
-function renderBonus() {
-  calcularERegistrarBonus();
-
-  // Info de hoje
-  const renovacoesHoje = pagamentos.filter(p => p.data === today());
-  const creditosHoje = renovacoesHoje.reduce((s,p) => s + creditosPorMeses(p.meses||1), 0);
-  const pontosHoje = Math.min(creditosHoje * 10, 1000);
-  const bonusAmanha = Math.floor(pontosHoje / 100);
-
-  const info = document.getElementById('trilha-info');
-  if (info) {
-    info.innerHTML = `
-      <div style="display:flex;gap:24px;flex-wrap:wrap">
-        <span>📊 <strong>Hoje:</strong> ${renovacoesHoje.length} renovações · ${pontosHoje} pontos acumulados</span>
-        <span style="color:#f59e0b">🏆 <strong>Bônus amanhã:</strong> ${bonusAmanha} crédito${bonusAmanha!==1?'s':''}</span>
-      </div>`;
-  }
-
-  const tbody = document.getElementById('tbody-bonus');
-  if (!tbody) return;
-
-  if (bonusList.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="4" style="color:#64748b;text-align:center;padding:20px">Nenhum bônus registrado ainda.<br><span style="font-size:12px">Faça 10+ renovações em um dia para ganhar créditos bônus.</span></td></tr>';
-    return;
-  }
-
-  tbody.innerHTML = bonusList.slice().reverse().map((b,i) => {
-    const realIdx = bonusList.length - 1 - i;
-    return `<tr>
-      <td>${fmtDate(b.data)}</td>
-      <td>${b.renovacoes}</td>
-      <td style="color:#f59e0b;font-weight:600">${b.pontos}</td>
-      <td style="color:#10b981;font-weight:700">+${b.creditos} crédito${b.creditos!==1?'s':''}</td>
-      <td><button class="btn btn-red" onclick="excluirBonus(${realIdx})">🗑</button></td>
-    </tr>`;
-  }).join('');
-}
-
-// ============================================================
-// BONUS MANUAL
-// ============================================================
-function addBonus() {
-  const data     = document.getElementById('bn-data').value || today();
-  const renovs   = +document.getElementById('bn-renovacoes').value;
-  const pontos   = Math.min(+document.getElementById('bn-pontos').value, 1000);
-  if (!renovs || !pontos) return alert('Preencha renovações e pontos!');
-  const creditos = Math.floor(pontos / 100);
-  bonusList.push({ data, renovacoes: renovs, pontos, creditos });
-  saveBN();
-  ['bn-data','bn-renovacoes','bn-pontos'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('form-bonus').style.display = 'none';
-  refreshAll();
-}
-
-function excluirBonus(idx) {
-  if (!confirm('Excluir este bônus?')) return;
-  bonusList.splice(idx, 1);
-  saveBN();
-  refreshAll();
-}
-
 // ============================================================
 // PROJEÇÃO
 // ============================================================
@@ -2774,7 +2685,7 @@ function renderHistoricoCreditos() {
 // ============================================================
 // INIT — Firebase primeiro, localStorage só como fallback
 // ============================================================
-function refreshAll() { updateKPIs(); updateCharts(); renderClientes(); renderAlertBanner(); atualizarAutocompleteApp(); renderCreditos(); renderDetalhamentoCreditos(); renderHistoricoCreditos(); renderBonus(); renderProjecao(); renderControle(); renderPrevisao(); }
+function refreshAll() { updateKPIs(); updateCharts(); renderClientes(); renderAlertBanner(); atualizarAutocompleteApp(); renderCreditos(); renderDetalhamentoCreditos(); renderHistoricoCreditos(); renderProjecao(); renderControle(); renderPrevisao(); }
 
 (async () => {
   document.getElementById('sync-status').textContent = '🔄 Sincronizando...';
