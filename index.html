@@ -229,6 +229,7 @@ tr:hover td { background: #0f172a55; }
       <div class="kpi green" style="cursor:pointer" onclick="abrirKpiModal('ativos')" title="Ver clientes ativos"><div class="kpi-label">✅ Clientes Ativos</div><div class="kpi-value" id="kpi-ativos">0</div><div class="kpi-sub">ativos</div></div>
       <div class="kpi red" style="cursor:pointer" onclick="abrirKpiModal('expirados')" title="Ver clientes expirados"><div class="kpi-label">🔴 Clientes Expirados</div><div class="kpi-value" id="kpi-vencidos">0</div><div class="kpi-sub" id="kpi-vencidos-val">R$ 0,00</div></div>
       <div class="kpi blue" style="cursor:pointer" onclick="abrirKpiModal('todos')" title="Ver todos os clientes"><div class="kpi-label">👥 Total de Clientes</div><div class="kpi-value" id="kpi-total">0</div><div class="kpi-sub">cadastrados</div></div>
+      <div class="kpi yellow"><div class="kpi-label">💵 Caixa do Mês</div><div class="kpi-value" id="kpi-caixa">R$ 0,00</div><div class="kpi-sub" id="kpi-caixa-sub">recebido − créditos</div></div>
     </div>
 
     <!-- BANNER DE ALERTAS -->
@@ -1092,6 +1093,16 @@ function updateKPIs() {
   _set('kpi-ativos', ativos);
   _set('kpi-vencidos', vencidos);
   _set('kpi-vencidos-val', brl(vV));
+
+  // Caixa do mês
+  const mesKey = new Date(today()+'T00:00:00').toISOString().slice(0,7);
+  const recebidoMes = pagamentos.filter(function(p){ return p.data.slice(0,7)===mesKey; }).reduce(function(s,p){ return s+(+p.valor||0); },0);
+  const gastoMes = compras.filter(function(c){ return c.data.slice(0,7)===mesKey; }).reduce(function(s,c){ return s+(+c.valor||0); },0);
+  const caixa = recebidoMes - gastoMes;
+  const elCaixa = document.getElementById('kpi-caixa');
+  const elCaixaSub = document.getElementById('kpi-caixa-sub');
+  if (elCaixa) { elCaixa.textContent = brl(caixa); elCaixa.style.color = caixa >= 0 ? '#10b981' : '#ef4444'; }
+  if (elCaixaSub) elCaixaSub.textContent = brl(recebidoMes) + ' − ' + brl(gastoMes);
   verificarLembrete();
 }
 
