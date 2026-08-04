@@ -2222,7 +2222,7 @@ function renderRelatorio() {
     <div style="background:#0f172a;border-radius:8px;padding:12px;font-size:13px">
       <div style="color:#ef4444;font-weight:600;margin-bottom:8px">❌ Não renovaram (${naoRenovaram.length})</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px">
-        ${naoRenovaram.map(function(c) { return '<span style="background:#1e293b;padding:3px 10px;border-radius:4px;font-size:12px">'+c.cliente+'</span>'; }).join('')}
+        ${naoRenovaram.map(function(c) { return '<span style="background:#1e293b;color:#e2e8f0;padding:3px 10px;border-radius:4px;font-size:12px">'+c.cliente+'</span>'; }).join('')}
       </div>
     </div>` : '<div style="background:#064e3b;border-radius:8px;padding:12px;font-size:13px;color:#a7f3d0">🎉 Todos os clientes com vencimento neste mês renovaram!</div>'}
   `;
@@ -2792,7 +2792,7 @@ function renderPrevisao() {
     const isPast = dia < hoje;
     const rowStyle = isHoje ? 'background:#1e3a5f33' : isPast ? 'opacity:0.6' : '';
     const badge = isHoje ? ' <span style="background:#10b981;color:#fff;font-size:10px;padding:1px 6px;border-radius:4px;margin-left:4px">hoje</span>' : '';
-    const nomes = d.clientes.map(c => `<span style="font-size:11px;background:#1e293b;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">${c.cliente}</span>`).join('');
+    const nomes = d.clientes.map(c => `<span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">${c.cliente}</span>`).join('');
     return `<tr style="${rowStyle}">
       <td><strong>${fmtDate(dia)}${badge}</strong></td>
       <td style="font-weight:700">${d.clientes.length}</td>
