@@ -232,6 +232,35 @@ tr:hover td { background: #0f172a55; }
       <div class="kpi yellow"><div class="kpi-label">💵 Caixa do Mês</div><div class="kpi-value" id="kpi-caixa">R$ 0,00</div><div class="kpi-sub" id="kpi-caixa-sub">recebido − créditos</div></div>
     </div>
 
+    <!-- META MENSAL + PROJEÇÃO -->
+    <div class="row" style="margin-bottom:20px">
+      <div class="card" style="margin-bottom:0">
+        <div class="topbar">
+          <h2>🎯 Meta de Renovações</h2>
+          <div style="display:flex;gap:8px;align-items:center">
+            <label style="font-size:12px;color:#94a3b8">Meta:</label>
+            <input type="number" id="meta-renovacoes" placeholder="Ex: 100" min="0" style="width:90px" oninput="salvarMetaRenovacoes()">
+            <label style="font-size:12px;color:#94a3b8">clientes/mês</label>
+          </div>
+        </div>
+        <div id="meta-renov-wrap" style="display:none">
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px">
+            <span id="meta-renov-label" style="color:#10b981;font-weight:600"></span>
+            <span id="meta-renov-pct" style="color:#94a3b8"></span>
+          </div>
+          <div style="background:#0f172a;border-radius:8px;height:14px;overflow:hidden">
+            <div id="meta-renov-barra" style="height:100%;border-radius:8px;background:linear-gradient(90deg,#10b981,#3b82f6);transition:width .4s;width:0%"></div>
+          </div>
+          <div style="font-size:12px;color:#64748b;margin-top:4px" id="meta-renov-falta"></div>
+        </div>
+        <p id="meta-renov-empty" style="font-size:13px;color:#64748b;margin:0">Defina uma meta de renovações acima.</p>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <h2>📈 Projeção de Caixa (30 dias)</h2>
+        <div id="projecao-caixa-info" style="font-size:13px"></div>
+      </div>
+    </div>
+
     <!-- BANNER DE ALERTAS -->
     <div id="alert-banner" style="display:none;margin-bottom:20px;padding:14px 18px;border-radius:10px;background:#1e293b;border-left:4px solid #ef4444;font-size:14px;display:flex;gap:18px;flex-wrap:wrap;align-items:center"></div>
 
@@ -279,6 +308,7 @@ tr:hover td { background: #0f172a55; }
         <div class="form-row" style="grid-template-columns:1fr 1fr 1fr auto">
           <input type="text" id="f-fone" placeholder="WhatsApp (ex: 11999999999)">
           <input type="text" id="f-obs" placeholder="Observações (opcional)">
+          <input type="text" id="f-indicacao" placeholder="Indicado por (opcional)">
           <select id="f-meses">
             <option value="1">Mensal (1 crédito)</option>
             <option value="3">Trimestral (2,5 créditos)</option>
@@ -330,8 +360,8 @@ tr:hover td { background: #0f172a55; }
             <th><input type="checkbox" id="chk-todos" onchange="toggleTodos(this.checked)" title="Selecionar todos"></th>
             <th style="cursor:pointer" onclick="ordenarPor('cliente')">Cliente <span id="sort-cliente"></span></th>
             <th style="cursor:pointer" onclick="ordenarPor('venc')">Vencimento <span id="sort-venc"></span></th>
-            <th style="cursor:pointer" onclick="ordenarPor('valor')">Valor Cobrado <span id="sort-valor"></span></th>
-            <th>Aplicativo</th><th>Plano</th><th>Status</th><th>Obs</th><th>Ação</th>
+            <th style="cursor:pointer" onclick="ordenarPor('valor')">Valor <span id="sort-valor"></span></th>
+            <th>App</th><th>Plano</th><th>Status</th><th>Renov.</th><th>Ação</th>
           </tr></thead>
           <tbody id="tbody-clientes"></tbody>
         </table>
@@ -829,6 +859,7 @@ tr:hover td { background: #0f172a55; }
         <option value="12">Anual (10 créditos)</option>
       </select>
       <input type="text" id="ec-obs" placeholder="Observações" style="grid-column:span 2">
+      <input type="text" id="ec-indicacao" placeholder="Indicado por (opcional)" style="grid-column:span 2">
     </div>
     <div class="modal-actions">
       <button class="btn btn-green" onclick="salvarEdicaoCliente()">💾 Salvar alterações</button>
@@ -1096,16 +1127,6 @@ function updateKPIs() {
   _set('kpi-ativos', ativos);
   _set('kpi-vencidos', vencidos);
   _set('kpi-vencidos-val', brl(vV));
-
-  // Caixa do mês
-  const mesKey = new Date(today()+'T00:00:00').toISOString().slice(0,7);
-  const recebidoMes = pagamentos.filter(function(p){ return p.data.slice(0,7)===mesKey; }).reduce(function(s,p){ return s+(+p.valor||0); },0);
-  const gastoMes = compras.filter(function(c){ return c.data.slice(0,7)===mesKey; }).reduce(function(s,c){ return s+(+c.valor||0); },0);
-  const caixa = recebidoMes - gastoMes;
-  const elCaixa = document.getElementById('kpi-caixa');
-  const elCaixaSub = document.getElementById('kpi-caixa-sub');
-  if (elCaixa) { elCaixa.textContent = brl(caixa); elCaixa.style.color = caixa >= 0 ? '#10b981' : '#ef4444'; }
-  if (elCaixaSub) elCaixaSub.textContent = brl(recebidoMes) + ' − ' + brl(gastoMes);
   verificarLembrete();
 }
 
@@ -1141,15 +1162,26 @@ function renderClientes() {
     const meses = c.meses||1;
     const cred = creditosPorMeses(meses);
     const planoLabel = meses==1?'Mensal':meses==3?'Trimestral':meses==6?'Semestral':'Anual';
-    return `<tr>
+    const renovCount = pagamentos.filter(function(p){ return p.cliente === c.cliente; }).length;
+    const dd = diffDays(c.venc);
+    // Cor da linha por urgência
+    let rowStyle = '';
+    if (dd < 0) rowStyle = 'background:rgba(239,68,68,0.08)';
+    else if (dd === 0) rowStyle = 'background:rgba(239,68,68,0.15)';
+    else if (dd <= 3) rowStyle = 'background:rgba(245,158,11,0.10)';
+    else if (dd <= 7) rowStyle = 'background:rgba(234,179,8,0.07)';
+    return `<tr style="${rowStyle}">
       <td><input type="checkbox" class="chk-cliente" data-idx="${idx}" ${selecionados.has(idx)?'checked':''} onchange="toggleSelecao(${idx}, this.checked)"></td>
-      <td><strong>${c.cliente}</strong></td>
+      <td>
+        <strong>${c.cliente}</strong>
+        ${c.indicacao ? `<br><span style="font-size:10px;color:#8b5cf6">👤 ${c.indicacao}</span>` : ''}
+      </td>
       <td>${fmtDate(c.venc)}</td>
       <td>${brl(+c.valor||0)}</td>
       <td>${c.app||'—'}</td>
       <td><span style="font-size:11px;color:#94a3b8">${planoLabel} · ${cred} cr.</span></td>
       <td><span class="tag ${st.cls}">${st.label}</span></td>
-      <td style="max-width:140px;font-size:12px;color:#94a3b8">${c.obs||''}</td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">${renovCount}x</span></td>
       <td>
         <button class="btn btn-edit btn-sm" onclick="editarCliente(${idx})" style="margin-right:4px">✏️</button>
         <button class="btn btn-green btn-sm" onclick="abrirRenovar(${idx})" style="margin-right:4px">🔄</button>
@@ -1226,9 +1258,10 @@ function addCliente() {
     tec:document.getElementById('f-tec').value,
     meses:+document.getElementById('f-meses').value,
     fone:document.getElementById('f-fone').value.trim(),
-    obs:document.getElementById('f-obs').value.trim()
+    obs:document.getElementById('f-obs').value.trim(),
+    indicacao:document.getElementById('f-indicacao').value.trim()
   });
-  ['f-nome','f-venc','f-valor','f-app','f-fone','f-obs'].forEach(id=>document.getElementById(id).value='');
+  ['f-nome','f-venc','f-valor','f-app','f-fone','f-obs','f-indicacao'].forEach(id=>document.getElementById(id).value='');
   saveC(); refreshAll();
   document.getElementById('form-cliente').style.display='none';
 }
@@ -1380,6 +1413,7 @@ function editarCliente(idx) {
   document.getElementById('ec-tec').value   = c.tec||'IPTV';
   document.getElementById('ec-meses').value = c.meses||1;
   document.getElementById('ec-obs').value   = c.obs||'';
+  document.getElementById('ec-indicacao').value = c.indicacao||'';
   document.getElementById('modal-cliente').classList.add('open');
 }
 
@@ -1416,6 +1450,7 @@ function salvarEdicaoCliente() {
     meses:   +document.getElementById('ec-meses').value||1,
     fone:    clientes[editIdx].fone||'',
     obs:     document.getElementById('ec-obs').value.trim(),
+    indicacao: document.getElementById('ec-indicacao').value.trim(),
   };
   saveC(); refreshAll(); fecharModal('modal-cliente');
 }
@@ -1876,8 +1911,100 @@ function renderDetalhamentoCreditos() {
 
 
 // ============================================================
-// GRÁFICO CUSTO x RECEITA
+// META DE RENOVAÇÕES
 // ============================================================
+const META_RENOV_KEY = 'iptv_meta_renovacoes';
+
+function salvarMetaRenovacoes() {
+  const val = parseInt(document.getElementById('meta-renovacoes').value) || 0;
+  localStorage.setItem(META_RENOV_KEY, val.toString());
+  renderMetaRenovacoes();
+}
+
+function renderMetaRenovacoes() {
+  const meta = parseInt(localStorage.getItem(META_RENOV_KEY) || '0');
+  const input = document.getElementById('meta-renovacoes');
+  if (input && !input.value && meta > 0) input.value = meta;
+
+  const wrap = document.getElementById('meta-renov-wrap');
+  const empty = document.getElementById('meta-renov-empty');
+  if (!meta || meta <= 0) {
+    if (wrap) wrap.style.display = 'none';
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+  if (wrap) wrap.style.display = 'block';
+  if (empty) empty.style.display = 'none';
+
+  const mesKey = new Date(today()+'T00:00:00').toISOString().slice(0,7);
+  const renovMes = pagamentos.filter(function(p){ return p.data.slice(0,7)===mesKey; }).length;
+  const pct = Math.min(100, (renovMes / meta) * 100);
+  const falta = Math.max(0, meta - renovMes);
+  const cor = pct >= 100 ? '#10b981' : pct >= 70 ? '#3b82f6' : pct >= 40 ? '#f59e0b' : '#ef4444';
+
+  const _s = function(id, v) { const el = document.getElementById(id); if(el) el.textContent = v; };
+  _s('meta-renov-label', '✅ Renovações: ' + renovMes + ' / ' + meta);
+  _s('meta-renov-pct', pct.toFixed(1) + '%');
+  _s('meta-renov-falta', falta > 0 ? 'Faltam ' + falta + ' renovações' : '🎉 Meta atingida!');
+  const barra = document.getElementById('meta-renov-barra');
+  if (barra) { barra.style.width = pct + '%'; barra.style.background = 'linear-gradient(90deg,' + cor + ',#3b82f6)'; }
+}
+
+// ============================================================
+// PROJEÇÃO DE CAIXA (30 dias)
+// ============================================================
+function renderProjecaoCaixa() {
+  const el = document.getElementById('projecao-caixa-info');
+  if (!el) return;
+  const hoje = new Date(today()+'T00:00:00');
+  const daqui30 = new Date(hoje.getTime() + 30*24*60*60*1000);
+  const daqui30Str = daqui30.toISOString().slice(0,10);
+
+  const clientesProximos = clientes.filter(function(c) {
+    return c.venc >= today() && c.venc <= daqui30Str;
+  });
+  const receitaProjetada = clientesProximos.reduce(function(s,c){ return s+(+c.valor||0); },0);
+  const mesKey = new Date(today()+'T00:00:00').toISOString().slice(0,7);
+  const gastoMes = compras.filter(function(c){ return c.data.slice(0,7)===mesKey; }).reduce(function(s,c){ return s+(+c.valor||0); },0);
+
+  // Agrupar por semana
+  const semanas = [0,0,0,0];
+  clientesProximos.forEach(function(c) {
+    const dias = Math.floor((new Date(c.venc+'T00:00:00') - hoje) / (24*60*60*1000));
+    const sem = Math.min(Math.floor(dias/7), 3);
+    semanas[sem] += (+c.valor||0);
+  });
+
+  el.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+      <div style="background:#0f172a;border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:11px;color:#94a3b8;margin-bottom:4px">💰 Receita Projetada</div>
+        <div style="font-size:20px;font-weight:700;color:#10b981">${brl(receitaProjetada)}</div>
+        <div style="font-size:11px;color:#64748b">${clientesProximos.length} clientes vencem</div>
+      </div>
+      <div style="background:#0f172a;border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:11px;color:#94a3b8;margin-bottom:4px">📅 Por Semana</div>
+        ${semanas.map(function(v,i){ return '<div style="font-size:12px;color:#cbd5e1">Sem '+(i+1)+': <strong style="color:#3b82f6">'+brl(v)+'</strong></div>'; }).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ============================================================
+// HISTÓRICO DE CAIXA POR MÊS
+// ============================================================
+function renderHistoricoCaixa() {
+  // Será renderizado no gráfico já existente (updateCharts)
+  // Aqui apenas atualiza o KPI de caixa
+  const mesKey = new Date(today()+'T00:00:00').toISOString().slice(0,7);
+  const recebidoMes = pagamentos.filter(function(p){ return p.data.slice(0,7)===mesKey; }).reduce(function(s,p){ return s+(+p.valor||0); },0);
+  const gastoMes = compras.filter(function(c){ return c.data.slice(0,7)===mesKey; }).reduce(function(s,c){ return s+(+c.valor||0); },0);
+  const caixa = recebidoMes - gastoMes;
+  const elCaixa = document.getElementById('kpi-caixa');
+  const elSub = document.getElementById('kpi-caixa-sub');
+  if (elCaixa) { elCaixa.textContent = brl(caixa); elCaixa.style.color = caixa >= 0 ? '#10b981' : '#ef4444'; }
+  if (elSub) elSub.textContent = brl(recebidoMes) + ' − ' + brl(gastoMes);
+}
 
 function updateCharts() {
   // Gráfico 1: vencimentos por mês — a partir de agosto/2026
@@ -2729,7 +2856,7 @@ function renderHistoricoCreditos() {
 // ============================================================
 // INIT — Firebase primeiro, localStorage só como fallback
 // ============================================================
-function refreshAll() { updateKPIs(); updateCharts(); renderClientes(); renderAlertBanner(); atualizarAutocompleteApp(); renderCreditos(); renderDetalhamentoCreditos(); renderHistoricoCreditos(); renderProjecao(); renderControle(); renderPrevisao(); }
+function refreshAll() { updateKPIs(); updateCharts(); renderClientes(); renderAlertBanner(); atualizarAutocompleteApp(); renderCreditos(); renderDetalhamentoCreditos(); renderHistoricoCreditos(); renderProjecao(); renderControle(); renderPrevisao(); renderMetaRenovacoes(); renderProjecaoCaixa(); renderHistoricoCaixa(); }
 
 (async () => {
   document.getElementById('sync-status').textContent = '🔄 Sincronizando...';
