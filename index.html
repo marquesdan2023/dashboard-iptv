@@ -861,6 +861,7 @@ tr:hover td { background: #0f172a55; }
         <option value="6">Semestral (5 créditos)</option>
         <option value="12">Anual (10 créditos)</option>
       </select>
+      <input type="text" id="ec-fone" placeholder="WhatsApp (ex: 11999999999)" style="grid-column:span 2">
       <input type="text" id="ec-obs" placeholder="Observações" style="grid-column:span 2">
       <input type="text" id="ec-indicacao" placeholder="Indicado por (opcional)" style="grid-column:span 2">
     </div>
@@ -1416,6 +1417,7 @@ function editarCliente(idx) {
   document.getElementById('ec-tec').value   = c.tec||'IPTV';
   document.getElementById('ec-meses').value = c.meses||1;
   document.getElementById('ec-obs').value   = c.obs||'';
+  document.getElementById('ec-fone').value  = c.fone||'';
   document.getElementById('ec-indicacao').value = c.indicacao||'';
   document.getElementById('modal-cliente').classList.add('open');
 }
@@ -1452,6 +1454,7 @@ function salvarEdicaoCliente() {
     tec:     document.getElementById('ec-tec').value,
     meses:   +document.getElementById('ec-meses').value||1,
     fone:    clientes[editIdx].fone||'',
+    fone:    document.getElementById('ec-fone').value.trim(),
     obs:     document.getElementById('ec-obs').value.trim(),
     indicacao: document.getElementById('ec-indicacao').value.trim(),
   };
