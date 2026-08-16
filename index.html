@@ -363,7 +363,7 @@ tr:hover td { background: #0f172a55; }
             <th style="cursor:pointer" onclick="ordenarPor('cliente')">Cliente <span id="sort-cliente"></span></th>
             <th style="cursor:pointer" onclick="ordenarPor('venc')">Vencimento <span id="sort-venc"></span></th>
             <th style="cursor:pointer" onclick="ordenarPor('valor')">Valor <span id="sort-valor"></span></th>
-            <th>App</th><th>Plano</th><th>Status</th><th>Renov.</th><th>Ação</th>
+            <th>App</th><th>Plano</th><th>WhatsApp</th><th>Status</th><th>Renov.</th><th>Ação</th>
           </tr></thead>
           <tbody id="tbody-clientes"></tbody>
         </table>
@@ -1184,6 +1184,7 @@ function renderClientes() {
       <td>${brl(+c.valor||0)}</td>
       <td>${c.app||'—'}</td>
       <td><span style="font-size:11px;color:#94a3b8">${planoLabel} · ${cred} cr.</span></td>
+      <td style="font-size:11px;color:#25d366">${c.fone||'—'}</td>
       <td><span class="tag ${st.cls}">${st.label}</span></td>
       <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">${renovCount}x</span></td>
       <td>
