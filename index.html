@@ -838,6 +838,11 @@ tr:hover td { background: #0f172a55; }
       <input type="date" id="renovar-pgto" style="width:100%">
     </div>
     <div style="margin-bottom:14px">
+      <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Valor pago pelo cliente (R$)</label>
+      <input type="number" id="renovar-valor" placeholder="Ex: 105.00" step="0.01" min="0" style="width:100%">
+      <div style="font-size:11px;color:#64748b;margin-top:4px">Deixe em branco para usar o valor cadastrado do cliente.</div>
+    </div>
+    <div style="margin-bottom:14px">
       <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Nova data de vencimento</label>
       <input type="date" id="renovar-data" style="width:100%">
     </div>
@@ -1054,6 +1059,7 @@ function abrirRenovar(idx) {
   document.getElementById('renovar-nome').textContent = c.cliente + ' — vence ' + fmtDate(c.venc);
   document.getElementById('renovar-data').value = '';
   document.getElementById('renovar-pgto').value = today();
+  document.getElementById('renovar-valor').value = '';
   document.getElementById('renovar-meses').value = c.meses || 1;
   atualizarInfoRenovar();
   document.getElementById('modal-renovar').classList.add('open');
@@ -1081,7 +1087,9 @@ function confirmarRenovar() {
   const dataPgto = document.getElementById('renovar-pgto').value || today();
   const meses = +document.getElementById('renovar-meses').value || c.meses || 1;
   const cred = creditosPorMeses(meses);
-  pagamentos.push({ data: dataPgto, cliente: c.cliente, valor: +c.valor||0, meses: meses, creditos: cred });
+  const valorDigitado = document.getElementById('renovar-valor').value;
+  const valorPago = valorDigitado !== '' ? +valorDigitado : +c.valor||0;
+  pagamentos.push({ data: dataPgto, cliente: c.cliente, valor: valorPago, meses: meses, creditos: cred });
   savePG();
   clientes[renovarIdx].venc = novaData;
   clientes[renovarIdx].meses = meses;
