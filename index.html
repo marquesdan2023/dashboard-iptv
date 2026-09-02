@@ -1069,7 +1069,7 @@ function atualizarInfoRenovar() {
   const dispAtual = parseFloat((saldoInicial + totalComprado + totalBonus - totalUsado).toFixed(2));
   const apos = parseFloat((dispAtual - cred).toFixed(2));
   document.getElementById('renovar-creditos-info').textContent = cred;
-  document.getElementById('renovar-saldo-info').textContent = apos.toFixed(2);
+  document.getElementById('renovar-saldo-info').textContent = +apos % 1 === 0 ? apos.toFixed(0) : String(Math.round(apos * 10) / 10);
   document.getElementById('renovar-saldo-info').style.color = apos >= 0 ? '#10b981' : '#ef4444';
 }
 
@@ -1362,7 +1362,7 @@ function renderCreditos() {
   _sc('cr-comprados-val', brl(compradosMes * CUSTO_CREDITO));
   _sc('cr-usados-mes', usadosMes.toFixed(2));
   _sc('cr-usados-mes-val', brl(usadosMes * CUSTO_CREDITO));
-  _sc('cr-disponiveis', disponiveis.toFixed(2));
+  _sc('cr-disponiveis', +disponiveis % 1 === 0 ? disponiveis.toFixed(0) : String(Math.round(disponiveis * 10) / 10));
   _sc('cr-disponiveis-val', brl(disponiveis * CUSTO_CREDITO));
 
   // Tabela de compras
@@ -1388,7 +1388,7 @@ function salvarSaldoInicial() {
   localStorage.setItem(SI_KEY, val.toString());
   fbSave('saldo_inicial', [val]);
   const status = document.getElementById('saldo-inicial-status');
-  if (status) status.textContent = '✅ Salvo! Saldo inicial: ' + val.toFixed(1) + ' créditos';
+  if (status) status.textContent = '✅ Salvo! Saldo inicial: ' + val + ' créditos';
   renderCreditos();
 }
 
