@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
+<html lang="pt-BR"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard IPTV</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -184,8 +183,8 @@ tr:hover td { background: #0f172a55; }
 .dns-card { border-top: 3px solid #f59e0b; }
 </style>
 </head>
-<body>
-<div id="tela-senha" style="display:none;position:fixed;inset:0;background:#0f172a;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px">
+<body class="tema-claro">
+<div id="tela-senha" style="position: fixed; inset: 0px; background: rgb(15, 23, 42); z-index: 9999; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 16px;">
   <div style="font-size:48px">🔐</div>
   <h2 style="color:#e2e8f0;margin:0">Dashboard IPTV</h2>
   <p style="color:#94a3b8;margin:0">Digite a senha para acessar</p>
@@ -196,16 +195,16 @@ tr:hover td { background: #0f172a55; }
   <p id="senha-erro" style="color:#ef4444;font-size:13px;display:none">Senha incorreta!</p>
 </div>
 
-<div id="app-conteudo">
+<div id="app-conteudo" style="display: block;">
 <div class="container">
   <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:8px">
     <div>
-      <h1>📊 Dashboard IPTV <span id="sync-status" style="font-size:13px;font-weight:400;color:#94a3b8;-webkit-text-fill-color:#94a3b8">🔄 Conectando...</span></h1>
+      <h1>📊 Dashboard IPTV <span id="sync-status" style="font-size:13px;font-weight:400;color:#94a3b8;-webkit-text-fill-color:#94a3b8">✅ Sincronizado</span></h1>
       <p class="subtitle" style="margin:0">Gestão de clientes — sincronizado na nuvem ☁️</p>
     </div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <button class="btn btn-gray" onclick="abrirLembrete()" id="btn-lembrete" style="display:none">🔔 <span id="lembrete-count">0</span> vencem amanhã</button>
-      <button class="btn btn-gray" onclick="toggleTema()" id="btn-tema">🌙 Escuro</button>
+      <button class="btn btn-gray" onclick="abrirLembrete()" id="btn-lembrete" style="">🔔 <span id="lembrete-count">1</span> vencem amanhã</button>
+      <button class="btn btn-gray" onclick="toggleTema()" id="btn-tema">☀️ Claro</button>
       <button class="btn btn-gray" onclick="abrirBackup()">💾 Backup</button>
       <button class="btn btn-gray" onclick="abrirSenha()">🔑 Senha</button>
     </div>
@@ -213,23 +212,23 @@ tr:hover td { background: #0f172a55; }
 
   <!-- TABS -->
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('clientes')">📋 Clientes</button>
+    <button class="tab" onclick="switchTab('clientes')">📋 Clientes</button>
     <button class="tab" onclick="switchTab('dns')">🌐 Alterar DNS</button>
     <button class="tab" onclick="switchTab('creditos')">🪙 Créditos</button>
     <button class="tab" onclick="switchTab('projecao')">📈 Projeção</button>
     <button class="tab" onclick="switchTab('controle')">📒 Controle do Mês</button>
-    <button class="tab" onclick="switchTab('previsao')">📅 Previsão Diária</button>
+    <button class="tab active" onclick="switchTab('previsao')">📅 Previsão Diária</button>
   </div>
 
   <!-- ========== ABA CLIENTES ========== -->
-  <div id="tab-clientes" class="tab-content active">
+  <div id="tab-clientes" class="tab-content">
 
     <!-- KPIs -->
     <div class="kpis">
-      <div class="kpi green" style="cursor:pointer" onclick="abrirKpiModal('ativos')" title="Ver clientes ativos"><div class="kpi-label">✅ Clientes Ativos</div><div class="kpi-value" id="kpi-ativos">0</div><div class="kpi-sub">ativos</div></div>
-      <div class="kpi red" style="cursor:pointer" onclick="abrirKpiModal('expirados')" title="Ver clientes expirados"><div class="kpi-label">🔴 Clientes Expirados</div><div class="kpi-value" id="kpi-vencidos">0</div><div class="kpi-sub" id="kpi-vencidos-val">R$ 0,00</div></div>
-      <div class="kpi blue" style="cursor:pointer" onclick="abrirKpiModal('todos')" title="Ver todos os clientes"><div class="kpi-label">👥 Total de Clientes</div><div class="kpi-value" id="kpi-total">0</div><div class="kpi-sub">cadastrados</div></div>
-      <div class="kpi yellow"><div class="kpi-label">💵 Caixa do Mês</div><div class="kpi-value" id="kpi-caixa">R$ 0,00</div><div class="kpi-sub" id="kpi-caixa-sub">recebido − créditos</div></div>
+      <div class="kpi green" style="cursor:pointer" onclick="abrirKpiModal('ativos')" title="Ver clientes ativos"><div class="kpi-label">✅ Clientes Ativos</div><div class="kpi-value" id="kpi-ativos">138</div><div class="kpi-sub">ativos</div></div>
+      <div class="kpi red" style="cursor:pointer" onclick="abrirKpiModal('expirados')" title="Ver clientes expirados"><div class="kpi-label">🔴 Clientes Expirados</div><div class="kpi-value" id="kpi-vencidos">1</div><div class="kpi-sub" id="kpi-vencidos-val">R$ 40,00</div></div>
+      <div class="kpi blue" style="cursor:pointer" onclick="abrirKpiModal('todos')" title="Ver todos os clientes"><div class="kpi-label">👥 Total de Clientes</div><div class="kpi-value" id="kpi-total">139</div><div class="kpi-sub">cadastrados</div></div>
+      <div class="kpi yellow"><div class="kpi-label">💵 Caixa do Mês</div><div class="kpi-value" id="kpi-caixa" style="color: rgb(16, 185, 129);">R$ 4.972,50</div><div class="kpi-sub" id="kpi-caixa-sub">R$ 5.395,00 − R$ 422,50</div></div>
     </div>
 
     <!-- META MENSAL + PROJEÇÃO -->
@@ -243,37 +242,49 @@ tr:hover td { background: #0f172a55; }
             <label style="font-size:12px;color:#94a3b8">clientes/mês</label>
           </div>
         </div>
-        <div id="meta-renov-wrap" style="display:none">
+        <div id="meta-renov-wrap" style="display: block;">
           <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px">
-            <span id="meta-renov-label" style="color:#10b981;font-weight:600"></span>
-            <span id="meta-renov-pct" style="color:#94a3b8"></span>
+            <span id="meta-renov-label" style="color:#10b981;font-weight:600">✅ Renovações: 123 / 100</span>
+            <span id="meta-renov-pct" style="color:#94a3b8">100.0%</span>
           </div>
           <div style="background:#0f172a;border-radius:8px;height:14px;overflow:hidden">
-            <div id="meta-renov-barra" style="height:100%;border-radius:8px;background:linear-gradient(90deg,#10b981,#3b82f6);transition:width .4s;width:0%"></div>
+            <div id="meta-renov-barra" style="height: 100%; border-radius: 8px; background: linear-gradient(90deg, rgb(16, 185, 129), rgb(59, 130, 246)); transition: width 0.4s; width: 100%;"></div>
           </div>
-          <div style="font-size:12px;color:#64748b;margin-top:4px" id="meta-renov-falta"></div>
+          <div style="font-size:12px;color:#64748b;margin-top:4px" id="meta-renov-falta">🎉 Meta atingida!</div>
         </div>
-        <p id="meta-renov-empty" style="font-size:13px;color:#64748b;margin:0">Defina uma meta de renovações acima.</p>
+        <p id="meta-renov-empty" style="font-size: 13px; color: rgb(100, 116, 139); margin: 0px; display: none;">Defina uma meta de renovações acima.</p>
       </div>
       <div class="card" style="margin-bottom:0">
         <h2>📈 Projeção de Caixa (30 dias)</h2>
-        <div id="projecao-caixa-info" style="font-size:13px"></div>
+        <div id="projecao-caixa-info" style="font-size:13px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+      <div style="background:#0f172a;border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:11px;color:#94a3b8;margin-bottom:4px">💰 Receita Projetada</div>
+        <div style="font-size:20px;font-weight:700;color:#10b981">R$ 4.360,00</div>
+        <div style="font-size:11px;color:#64748b">110 clientes vencem</div>
+      </div>
+      <div style="background:#0f172a;border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:11px;color:#94a3b8;margin-bottom:4px">📅 Por Semana</div>
+        <div style="font-size:12px;color:#cbd5e1">Sem 1: <strong style="color:#3b82f6">R$ 280,00</strong></div><div style="font-size:12px;color:#cbd5e1">Sem 2: <strong style="color:#3b82f6">R$ 240,00</strong></div><div style="font-size:12px;color:#cbd5e1">Sem 3: <strong style="color:#3b82f6">R$ 1.760,00</strong></div><div style="font-size:12px;color:#cbd5e1">Sem 4: <strong style="color:#3b82f6">R$ 2.080,00</strong></div>
+      </div>
+    </div>
+  </div>
       </div>
     </div>
 
     <!-- BANNER DE ALERTAS -->
-    <div id="alert-banner" style="display:none;margin-bottom:20px;padding:14px 18px;border-radius:10px;background:#1e293b;border-left:4px solid #ef4444;font-size:14px;display:flex;gap:18px;flex-wrap:wrap;align-items:center"></div>
+    <div id="alert-banner" style="display:none;margin-bottom:20px;padding:14px 18px;border-radius:10px;background:#1e293b;border-left:4px solid #ef4444;font-size:14px;display:flex;gap:18px;flex-wrap:wrap;align-items:center"><span style="cursor:pointer;color:#fca5a5;font-weight:600" onclick="filtrarPorBanner('vencido')">🔴 1 vencido(s) — R$ 40,00 a recuperar</span><span style="color:#334155">|</span><span style="cursor:pointer;color:#fde68a;font-weight:600" onclick="filtrarPorBanner('semana')">🟡 9 vencem em até 7 dias — R$ 320,00 previstos</span></div>
 
 
     <!-- GRÁFICOS: VENCIMENTOS + CUSTO x RECEITA -->
     <div class="row" style="margin-bottom:20px">
       <div class="card">
         <h2>📅 Vencimentos por Mês</h2>
-        <div class="chart-wrap"><canvas id="chartMes"></canvas></div>
+        <div class="chart-wrap"><canvas id="chartMes" style="box-sizing: border-box; display: block; height: 240px; width: 652px;" width="652" height="240"></canvas></div>
       </div>
       <div class="card">
         <h2>💰 Receita vs Custo (últimos 6 meses)</h2>
-        <div class="chart-wrap"><canvas id="chartCustoReceita"></canvas></div>
+        <div class="chart-wrap"><canvas id="chartCustoReceita" style="box-sizing: border-box; display: block; height: 240px; width: 652px;" width="652" height="240"></canvas></div>
       </div>
     </div>
 
@@ -315,7 +326,7 @@ tr:hover td { background: #0f172a55; }
             <option value="3">Trimestral (2,5 créditos)</option>
             <option value="6">Semestral (5 créditos)</option>
             <option value="12">Anual (10 créditos)</option>
-          </select>
+          <option value="0">Gratuidade (1 crédito)</option></select>
           <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#94a3b8" id="f-creditos-preview">= 1 crédito</div>
           <button class="btn btn-green" onclick="addCliente()">💾 Salvar</button>
         </div>
@@ -325,7 +336,7 @@ tr:hover td { background: #0f172a55; }
     <!-- LISTA CLIENTES -->
     <div class="card">
       <div class="topbar">
-        <h2>📋 Lista de Clientes (<span id="count-clientes">0</span>)</h2>
+        <h2>📋 Lista de Clientes (<span id="count-clientes">3</span>)</h2>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn btn-green" onclick="abrirImportacao()">📥 Importar</button>
           <button class="btn btn-blue" id="btn-renovar-massa" onclick="abrirRenovarMassa()" style="display:none">🔄 Renovar Selecionados (<span id="count-selecionados">0</span>)</button>
@@ -342,30 +353,78 @@ tr:hover td { background: #0f172a55; }
           <option value="semana">Próximos 7 dias</option>
           <option value="futuro">Futuros</option>
         </select>
-        <select id="filter-app" onchange="renderClientes()">
-          <option value="">Todos os apps</option>
-          <option value="Ultra Player">Ultra Player</option>
-          <option value="Xcloud">Xcloud</option>
-          <option value="Quick Player">Quick Player</option>
-          <option value="Duplecast">Duplecast</option>
-          <option value="Ibo Player">Ibo Player</option>
-          <option value="Bay IPTV">Bay IPTV</option>
-          <option value="Player Pro">Player Pro</option>
-          <option value="Fusion XC">Fusion XC</option>
-            <option value="Smart STB">Smart STB</option>
-            <option value="Smartone">Smartone</option>
-        </select>
+        <select id="filter-app" onchange="renderClientes()"><option value="">Todos os apps</option></select>
       </div>
       <div class="table-wrap">
         <table>
           <thead><tr>
             <th><input type="checkbox" id="chk-todos" onchange="toggleTodos(this.checked)" title="Selecionar todos"></th>
             <th style="cursor:pointer" onclick="ordenarPor('cliente')">Cliente <span id="sort-cliente"></span></th>
-            <th style="cursor:pointer" onclick="ordenarPor('venc')">Vencimento <span id="sort-venc"></span></th>
+            <th style="cursor:pointer" onclick="ordenarPor('venc')">Vencimento <span id="sort-venc">▲</span></th>
             <th style="cursor:pointer" onclick="ordenarPor('valor')">Valor <span id="sort-valor"></span></th>
             <th>App</th><th>Plano</th><th>WhatsApp</th><th>Status</th><th>Renov.</th><th>Ação</th>
           </tr></thead>
-          <tbody id="tbody-clientes"></tbody>
+          <tbody id="tbody-clientes"><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="41" onchange="toggleSelecao(41, this.checked)"></td>
+      <td>
+        <strong>Natalia Ponto 3</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 0,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(41)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(41)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(41)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(41)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="47" onchange="toggleSelecao(47, this.checked)"></td>
+      <td>
+        <strong>Natalia Smart STB</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 0,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(47)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(47)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(47)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(47)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="51" onchange="toggleSelecao(51, this.checked)"></td>
+      <td>
+        <strong>Natalia Ultra Player</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 100,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(51)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(51)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(51)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(51)">🗑</button>
+      </td>
+    </tr></tbody>
         </table>
       </div>
       <p class="muted">💾 Dados salvos automaticamente no seu navegador. Use "Exportar PDF" para backup.</p>
@@ -376,7 +435,7 @@ tr:hover td { background: #0f172a55; }
   <div id="tab-dns" class="tab-content">
     <div class="card dns-card">
       <div class="topbar">
-        <h2>🌐 Alterar DNS — Clientes (<span id="count-dns">0</span>)</h2>
+        <h2>🌐 Alterar DNS — Clientes (<span id="count-dns">14</span>)</h2>
         <button class="btn btn-yellow" onclick="toggleForm('form-dns')">➕ Adicionar Cliente DNS</button>
       </div>
 
@@ -410,7 +469,11 @@ tr:hover td { background: #0f172a55; }
       </div>
 
       <!-- KPI vencimentos DNS -->
-      <div id="dns-venc-banner" style="display:none;background:#1e3a5f;border-radius:8px;padding:12px 16px;margin-bottom:12px;font-size:13px;color:#bfdbfe;display:flex;gap:20px;flex-wrap:wrap;align-items:center"></div>
+      <div id="dns-venc-banner" style="display:none;background:#1e3a5f;border-radius:8px;padding:12px 16px;margin-bottom:12px;font-size:13px;color:#bfdbfe;display:flex;gap:20px;flex-wrap:wrap;align-items:center">
+    <span>📅 <strong>Este mês:</strong> 0 clientes</span>
+    <span>🗓 <strong>Mês que vem:</strong> 0 clientes</span>
+    <span style="color:#fecaca">🔴 <strong>Vencidos:</strong> 2 clientes</span>
+  </div>
 
       <!-- TABELA DNS -->
       <div class="table-wrap">
@@ -418,7 +481,203 @@ tr:hover td { background: #0f172a55; }
           <thead><tr>
             <th>Cliente</th><th>Aplicativo</th><th>MAC Address</th><th>Senha</th><th>Data Venc.</th><th>Obs</th><th>Ação</th>
           </tr></thead>
-          <tbody id="tbody-dns"></tbody>
+          <tbody id="tbody-dns"><tr>
+      <td><strong>Léo</strong></td>
+      <td>IBO</td>
+      <td>
+        <span style="font-family:monospace;font-size:12px">c8:a6:ef:7a:54:5e</span>
+        <button class="copy-btn" id="cm0" onclick="copyText('c8:a6:ef:7a:54:5e','cm0')">📋</button>
+      </td>
+      <td>
+        <span style="font-family:monospace">329747</span>
+        <button class="copy-btn" id="cs0" onclick="copyText('329747','cs0')">📋</button>
+      </td>
+      <td><span style="color:#fca5a5">22/10/2026</span></td>
+      <td style="color:#64748b;font-size:12px"></td>
+      <td><button class="btn btn-edit btn-sm" onclick="editarDns(9)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(9)">🗑</button></td>
+    </tr><tr>
+      <td><strong>Cintia</strong></td>
+      <td>Duplecast</td>
+      <td>
+        <span style="font-family:monospace;font-size:12px">70:B1:3D:38:1A:38</span>
+        <button class="copy-btn" id="cm1" onclick="copyText('70:B1:3D:38:1A:38','cm1')">📋</button>
+      </td>
+      <td>
+        <span style="font-family:monospace">1665541299</span>
+        <button class="copy-btn" id="cs1" onclick="copyText('1665541299','cs1')">📋</button>
+      </td>
+      <td><span style="color:#fca5a5">24/10/2026</span></td>
+      <td style="color:#64748b;font-size:12px"></td>
+      <td><button class="btn btn-edit btn-sm" onclick="editarDns(10)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(10)">🗑</button></td>
+    </tr><tr>
+      <td><strong>Rogério</strong></td>
+      <td>Duplecast</td>
+      <td>
+        <span style="font-family:monospace;font-size:12px">d0c24e750930</span>
+        <button class="copy-btn" id="cm2" onclick="copyText('d0c24e750930','cm2')">📋</button>
+      </td>
+      <td>
+        <span style="font-family:monospace">1707264632</span>
+        <button class="copy-btn" id="cs2" onclick="copyText('1707264632','cs2')">📋</button>
+      </td>
+      <td><span style="color:#94a3b8">07/02/2027</span></td>
+      <td style="color:#64748b;font-size:12px"></td>
+      <td><button class="btn btn-edit btn-sm" onclick="editarDns(1)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(1)">🗑</button></td>
+    </tr><tr>
+      <td><strong>Gilberto</strong></td>
+      <td>Quick Player</td>
+      <td>
+        <span style="font-family:monospace;font-size:12px">79735823792b</span>
+        <button class="copy-btn" id="cm3" onclick="copyText('79735823792b','cm3')">📋</button>
+      </td>
+      <td>
+        <span style="font-family:monospace">769901</span>
+        <button class="copy-btn" id="cs3" onclick="copyText('769901','cs3')">📋</button>
+      </td>
+      <td><span style="color:#94a3b8">22/02/2027</span></td>
+      <td style="color:#64748b;font-size:12px"></td>
+      <td><button class="btn btn-edit btn-sm" onclick="editarDns(0)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(0)">🗑</button></td>
+    </tr><tr>
+      <td><strong>Francisco</strong></td>
+      <td>IBO</td>
+      <td>
+        <span style="font-family:monospace;font-size:12px">9C:8C:6E:8E:A0:60</span>
+        <button class="copy-btn" id="cm4" onclick="copyText('9C:8C:6E:8E:A0:60','cm4')">📋</button>
+      </td>
+      <td>
+        <span style="font-family:monospace">210312</span>
+        <button class="copy-btn" id="cs4" onclick="copyText('210312','cs4')">📋</button>
+      </td>
+      <td><span style="color:#94a3b8">27/02/2027</span></td>
+      <td style="color:#64748b;font-size:12px"></td>
+      <td><button class="btn btn-edit btn-sm" onclick="editarDns(11)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(11)">🗑</button></td>
+    </tr><tr>
+      <td><strong>Juan Santana</strong></td>
+      <td>Duplecast</td>
+      <td>
+        <span style="font-family:monospace;font-size:12px">E0:9D:13:BE:EF:79</span>
+        <button class="copy-btn" id="cm5" onclick="copyText('E0:9D:13:BE:EF:79','cm5')">📋</button>
+      </td>
+      <td>
+        <span style="font-family:monospace">1738440347</span>
+        <button class="copy-btn" id="cs5" onclick="copyText('1738440347','cs5')">📋</button>
+      </td>
+      <td><span style="color:#94a3b8">10/04/2027</span></td>
+      <td style="color:#64748b;font-size:12px"></td>
+      <td><button class="btn btn-edit btn-sm" onclick="editarDns(13)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(13)">🗑</button></td>
+    </tr><tr>
+      <td><strong>Navarro</strong></td>
+      <td>Bay iptv</td>
+      <td>
+        <span style="font-family:monospace;font-size:12px">68fcca28851c</span>
+        <button class="copy-btn" id="cm6" onclick="copyText('68fcca28851c','cm6')">📋</button>
+      </td>
+      <td>
+        <span style="font-family:monospace">NYRU46</span>
+        <button class="copy-btn" id="cs6" onclick="copyText('NYRU46','cs6')">📋</button>
+      </td>
+      <td>—</td>
+      <td style="color:#64748b;font-size:12px"></td>
+      <td><button class="btn btn-edit btn-sm" onclick="editarDns(2)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(2)">🗑</button></td>
+    </tr><tr>
+      <td><strong>Caio</strong></td>
+      <td>Smartone</td>
+      <td>
+        <span style="font-family:monospace;font-size:12px">bcc2d905a3c7</span>
+        <button class="copy-btn" id="cm7" onclick="copyText('bcc2d905a3c7','cm7')">📋</button>
+      </td>
+      <td>
+        <span style="font-family:monospace">—</span>
+        
+      </td>
+      <td>—</td>
+      <td style="color:#64748b;font-size:12px"></td>
+      <td><button class="btn btn-edit btn-sm" onclick="editarDns(3)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(3)">🗑</button></td>
+    </tr><tr>
+      <td><strong>Kaio</strong></td>
+      <td>Duplecast</td>
+      <td>
+        <span style="font-family:monospace;font-size:12px">20174275f0f8</span>
+        <button class="copy-btn" id="cm8" onclick="copyText('20174275f0f8','cm8')">📋</button>
+      </td>
+      <td>
+        <span style="font-family:monospace">1710012774</span>
+        <button class="copy-btn" id="cs8" onclick="copyText('1710012774','cs8')">📋</button>
+      </td>
+      <td>—</td>
+      <td style="color:#64748b;font-size:12px"></td>
+      <td><button class="btn btn-edit btn-sm" onclick="editarDns(4)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(4)">🗑</button></td>
+    </tr><tr>
+      <td><strong>Jefferson Santos</strong></td>
+      <td>Smartone</td>
+      <td>
+        <span style="font-family:monospace;font-size:12px">b8b40973f343</span>
+        <button class="copy-btn" id="cm9" onclick="copyText('b8b40973f343','cm9')">📋</button>
+      </td>
+      <td>
+        <span style="font-family:monospace">—</span>
+        
+      </td>
+      <td>—</td>
+      <td style="color:#64748b;font-size:12px"></td>
+      <td><button class="btn btn-edit btn-sm" onclick="editarDns(5)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(5)">🗑</button></td>
+    </tr><tr>
+      <td><strong>Gustavo Zeni</strong></td>
+      <td>Duplecast</td>
+      <td>
+        <span style="font-family:monospace;font-size:12px">58fdb1c7e40f</span>
+        <button class="copy-btn" id="cm10" onclick="copyText('58fdb1c7e40f','cm10')">📋</button>
+      </td>
+      <td>
+        <span style="font-family:monospace">1703279801</span>
+        <button class="copy-btn" id="cs10" onclick="copyText('1703279801','cs10')">📋</button>
+      </td>
+      <td>—</td>
+      <td style="color:#64748b;font-size:12px"></td>
+      <td><button class="btn btn-edit btn-sm" onclick="editarDns(6)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(6)">🗑</button></td>
+    </tr><tr>
+      <td><strong>Jessica</strong></td>
+      <td>Duplecast</td>
+      <td>
+        <span style="font-family:monospace;font-size:12px">1c869a7f9e4a</span>
+        <button class="copy-btn" id="cm11" onclick="copyText('1c869a7f9e4a','cm11')">📋</button>
+      </td>
+      <td>
+        <span style="font-family:monospace">1676918947</span>
+        <button class="copy-btn" id="cs11" onclick="copyText('1676918947','cs11')">📋</button>
+      </td>
+      <td>—</td>
+      <td style="color:#64748b;font-size:12px"></td>
+      <td><button class="btn btn-edit btn-sm" onclick="editarDns(7)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(7)">🗑</button></td>
+    </tr><tr>
+      <td><strong>Maria Aparecida</strong></td>
+      <td>Duplecast</td>
+      <td>
+        <span style="font-family:monospace;font-size:12px">fc039f74ca96</span>
+        <button class="copy-btn" id="cm12" onclick="copyText('fc039f74ca96','cm12')">📋</button>
+      </td>
+      <td>
+        <span style="font-family:monospace">1679176586</span>
+        <button class="copy-btn" id="cs12" onclick="copyText('1679176586','cs12')">📋</button>
+      </td>
+      <td>—</td>
+      <td style="color:#64748b;font-size:12px"></td>
+      <td><button class="btn btn-edit btn-sm" onclick="editarDns(8)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(8)">🗑</button></td>
+    </tr><tr>
+      <td><strong>Carlos Lima</strong></td>
+      <td>—</td>
+      <td>
+        <span style="font-family:monospace;font-size:12px">—</span>
+        
+      </td>
+      <td>
+        <span style="font-family:monospace">—</span>
+        
+      </td>
+      <td>—</td>
+      <td style="color:#f59e0b;font-weight:600;font-size:12px">Enviar novo DNS</td>
+      <td><button class="btn btn-edit btn-sm" onclick="editarDns(12)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(12)">🗑</button></td>
+    </tr></tbody>
         </table>
       </div>
       <p class="muted">💡 Clique em 📋 para copiar o MAC ou Senha rapidamente. Dados salvos no navegador.</p>
@@ -445,23 +704,884 @@ tr:hover td { background: #0f172a55; }
 
     <!-- KPIs créditos -->
     <div class="kpis" style="margin-bottom:20px">
-      <div class="kpi purple"><div class="kpi-label">🪙 Créditos Comprados</div><div class="kpi-value" id="cr-comprados">0</div><div class="kpi-sub" id="cr-comprados-val">R$ 0,00</div></div>
-      <div class="kpi red"><div class="kpi-label">📤 Créditos Usados no Mês</div><div class="kpi-value" id="cr-usados-mes">0</div><div class="kpi-sub" id="cr-usados-mes-val">R$ 0,00</div></div>
-      <div class="kpi green"><div class="kpi-label">✅ Créditos Disponíveis</div><div class="kpi-value" id="cr-disponiveis">0</div><div class="kpi-sub" id="cr-disponiveis-val">R$ 0,00</div></div>
+      <div class="kpi purple"><div class="kpi-label">🪙 Créditos Comprados</div><div class="kpi-value" id="cr-comprados">65.00</div><div class="kpi-sub" id="cr-comprados-val">R$ 422,50</div></div>
+      <div class="kpi red"><div class="kpi-label">📤 Créditos Usados no Mês</div><div class="kpi-value" id="cr-usados-mes">145.50</div><div class="kpi-sub" id="cr-usados-mes-val">R$ 945,75</div></div>
+      <div class="kpi green"><div class="kpi-label">✅ Créditos Disponíveis</div><div class="kpi-value" id="cr-disponiveis">-26.5</div><div class="kpi-sub" id="cr-disponiveis-val">R$ -172,12</div></div>
     </div>
 
     <!-- Detalhamento créditos usados -->
     <div class="card" style="margin-bottom:20px">
       <div class="topbar">
         <h2>📤 Detalhamento — Créditos Usados no Mês</h2>
-        <select id="det-mes" onchange="renderDetalhamentoCreditos()" style="width:180px"></select>
+        <select id="det-mes" onchange="renderDetalhamentoCreditos()" style="width:180px"><option value="2026-10" selected="">Outubro de 2026</option><option value="2026-09">Setembro de 2026</option><option value="2026-08">Agosto de 2026</option></select>
       </div>
       <div class="table-wrap" style="max-height:320px">
         <table>
           <thead><tr>
             <th>#</th><th>Data</th><th>Cliente</th><th>Plano</th><th>Créditos</th><th>Saldo após</th>
           </tr></thead>
-          <tbody id="tbody-det-creditos"></tbody>
+          <tbody id="tbody-det-creditos"><tr>
+      <td style="color:#64748b;font-size:12px">1</td>
+      <td>01/10/2026</td>
+      <td><strong>Vini Ponto 2</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">49.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">2</td>
+      <td>01/10/2026</td>
+      <td><strong>Vini Ponto 1</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">48.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">3</td>
+      <td>01/10/2026</td>
+      <td><strong>Sonia</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">47.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">4</td>
+      <td>01/10/2026</td>
+      <td><strong>Lucas Barreto</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">46.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">5</td>
+      <td>01/10/2026</td>
+      <td><strong>Homero Ponto 1</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">45.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">6</td>
+      <td>01/10/2026</td>
+      <td><strong>Homero Ponto 2</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">44.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">7</td>
+      <td>01/10/2026</td>
+      <td><strong>Cintia Ponto 1</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">43.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">8</td>
+      <td>01/10/2026</td>
+      <td><strong>Cintia Ponto 2</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">42.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">9</td>
+      <td>01/10/2026</td>
+      <td><strong>Lucas Miranda Ponto 1</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">41.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">10</td>
+      <td>12/10/2026</td>
+      <td><strong>Fábio Pereira Ponto 2</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">40.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">11</td>
+      <td>12/10/2026</td>
+      <td><strong>Camila Alves</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">39.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">12</td>
+      <td>12/10/2026</td>
+      <td><strong>Igão</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">38.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">13</td>
+      <td>12/10/2026</td>
+      <td><strong>Rebeka</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">37.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">14</td>
+      <td>12/10/2026</td>
+      <td><strong>Joana</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">36.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">15</td>
+      <td>12/10/2026</td>
+      <td><strong>Rogério</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">35.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">16</td>
+      <td>12/10/2026</td>
+      <td><strong>Danilo</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">34.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">17</td>
+      <td>12/10/2026</td>
+      <td><strong>Jéssica Duplecast</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">33.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">18</td>
+      <td>12/10/2026</td>
+      <td><strong>Gilvane</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">32.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">19</td>
+      <td>12/10/2026</td>
+      <td><strong>Reginaldo</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">31.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">20</td>
+      <td>12/10/2026</td>
+      <td><strong>Marcelo</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">30.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">21</td>
+      <td>12/10/2026</td>
+      <td><strong>Janete Rogério</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">29.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">22</td>
+      <td>12/10/2026</td>
+      <td><strong>Tabata Lage</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">28.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">23</td>
+      <td>12/10/2026</td>
+      <td><strong>Fábio Pereira Ponto 1</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">27.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">24</td>
+      <td>12/10/2026</td>
+      <td><strong>Lucas Miranda Ponto 2</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">26.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">25</td>
+      <td>12/10/2026</td>
+      <td><strong>Fernando Moreira</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">25.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">26</td>
+      <td>12/10/2026</td>
+      <td><strong>Jefferson Santos</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">24.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">27</td>
+      <td>12/10/2026</td>
+      <td><strong>Heudes</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">23.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">28</td>
+      <td>12/10/2026</td>
+      <td><strong>Lidia Abreu</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">22.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">29</td>
+      <td>12/10/2026</td>
+      <td><strong>Érika</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">21.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">30</td>
+      <td>12/10/2026</td>
+      <td><strong>Renato</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Trimestral</td>
+      <td style="color:#ef4444;font-weight:600">−2.5</td>
+      <td style="color:#10b981;font-weight:600">19.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">31</td>
+      <td>12/10/2026</td>
+      <td><strong>Matheus Filho</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">18.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">32</td>
+      <td>12/10/2026</td>
+      <td><strong>Kelven Ponto 2</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Trimestral</td>
+      <td style="color:#ef4444;font-weight:600">−2.5</td>
+      <td style="color:#10b981;font-weight:600">15.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">33</td>
+      <td>12/10/2026</td>
+      <td><strong>Caio Felipe</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">14.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">34</td>
+      <td>12/10/2026</td>
+      <td><strong>Ronaldo Castelli</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Anual</td>
+      <td style="color:#ef4444;font-weight:600">−10.0</td>
+      <td style="color:#10b981;font-weight:600">4.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">35</td>
+      <td>12/10/2026</td>
+      <td><strong>Reginaldo HBF</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">3.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">36</td>
+      <td>12/10/2026</td>
+      <td><strong>Giovani Mendes</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">2.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">37</td>
+      <td>12/10/2026</td>
+      <td><strong>Fagner</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">1.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">38</td>
+      <td>12/10/2026</td>
+      <td><strong>Rafael Silva</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#10b981;font-weight:600">0.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">39</td>
+      <td>12/10/2026</td>
+      <td><strong>Nickolas</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-0.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">40</td>
+      <td>12/10/2026</td>
+      <td><strong>Kaio</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Trimestral</td>
+      <td style="color:#ef4444;font-weight:600">−2.5</td>
+      <td style="color:#ef4444;font-weight:600">-3.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">41</td>
+      <td>12/10/2026</td>
+      <td><strong>Léo Igreja</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-4.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">42</td>
+      <td>12/10/2026</td>
+      <td><strong>Navarro</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-5.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">43</td>
+      <td>12/10/2026</td>
+      <td><strong>Bento</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-6.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">44</td>
+      <td>12/10/2026</td>
+      <td><strong>Sidney</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-7.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">45</td>
+      <td>12/10/2026</td>
+      <td><strong>Nando</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-8.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">46</td>
+      <td>12/10/2026</td>
+      <td><strong>Luciano Orlando</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-9.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">47</td>
+      <td>12/10/2026</td>
+      <td><strong>Bianca</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-10.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">48</td>
+      <td>12/10/2026</td>
+      <td><strong>Leonardo Premero</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-11.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">49</td>
+      <td>12/10/2026</td>
+      <td><strong>Elvys Rick</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-12.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">50</td>
+      <td>12/10/2026</td>
+      <td><strong>Alessandra</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-13.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">51</td>
+      <td>12/10/2026</td>
+      <td><strong>Rosângela</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-14.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">52</td>
+      <td>12/10/2026</td>
+      <td><strong>Francisco</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-15.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">53</td>
+      <td>12/10/2026</td>
+      <td><strong>Rodrigo Evaristo</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-16.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">54</td>
+      <td>12/10/2026</td>
+      <td><strong>Ademilso</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-17.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">55</td>
+      <td>12/10/2026</td>
+      <td><strong>Sueli Ponto 2</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-18.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">56</td>
+      <td>12/10/2026</td>
+      <td><strong>Val</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-19.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">57</td>
+      <td>12/10/2026</td>
+      <td><strong>Janaina</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-20.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">58</td>
+      <td>12/10/2026</td>
+      <td><strong>Alexandre Ponto 2</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-21.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">59</td>
+      <td>12/10/2026</td>
+      <td><strong>Thayna</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-22.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">60</td>
+      <td>12/10/2026</td>
+      <td><strong>Maria Aparecida</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-23.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">61</td>
+      <td>12/10/2026</td>
+      <td><strong>Minzon</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-24.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">62</td>
+      <td>12/10/2026</td>
+      <td><strong>Marcelo Motta Ponto 2</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-25.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">63</td>
+      <td>12/10/2026</td>
+      <td><strong>Rose Moreno</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-26.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">64</td>
+      <td>12/10/2026</td>
+      <td><strong>Leonardo Ponto 1</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-27.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">65</td>
+      <td>12/10/2026</td>
+      <td><strong>Leonardo Ponto 2</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-28.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">66</td>
+      <td>12/10/2026</td>
+      <td><strong>Leandro</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-29.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">67</td>
+      <td>12/10/2026</td>
+      <td><strong>Efigênia</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-30.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">68</td>
+      <td>12/10/2026</td>
+      <td><strong>Natália Ponto 3</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-31.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">69</td>
+      <td>12/10/2026</td>
+      <td><strong>Larissa Serafim</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-32.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">70</td>
+      <td>12/10/2026</td>
+      <td><strong>Alexandre</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-33.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">71</td>
+      <td>12/10/2026</td>
+      <td><strong>Gabriela</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-34.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">72</td>
+      <td>12/10/2026</td>
+      <td><strong>Natália Smart STB</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-35.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">73</td>
+      <td>12/10/2026</td>
+      <td><strong>Julio Simonelli</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-36.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">74</td>
+      <td>12/10/2026</td>
+      <td><strong>Diego Silva</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-37.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">75</td>
+      <td>12/10/2026</td>
+      <td><strong>Natália Ultra Player</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-38.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">76</td>
+      <td>12/10/2026</td>
+      <td><strong>Marcelo Motta Ponto 1</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-39.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">77</td>
+      <td>12/10/2026</td>
+      <td><strong>Darley</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-40.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">78</td>
+      <td>12/10/2026</td>
+      <td><strong>Sueli Ponto 1</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-41.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">79</td>
+      <td>12/10/2026</td>
+      <td><strong>Carol Pires</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-42.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">80</td>
+      <td>12/10/2026</td>
+      <td><strong>Juan Santana</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-43.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">81</td>
+      <td>12/10/2026</td>
+      <td><strong>Kelven Ponto 1</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Trimestral</td>
+      <td style="color:#ef4444;font-weight:600">−2.5</td>
+      <td style="color:#ef4444;font-weight:600">-45.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">82</td>
+      <td>12/10/2026</td>
+      <td><strong>Denise Alves</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-46.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">83</td>
+      <td>12/10/2026</td>
+      <td><strong>Caroline Pereira</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Trimestral</td>
+      <td style="color:#ef4444;font-weight:600">−2.5</td>
+      <td style="color:#ef4444;font-weight:600">-49.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">84</td>
+      <td>12/10/2026</td>
+      <td><strong>Percival</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Trimestral</td>
+      <td style="color:#ef4444;font-weight:600">−2.5</td>
+      <td style="color:#ef4444;font-weight:600">-51.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">85</td>
+      <td>12/10/2026</td>
+      <td><strong>Gabriela RD</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-52.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">86</td>
+      <td>12/10/2026</td>
+      <td><strong>Caroline Pereira</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Trimestral</td>
+      <td style="color:#ef4444;font-weight:600">−2.5</td>
+      <td style="color:#ef4444;font-weight:600">-55.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">87</td>
+      <td>13/10/2026</td>
+      <td><strong>Sara</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-56.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">88</td>
+      <td>13/10/2026</td>
+      <td><strong>Silvio</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-57.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">89</td>
+      <td>13/10/2026</td>
+      <td><strong>Roberto Gonçalves</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-58.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">90</td>
+      <td>13/10/2026</td>
+      <td><strong>Jacqueline</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-59.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">91</td>
+      <td>13/10/2026</td>
+      <td><strong>Magali</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-60.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">92</td>
+      <td>14/10/2026</td>
+      <td><strong>Leandro Rodrigues</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Trimestral</td>
+      <td style="color:#ef4444;font-weight:600">−2.5</td>
+      <td style="color:#ef4444;font-weight:600">-62.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">93</td>
+      <td>15/10/2026</td>
+      <td><strong>Gabriela RD</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-63.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">94</td>
+      <td>15/10/2026</td>
+      <td><strong>Maria Amalia</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-64.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">95</td>
+      <td>20/10/2026</td>
+      <td><strong>Gabriel Coelho</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-65.5</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">96</td>
+      <td>20/10/2026</td>
+      <td><strong>Victor</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Trimestral</td>
+      <td style="color:#ef4444;font-weight:600">−2.5</td>
+      <td style="color:#ef4444;font-weight:600">-68.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">97</td>
+      <td>20/10/2026</td>
+      <td><strong>Val</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-69.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">98</td>
+      <td>20/10/2026</td>
+      <td><strong>Fabio Pereira Ponto 2</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-70.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">99</td>
+      <td>20/10/2026</td>
+      <td><strong>Fabio Pereira Ponto 1</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-71.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">100</td>
+      <td>20/10/2026</td>
+      <td><strong>Tabata Lage</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-72.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">101</td>
+      <td>20/10/2026</td>
+      <td><strong>Anderson</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-73.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">102</td>
+      <td>20/10/2026</td>
+      <td><strong>Marcelo</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-74.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">103</td>
+      <td>21/10/2026</td>
+      <td><strong>Sonia</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-75.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">104</td>
+      <td>21/10/2026</td>
+      <td><strong>Heudes</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-76.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">105</td>
+      <td>21/10/2026</td>
+      <td><strong>Érika</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-77.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">106</td>
+      <td>21/10/2026</td>
+      <td><strong>Jefferson Santos</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-78.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">107</td>
+      <td>21/10/2026</td>
+      <td><strong>Joana</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-79.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">108</td>
+      <td>21/10/2026</td>
+      <td><strong>Lucas Barreto</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-80.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">109</td>
+      <td>21/10/2026</td>
+      <td><strong>Fernando Moreira</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-81.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">110</td>
+      <td>21/10/2026</td>
+      <td><strong>Igão</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-82.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">111</td>
+      <td>21/10/2026</td>
+      <td><strong>Graziela Tomaz</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-83.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">112</td>
+      <td>21/10/2026</td>
+      <td><strong>Camila Alves</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-84.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">113</td>
+      <td>21/10/2026</td>
+      <td><strong>João Pedro</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-85.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">114</td>
+      <td>21/10/2026</td>
+      <td><strong>Rogério</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-86.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">115</td>
+      <td>21/10/2026</td>
+      <td><strong>Danilo</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-87.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">116</td>
+      <td>21/10/2026</td>
+      <td><strong>Edmilson</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-88.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">117</td>
+      <td>21/10/2026</td>
+      <td><strong>Jéssica Duplecast</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-89.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">118</td>
+      <td>21/10/2026</td>
+      <td><strong>Lucas Miranda Ponto 1</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-90.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">119</td>
+      <td>21/10/2026</td>
+      <td><strong>Lucas Miranda Ponto 2</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-91.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">120</td>
+      <td>21/10/2026</td>
+      <td><strong>Janete Rogério</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-92.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">121</td>
+      <td>21/10/2026</td>
+      <td><strong>Vini Ponto 2</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-93.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">122</td>
+      <td>21/10/2026</td>
+      <td><strong>Vini Ponto 1</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-94.0</td>
+    </tr><tr>
+      <td style="color:#64748b;font-size:12px">123</td>
+      <td>21/10/2026</td>
+      <td><strong>Rebeka</strong></td>
+      <td style="font-size:12px;color:#94a3b8">Mensal</td>
+      <td style="color:#ef4444;font-weight:600">−1.0</td>
+      <td style="color:#ef4444;font-weight:600">-95.0</td>
+    </tr></tbody>
         </table>
       </div>
     </div>
@@ -489,7 +1609,98 @@ tr:hover td { background: #0f172a55; }
           <thead><tr>
             <th>Data</th><th>Créditos</th><th>Valor Pago</th><th>Preço/Crédito</th><th>Fornecedor/Obs</th><th>Ação</th>
           </tr></thead>
-          <tbody id="tbody-compras"></tbody>
+          <tbody id="tbody-compras"><tr>
+        <td>13/08/2026</td>
+        <td><strong>3.0</strong></td>
+        <td>R$ 0,01</td>
+        <td style="color:#94a3b8;font-size:12px">R$ 0,00/cr.</td>
+        <td style="color:#94a3b8;font-size:12px">NatalGF</td>
+        <td><button class="btn btn-red" onclick="excluirCompra(0)">🗑</button></td>
+      </tr><tr>
+        <td>13/08/2026</td>
+        <td><strong>20.0</strong></td>
+        <td>R$ 126,00</td>
+        <td style="color:#94a3b8;font-size:12px">R$ 6,30/cr.</td>
+        <td style="color:#94a3b8;font-size:12px">NatalGF</td>
+        <td><button class="btn btn-red" onclick="excluirCompra(1)">🗑</button></td>
+      </tr><tr>
+        <td>19/08/2026</td>
+        <td><strong>40.0</strong></td>
+        <td>R$ 6,50</td>
+        <td style="color:#94a3b8;font-size:12px">R$ 0,16/cr.</td>
+        <td style="color:#94a3b8;font-size:12px">NatalGF</td>
+        <td><button class="btn btn-red" onclick="excluirCompra(2)">🗑</button></td>
+      </tr><tr>
+        <td>21/08/2026</td>
+        <td><strong>2.0</strong></td>
+        <td>R$ 0,01</td>
+        <td style="color:#94a3b8;font-size:12px">R$ 0,01/cr.</td>
+        <td style="color:#94a3b8;font-size:12px">NatalGF</td>
+        <td><button class="btn btn-red" onclick="excluirCompra(3)">🗑</button></td>
+      </tr><tr>
+        <td>30/08/2026</td>
+        <td><strong>10.0</strong></td>
+        <td>R$ 65,00</td>
+        <td style="color:#94a3b8;font-size:12px">R$ 6,50/cr.</td>
+        <td style="color:#94a3b8;font-size:12px">NatalGF</td>
+        <td><button class="btn btn-red" onclick="excluirCompra(4)">🗑</button></td>
+      </tr><tr>
+        <td>01/09/2026</td>
+        <td><strong>10.0</strong></td>
+        <td>R$ 65,00</td>
+        <td style="color:#94a3b8;font-size:12px">R$ 6,50/cr.</td>
+        <td style="color:#94a3b8;font-size:12px">NatalGF</td>
+        <td><button class="btn btn-red" onclick="excluirCompra(5)">🗑</button></td>
+      </tr><tr>
+        <td>10/09/2026</td>
+        <td><strong>40.0</strong></td>
+        <td>R$ 260,00</td>
+        <td style="color:#94a3b8;font-size:12px">R$ 6,50/cr.</td>
+        <td style="color:#94a3b8;font-size:12px">NatalGF</td>
+        <td><button class="btn btn-red" onclick="excluirCompra(6)">🗑</button></td>
+      </tr><tr>
+        <td>11/09/2026</td>
+        <td><strong>2.0</strong></td>
+        <td>R$ 0,01</td>
+        <td style="color:#94a3b8;font-size:12px">R$ 0,01/cr.</td>
+        <td style="color:#94a3b8;font-size:12px">NatalGF</td>
+        <td><button class="btn btn-red" onclick="excluirCompra(7)">🗑</button></td>
+      </tr><tr>
+        <td>13/09/2026</td>
+        <td><strong>10.0</strong></td>
+        <td>R$ 65,00</td>
+        <td style="color:#94a3b8;font-size:12px">R$ 6,50/cr.</td>
+        <td style="color:#94a3b8;font-size:12px">NatalGF</td>
+        <td><button class="btn btn-red" onclick="excluirCompra(8)">🗑</button></td>
+      </tr><tr>
+        <td>16/09/2026</td>
+        <td><strong>20.0</strong></td>
+        <td>R$ 130,00</td>
+        <td style="color:#94a3b8;font-size:12px">R$ 6,50/cr.</td>
+        <td style="color:#94a3b8;font-size:12px">NatalGF</td>
+        <td><button class="btn btn-red" onclick="excluirCompra(9)">🗑</button></td>
+      </tr><tr>
+        <td>10/10/2026</td>
+        <td><strong>45.0</strong></td>
+        <td>R$ 292,50</td>
+        <td style="color:#94a3b8;font-size:12px">R$ 6,50/cr.</td>
+        <td style="color:#94a3b8;font-size:12px">NatalGF</td>
+        <td><button class="btn btn-red" onclick="excluirCompra(10)">🗑</button></td>
+      </tr><tr>
+        <td>01/10/2026</td>
+        <td><strong>10.0</strong></td>
+        <td>R$ 65,00</td>
+        <td style="color:#94a3b8;font-size:12px">R$ 6,50/cr.</td>
+        <td style="color:#94a3b8;font-size:12px">NatalGF</td>
+        <td><button class="btn btn-red" onclick="excluirCompra(11)">🗑</button></td>
+      </tr><tr>
+        <td>06/10/2026</td>
+        <td><strong>10.0</strong></td>
+        <td>R$ 65,00</td>
+        <td style="color:#94a3b8;font-size:12px">R$ 6,50/cr.</td>
+        <td style="color:#94a3b8;font-size:12px">NatalGF</td>
+        <td><button class="btn btn-red" onclick="excluirCompra(12)">🗑</button></td>
+      </tr></tbody>
         </table>
       </div>
       <p class="muted">💾 Histórico salvo no navegador.</p>
@@ -507,7 +1718,25 @@ tr:hover td { background: #0f172a55; }
             <th>Bônus Recebidos</th>
             <th>Saldo do Mês</th>
           </tr></thead>
-          <tbody id="tbody-historico-creditos"></tbody>
+          <tbody id="tbody-historico-creditos"><tr style="background:#1e3a5f22">
+      <td><strong>Outubro de 2026 <span style="background:#3b82f6;color:#fff;font-size:10px;padding:1px 6px;border-radius:4px;margin-left:4px">atual</span></strong></td>
+      <td style="color:#8b5cf6;font-weight:600">65.0</td>
+      <td style="color:#ef4444">145.5</td>
+      <td style="color:#f59e0b">0.0</td>
+      <td style="color:#ef4444;font-weight:700">-80.5</td>
+    </tr><tr style="">
+      <td><strong>Setembro de 2026</strong></td>
+      <td style="color:#8b5cf6;font-weight:600">82.0</td>
+      <td style="color:#ef4444">66.5</td>
+      <td style="color:#f59e0b">0.0</td>
+      <td style="color:#10b981;font-weight:700">+15.5</td>
+    </tr><tr style="">
+      <td><strong>Agosto de 2026</strong></td>
+      <td style="color:#8b5cf6;font-weight:600">75.0</td>
+      <td style="color:#ef4444">105.0</td>
+      <td style="color:#f59e0b">0.0</td>
+      <td style="color:#ef4444;font-weight:700">-30.0</td>
+    </tr></tbody>
         </table>
       </div>
     </div>
@@ -529,7 +1758,79 @@ tr:hover td { background: #0f172a55; }
             <th>Custo Créditos</th>
             <th>Lucro Estimado</th>
           </tr></thead>
-          <tbody id="tbody-projecao"></tbody>
+          <tbody id="tbody-projecao"><tr style="background:#1e3a5f22">
+      <td><strong>Outubro de 2026 <span style="background:#3b82f6;color:#fff;font-size:10px;padding:1px 6px;border-radius:4px;margin-left:4px">atual</span></strong></td>
+      <td style="font-weight:700">4</td>
+      <td style="color:#10b981;font-weight:600">R$ 160,00</td>
+      <td style="color:#ef4444">R$ 26,00</td>
+      <td style="color:#10b981;font-weight:700">R$ 134,00</td>
+    </tr><tr style="">
+      <td><strong>Novembro de 2026</strong></td>
+      <td style="font-weight:700">114</td>
+      <td style="color:#10b981;font-weight:600">R$ 4.520,00</td>
+      <td style="color:#ef4444">R$ 741,00</td>
+      <td style="color:#10b981;font-weight:700">R$ 3.779,00</td>
+    </tr><tr style="">
+      <td><strong>Dezembro de 2026</strong></td>
+      <td style="font-weight:700">125</td>
+      <td style="color:#10b981;font-weight:600">R$ 4.960,00</td>
+      <td style="color:#ef4444">R$ 812,50</td>
+      <td style="color:#10b981;font-weight:700">R$ 4.147,50</td>
+    </tr><tr style="">
+      <td><strong>Janeiro de 2027</strong></td>
+      <td style="font-weight:700">135</td>
+      <td style="color:#10b981;font-weight:600">R$ 5.360,00</td>
+      <td style="color:#ef4444">R$ 877,50</td>
+      <td style="color:#10b981;font-weight:700">R$ 4.482,50</td>
+    </tr><tr style="">
+      <td><strong>Fevereiro de 2027</strong></td>
+      <td style="font-weight:700">135</td>
+      <td style="color:#10b981;font-weight:600">R$ 5.360,00</td>
+      <td style="color:#ef4444">R$ 877,50</td>
+      <td style="color:#10b981;font-weight:700">R$ 4.482,50</td>
+    </tr><tr style="">
+      <td><strong>Março de 2027</strong></td>
+      <td style="font-weight:700">136</td>
+      <td style="color:#10b981;font-weight:600">R$ 5.400,00</td>
+      <td style="color:#ef4444">R$ 884,00</td>
+      <td style="color:#10b981;font-weight:700">R$ 4.516,00</td>
+    </tr><tr style="">
+      <td><strong>Abril de 2027</strong></td>
+      <td style="font-weight:700">137</td>
+      <td style="color:#10b981;font-weight:600">R$ 5.440,00</td>
+      <td style="color:#ef4444">R$ 890,50</td>
+      <td style="color:#10b981;font-weight:700">R$ 4.549,50</td>
+    </tr><tr style="">
+      <td><strong>Maio de 2027</strong></td>
+      <td style="font-weight:700">138</td>
+      <td style="color:#10b981;font-weight:600">R$ 5.480,00</td>
+      <td style="color:#ef4444">R$ 897,00</td>
+      <td style="color:#10b981;font-weight:700">R$ 4.583,00</td>
+    </tr><tr style="">
+      <td><strong>Junho de 2027</strong></td>
+      <td style="font-weight:700">138</td>
+      <td style="color:#10b981;font-weight:600">R$ 5.480,00</td>
+      <td style="color:#ef4444">R$ 897,00</td>
+      <td style="color:#10b981;font-weight:700">R$ 4.583,00</td>
+    </tr><tr style="">
+      <td><strong>Julho de 2027</strong></td>
+      <td style="font-weight:700">138</td>
+      <td style="color:#10b981;font-weight:600">R$ 5.480,00</td>
+      <td style="color:#ef4444">R$ 897,00</td>
+      <td style="color:#10b981;font-weight:700">R$ 4.583,00</td>
+    </tr><tr style="">
+      <td><strong>Agosto de 2027</strong></td>
+      <td style="font-weight:700">138</td>
+      <td style="color:#10b981;font-weight:600">R$ 5.480,00</td>
+      <td style="color:#ef4444">R$ 897,00</td>
+      <td style="color:#10b981;font-weight:700">R$ 4.583,00</td>
+    </tr><tr style="">
+      <td><strong>Setembro de 2027</strong></td>
+      <td style="font-weight:700">139</td>
+      <td style="color:#10b981;font-weight:600">R$ 5.520,00</td>
+      <td style="color:#ef4444">R$ 903,50</td>
+      <td style="color:#10b981;font-weight:700">R$ 4.616,50</td>
+    </tr></tbody>
         </table>
       </div>
     </div>
@@ -543,17 +1844,16 @@ tr:hover td { background: #0f172a55; }
       <div class="topbar">
         <h2>📒 Controle do Mês</h2>
         <div style="display:flex;gap:8px;align-items:center">
-          <select id="controle-mes" onchange="renderControle()" style="width:180px">
-          </select>
+          <select id="controle-mes" onchange="renderControle()" style="width:180px"><option value="2027-01">Janeiro de 2027</option><option value="2026-12">Dezembro de 2026</option><option value="2026-11">Novembro de 2026</option><option value="2026-10" selected="">Outubro de 2026</option><option value="2026-09">Setembro de 2026</option><option value="2026-08">Agosto de 2026</option></select>
         </div>
       </div>
 
       <!-- KPIs do mês -->
       <div class="kpis" style="margin-bottom:20px">
-        <div class="kpi green"><div class="kpi-label">✅ Clientes Pagaram</div><div class="kpi-value" id="ctrl-clientes">0</div><div class="kpi-sub">renovações</div></div>
-        <div class="kpi blue"><div class="kpi-label">💰 Total Recebido</div><div class="kpi-value" id="ctrl-receita">R$ 0</div><div class="kpi-sub" id="ctrl-receita-sub">no mês</div></div>
-        <div class="kpi red"><div class="kpi-label">🪙 Créditos Gastos</div><div class="kpi-value" id="ctrl-creditos">0</div><div class="kpi-sub" id="ctrl-custo">R$ 0,00</div></div>
-        <div class="kpi purple"><div class="kpi-label">📈 Lucro do Mês</div><div class="kpi-value" id="ctrl-lucro">R$ 0</div><div class="kpi-sub" id="ctrl-lucro-sub">líquido</div></div>
+        <div class="kpi green"><div class="kpi-label">✅ Clientes Pagaram</div><div class="kpi-value" id="ctrl-clientes">123</div><div class="kpi-sub">renovações</div></div>
+        <div class="kpi blue"><div class="kpi-label">💰 Total Recebido</div><div class="kpi-value" id="ctrl-receita">R$ 5.395,00</div><div class="kpi-sub" id="ctrl-receita-sub">no mês</div></div>
+        <div class="kpi red"><div class="kpi-label">🪙 Créditos Gastos</div><div class="kpi-value" id="ctrl-creditos">145.5</div><div class="kpi-sub" id="ctrl-custo">R$ 945,75</div></div>
+        <div class="kpi purple"><div class="kpi-label">📈 Lucro do Mês</div><div class="kpi-value" id="ctrl-lucro">R$ 4.449,25</div><div class="kpi-sub" id="ctrl-lucro-sub">lucro</div></div>
       </div>
 
       <!-- Tabela de pagamentos do mês -->
@@ -566,25 +1866,768 @@ tr:hover td { background: #0f172a55; }
             <th>Créditos</th>
             <th>Ação</th>
           </tr></thead>
-          <tbody id="tbody-controle"></tbody>
+          <tbody id="tbody-controle"><tr>
+      <td>01/10/2026</td>
+      <td><strong>Vini Ponto 2</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 30,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(148)">🗑</button></td>
+    </tr><tr>
+      <td>01/10/2026</td>
+      <td><strong>Vini Ponto 1</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 30,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(149)">🗑</button></td>
+    </tr><tr>
+      <td>01/10/2026</td>
+      <td><strong>Sonia</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(150)">🗑</button></td>
+    </tr><tr>
+      <td>01/10/2026</td>
+      <td><strong>Lucas Barreto</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(151)">🗑</button></td>
+    </tr><tr>
+      <td>01/10/2026</td>
+      <td><strong>Homero Ponto 1</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 35,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(152)">🗑</button></td>
+    </tr><tr>
+      <td>01/10/2026</td>
+      <td><strong>Homero Ponto 2</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 35,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(153)">🗑</button></td>
+    </tr><tr>
+      <td>01/10/2026</td>
+      <td><strong>Cintia Ponto 1</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 35,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(154)">🗑</button></td>
+    </tr><tr>
+      <td>01/10/2026</td>
+      <td><strong>Cintia Ponto 2</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 35,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(155)">🗑</button></td>
+    </tr><tr>
+      <td>01/10/2026</td>
+      <td><strong>Lucas Miranda Ponto 1</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 35,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(156)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Fábio Pereira Ponto 2</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(157)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Camila Alves</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(158)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Igão</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(159)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Rebeka</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(160)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Joana</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(161)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Rogério</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(162)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Danilo</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 0,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(163)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Jéssica Duplecast</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(164)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Gilvane</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(165)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Reginaldo</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(166)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Marcelo</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(167)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Janete Rogério</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(168)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Tabata Lage</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(169)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Fábio Pereira Ponto 1</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(170)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Lucas Miranda Ponto 2</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 35,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(171)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Fernando Moreira</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(172)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Jefferson Santos</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 35,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(173)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Heudes</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(174)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Lidia Abreu</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(175)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Érika</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(176)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Renato</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 105,00</td>
+      <td style="color:#f59e0b">2.5</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(177)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Matheus Filho</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 0,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(178)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Kelven Ponto 2</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 105,00</td>
+      <td style="color:#f59e0b">2.5</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(179)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Caio Felipe</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(180)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Ronaldo Castelli</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 350,00</td>
+      <td style="color:#f59e0b">10.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(181)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Reginaldo HBF</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(182)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Giovani Mendes</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(183)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Fagner</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 0,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(184)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Rafael Silva</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(185)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Nickolas</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 0,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(186)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Kaio</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 90,00</td>
+      <td style="color:#f59e0b">2.5</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(187)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Léo Igreja</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(188)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Navarro</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(189)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Bento</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(190)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Sidney</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(191)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Nando</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(192)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Luciano Orlando</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(193)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Bianca</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(194)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Leonardo Premero</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(195)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Elvys Rick</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(196)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Alessandra</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(197)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Rosângela</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(198)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Francisco</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(199)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Rodrigo Evaristo</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(200)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Ademilso</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(201)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Sueli Ponto 2</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(202)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Val</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(203)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Janaina</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(204)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Alexandre Ponto 2</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(205)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Thayna</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(206)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Maria Aparecida</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(207)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Minzon</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 0,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(208)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Marcelo Motta Ponto 2</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(209)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Rose Moreno</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(210)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Leonardo Ponto 1</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 35,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(211)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Leonardo Ponto 2</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 35,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(212)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Leandro</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(213)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Efigênia</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(214)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Natália Ponto 3</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 100,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(215)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Larissa Serafim</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(216)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Alexandre</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(217)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Gabriela</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(218)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Natália Smart STB</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 0,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(219)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Julio Simonelli</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(220)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Diego Silva</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(221)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Natália Ultra Player</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 0,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(222)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Marcelo Motta Ponto 1</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(223)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Darley</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 0,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(224)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Sueli Ponto 1</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(225)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Carol Pires</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(226)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Juan Santana</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 0,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(227)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Kelven Ponto 1</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 105,00</td>
+      <td style="color:#f59e0b">2.5</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(228)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Denise Alves</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(229)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Caroline Pereira</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 105,00</td>
+      <td style="color:#f59e0b">2.5</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(230)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Percival</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 105,00</td>
+      <td style="color:#f59e0b">2.5</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(231)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Gabriela RD</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(232)">🗑</button></td>
+    </tr><tr>
+      <td>12/10/2026</td>
+      <td><strong>Caroline Pereira</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 105,00</td>
+      <td style="color:#f59e0b">2.5</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(233)">🗑</button></td>
+    </tr><tr>
+      <td>13/10/2026</td>
+      <td><strong>Sara</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(234)">🗑</button></td>
+    </tr><tr>
+      <td>13/10/2026</td>
+      <td><strong>Silvio</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(235)">🗑</button></td>
+    </tr><tr>
+      <td>13/10/2026</td>
+      <td><strong>Roberto Gonçalves</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(236)">🗑</button></td>
+    </tr><tr>
+      <td>13/10/2026</td>
+      <td><strong>Jacqueline</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(237)">🗑</button></td>
+    </tr><tr>
+      <td>13/10/2026</td>
+      <td><strong>Magali</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(238)">🗑</button></td>
+    </tr><tr>
+      <td>14/10/2026</td>
+      <td><strong>Leandro Rodrigues</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 105,00</td>
+      <td style="color:#f59e0b">2.5</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(239)">🗑</button></td>
+    </tr><tr>
+      <td>15/10/2026</td>
+      <td><strong>Gabriela RD</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 30,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(240)">🗑</button></td>
+    </tr><tr>
+      <td>15/10/2026</td>
+      <td><strong>Maria Amalia</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 30,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(241)">🗑</button></td>
+    </tr><tr>
+      <td>20/10/2026</td>
+      <td><strong>Gabriel Coelho</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(242)">🗑</button></td>
+    </tr><tr>
+      <td>20/10/2026</td>
+      <td><strong>Victor</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 105,00</td>
+      <td style="color:#f59e0b">2.5</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(243)">🗑</button></td>
+    </tr><tr>
+      <td>20/10/2026</td>
+      <td><strong>Val</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(244)">🗑</button></td>
+    </tr><tr>
+      <td>20/10/2026</td>
+      <td><strong>Fabio Pereira Ponto 2</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(245)">🗑</button></td>
+    </tr><tr>
+      <td>20/10/2026</td>
+      <td><strong>Fabio Pereira Ponto 1</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(246)">🗑</button></td>
+    </tr><tr>
+      <td>20/10/2026</td>
+      <td><strong>Tabata Lage</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(247)">🗑</button></td>
+    </tr><tr>
+      <td>20/10/2026</td>
+      <td><strong>Anderson</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(248)">🗑</button></td>
+    </tr><tr>
+      <td>20/10/2026</td>
+      <td><strong>Marcelo</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(249)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Sonia</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(250)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Heudes</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(251)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Érika</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(252)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Jefferson Santos</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 30,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(253)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Joana</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(254)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Lucas Barreto</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(255)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Fernando Moreira</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(256)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Igão</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(257)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Graziela Tomaz</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(258)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Camila Alves</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(259)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>João Pedro</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(260)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Rogério</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(261)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Danilo</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 0,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(262)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Edmilson</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 90,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(263)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Jéssica Duplecast</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(264)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Lucas Miranda Ponto 1</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(265)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Lucas Miranda Ponto 2</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(266)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Janete Rogério</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(267)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Vini Ponto 2</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 30,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(268)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Vini Ponto 1</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 30,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(269)">🗑</button></td>
+    </tr><tr>
+      <td>21/10/2026</td>
+      <td><strong>Rebeka</strong></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="color:#f59e0b">1.0</td>
+      <td><button class="btn btn-red" onclick="excluirPagamento(270)">🗑</button></td>
+    </tr><tr style="border-top:2px solid #334155;background:#0f172a">
+    <td colspan="2"><strong>TOTAL</strong></td>
+    <td style="color:#10b981;font-weight:700">R$ 5.395,00</td>
+    <td style="color:#f59e0b;font-weight:700">145.5</td>
+    <td></td>
+  </tr></tbody>
         </table>
       </div>
     </div>
   </div>
 
   <!-- ========== ABA PREVISÃO DIÁRIA ========== -->
-  <div id="tab-previsao" class="tab-content">
+  <div id="tab-previsao" class="tab-content active">
     <div class="card">
       <div class="topbar">
         <h2>📅 Previsão de Recebimento por Dia</h2>
-        <select id="previsao-mes" onchange="renderPrevisao()" style="width:180px"></select>
+        <select id="previsao-mes" onchange="renderPrevisao()" style="width:180px"><option value="2026-09">Setembro de 2026</option><option value="2026-10">Outubro de 2026</option><option value="2026-11" selected="">Novembro de 2026</option><option value="2026-12">Dezembro de 2026</option><option value="2027-01">Janeiro de 2027</option><option value="2027-02">Fevereiro de 2027</option><option value="2027-03">Março de 2027</option><option value="2027-04">Abril de 2027</option><option value="2027-05">Maio de 2027</option><option value="2027-09">Setembro de 2027</option></select>
       </div>
 
       <!-- KPIs do mês -->
       <div class="kpis" style="margin-bottom:20px">
-        <div class="kpi blue"><div class="kpi-label">📋 Clientes no Mês</div><div class="kpi-value" id="prev-clientes">0</div><div class="kpi-sub">a vencer</div></div>
-        <div class="kpi green"><div class="kpi-label">💰 Previsão Total</div><div class="kpi-value" id="prev-total">R$ 0</div><div class="kpi-sub">se todos pagarem</div></div>
-        <div class="kpi yellow"><div class="kpi-label">📆 Dias com Vencimento</div><div class="kpi-value" id="prev-dias">0</div><div class="kpi-sub">dias no mês</div></div>
+        <div class="kpi blue"><div class="kpi-label">📋 Clientes no Mês</div><div class="kpi-value" id="prev-clientes">110</div><div class="kpi-sub">a vencer</div></div>
+        <div class="kpi green"><div class="kpi-label">💰 Previsão Total</div><div class="kpi-value" id="prev-total">R$ 3.825,00</div><div class="kpi-sub">se todos pagarem</div></div>
+        <div class="kpi yellow"><div class="kpi-label">📆 Dias com Vencimento</div><div class="kpi-value" id="prev-dias">20</div><div class="kpi-sub">dias no mês</div></div>
       </div>
 
       <!-- Tabela por dia -->
@@ -596,7 +2639,112 @@ tr:hover td { background: #0f172a55; }
             <th>Valor Previsto</th>
             <th>Detalhes</th>
           </tr></thead>
-          <tbody id="tbody-previsao"></tbody>
+          <tbody id="tbody-previsao"><tr style="">
+      <td><strong>01/11/2026</strong></td>
+      <td style="font-weight:700">5 <span style="color:#94a3b8;font-size:11px">(+1 gratuidade)</span></td>
+      <td style="color:#10b981;font-weight:600">R$ 160,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rafael Silva</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Kelly Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Fagner</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Kelly Ponto 1</span></td>
+    </tr><tr style="">
+      <td><strong>02/11/2026</strong></td>
+      <td style="font-weight:700">1</td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Gabrielli</span></td>
+    </tr><tr style="">
+      <td><strong>05/11/2026</strong></td>
+      <td style="font-weight:700">1</td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Navarro</span></td>
+    </tr><tr style="">
+      <td><strong>07/11/2026</strong></td>
+      <td style="font-weight:700">3</td>
+      <td style="color:#10b981;font-weight:600">R$ 120,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Sidney</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Vinícius Nilton</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Bento</span></td>
+    </tr><tr style="">
+      <td><strong>08/11/2026</strong></td>
+      <td style="font-weight:700">1</td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Léo Igreja</span></td>
+    </tr><tr style="">
+      <td><strong>09/11/2026</strong></td>
+      <td style="font-weight:700">1</td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Nando</span></td>
+    </tr><tr style="">
+      <td><strong>10/11/2026</strong></td>
+      <td style="font-weight:700">38 <span style="color:#94a3b8;font-size:11px">(+5 gratuidade)</span></td>
+      <td style="color:#10b981;font-weight:600">R$ 1.370,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Sara</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Luciano Orlando</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Bianca</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Leonardo Premero</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Elvys Rick</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Alessandra</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Jacqueline</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rosângela</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rodrigo Evaristo</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Francisco</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Ademilso</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Silvio</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Sueli Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Janaina</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Alexandre Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Thayna</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Maria Aparecida</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Marcelo Motta Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rose Moreno</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Leonardo Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Leonardo Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Leandro</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Denise Alves</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Elaine</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Darley</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Roberto Gonçalves</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Alexandre</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Gabriela</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Julio Simonelli</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Carol Pires</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Natalia Ultra Player</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Marcelo Motta Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Sueli Ponto 1</span></td>
+    </tr><tr style="">
+      <td><strong>11/11/2026</strong></td>
+      <td style="font-weight:700">1</td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Larissa Serafim</span></td>
+    </tr><tr style="">
+      <td><strong>13/11/2026</strong></td>
+      <td style="font-weight:700">1</td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Magali</span></td>
+    </tr><tr style="">
+      <td><strong>15/11/2026</strong></td>
+      <td style="font-weight:700">3</td>
+      <td style="color:#10b981;font-weight:600">R$ 100,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Du QIC</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Gabriela RD</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Maria Amalia</span></td>
+    </tr><tr style="">
+      <td><strong>16/11/2026</strong></td>
+      <td style="font-weight:700">1</td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Gabriel Coelho</span></td>
+    </tr><tr style="">
+      <td><strong>17/11/2026</strong></td>
+      <td style="font-weight:700">4</td>
+      <td style="color:#10b981;font-weight:600">R$ 160,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Gilberto</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Eliana</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Val</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Lucas Machado</span></td>
+    </tr><tr style="">
+      <td><strong>18/11/2026</strong></td>
+      <td style="font-weight:700">2</td>
+      <td style="color:#10b981;font-weight:600">R$ 80,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Cátia</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Aline</span></td>
+    </tr><tr style="">
+      <td><strong>19/11/2026</strong></td>
+      <td style="font-weight:700">2 <span style="color:#94a3b8;font-size:11px">(+1 gratuidade)</span></td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Wedson</span></td>
+    </tr><tr style="">
+      <td><strong>20/11/2026</strong></td>
+      <td style="font-weight:700">32 <span style="color:#94a3b8;font-size:11px">(+4 gratuidade)</span></td>
+      <td style="color:#10b981;font-weight:600">R$ 1.085,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Sonia</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Lucas Barreto</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Homero Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Anderson</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Homero Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Cintia Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Cintia Ponto 2 Duplecast</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Lucas Miranda Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Fabio Pereira Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Camila Alves</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Igão</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rebeka</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Heudes</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Joana</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rogerio</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Jessica Duplecast</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Vini Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Gilvane</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Vini Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">João Pedro</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Marcelo</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Janete Rogério</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Erika</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Tabata Lage</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Fabio Pereira Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Lucas Miranda Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Fernando Moreira</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Jefferson Santos</span></td>
+    </tr><tr style="">
+      <td><strong>21/11/2026</strong></td>
+      <td style="font-weight:700">2</td>
+      <td style="color:#10b981;font-weight:600">R$ 80,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Graziela Tomaz</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Tais Ramazoti</span></td>
+    </tr><tr style="">
+      <td><strong>23/11/2026</strong></td>
+      <td style="font-weight:700">5</td>
+      <td style="color:#10b981;font-weight:600">R$ 190,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Lidia Abreu</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Edgar</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">João Vinicius</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Lidia Abreu Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Efigênia</span></td>
+    </tr><tr style="">
+      <td><strong>24/11/2026</strong></td>
+      <td style="font-weight:700">1</td>
+      <td style="color:#10b981;font-weight:600">R$ 40,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">José Nilton / Giovani</span></td>
+    </tr><tr style="">
+      <td><strong>25/11/2026</strong></td>
+      <td style="font-weight:700">3</td>
+      <td style="color:#10b981;font-weight:600">R$ 120,00</td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Caio Felipe</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Isabelly Celular</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Isabelly</span></td>
+    </tr><tr style="">
+      <td><strong>29/11/2026</strong></td>
+      <td style="font-weight:700">3 <span style="color:#94a3b8;font-size:11px">(+3 gratuidade)</span></td>
+      <td style="color:#10b981;font-weight:600">R$ 0,00</td>
+      <td style="line-height:1.8"></td>
+    </tr><tr style="border-top:2px solid #334155;background:#0f172a">
+    <td><strong>TOTAL</strong></td>
+    <td><strong>110</strong></td>
+    <td style="color:#10b981;font-weight:700">R$ 3.825,00</td>
+    <td></td>
+  </tr></tbody>
         </table>
       </div>
     </div>
@@ -748,7 +2896,8 @@ tr:hover td { background: #0f172a55; }
         Formato: <code style="color:#fbbf24">Nome ; dd/mm/aaaa ; Valor ; WhatsApp ; Obs</code><br>
         <span style="font-size:11px;color:#64748b">Só Nome e Vencimento são obrigatórios. Valor padrão: R$ 40,00</span>
       </p>
-      <textarea id="imp-texto" rows="6" style="width:100%;font-family:monospace;font-size:12px" placeholder="João Silva ; 20/08/2026 ; 40&#10;Maria Santos ; 10/09/2026 ; 35 ; 11999999999"></textarea>
+      <textarea id="imp-texto" rows="6" style="width:100%;font-family:monospace;font-size:12px" placeholder="João Silva ; 20/08/2026 ; 40
+Maria Santos ; 10/09/2026 ; 35 ; 11999999999"></textarea>
     </div>
 
     <div id="imp-preview" style="font-size:13px;color:#94a3b8;margin-bottom:12px"></div>
@@ -827,7 +2976,7 @@ tr:hover td { background: #0f172a55; }
         <option value="3">Trimestral — 2.5 créditos</option>
         <option value="6">Semestral — 5 créditos</option>
         <option value="12">Anual — 10 créditos</option>
-      </select>
+      <option value="0">Gratuidade — 1 crédito</option></select>
     </div>
     <div style="margin-bottom:14px;padding:10px;background:#0f172a;border-radius:8px;font-size:13px" id="renovar-info">
       <span style="color:#94a3b8">Créditos a descontar: </span><strong id="renovar-creditos-info" style="color:#ef4444">1</strong>
@@ -880,7 +3029,7 @@ tr:hover td { background: #0f172a55; }
         <option value="3">Trimestral (2,5 créditos)</option>
         <option value="6">Semestral (5 créditos)</option>
         <option value="12">Anual (10 créditos)</option>
-      </select>
+      <option value="0">Gratuidade (1 crédito)</option></select>
       <input type="text" id="ec-fone" placeholder="WhatsApp (ex: 11999999999)" style="grid-column:span 2">
       <input type="text" id="ec-obs" placeholder="Observações" style="grid-column:span 2">
       <input type="text" id="ec-indicacao" placeholder="Indicado por (opcional)" style="grid-column:span 2">
@@ -2537,5 +4686,6 @@ function refreshAll() {
   }
 })();
 </script>
-</body>
-</html>
+
+
+</body></html>
