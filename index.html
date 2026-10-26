@@ -260,12 +260,12 @@ tr:hover td { background: #0f172a55; }
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
       <div style="background:#0f172a;border-radius:8px;padding:12px;text-align:center">
         <div style="font-size:11px;color:#94a3b8;margin-bottom:4px">💰 Receita Projetada</div>
-        <div style="font-size:20px;font-weight:700;color:#10b981">R$ 4.360,00</div>
+        <div style="font-size:20px;font-weight:700;color:#10b981">R$ 3.945,00</div>
         <div style="font-size:11px;color:#64748b">110 clientes vencem</div>
       </div>
       <div style="background:#0f172a;border-radius:8px;padding:12px;text-align:center">
         <div style="font-size:11px;color:#94a3b8;margin-bottom:4px">📅 Por Semana</div>
-        <div style="font-size:12px;color:#cbd5e1">Sem 1: <strong style="color:#3b82f6">R$ 280,00</strong></div><div style="font-size:12px;color:#cbd5e1">Sem 2: <strong style="color:#3b82f6">R$ 240,00</strong></div><div style="font-size:12px;color:#cbd5e1">Sem 3: <strong style="color:#3b82f6">R$ 1.760,00</strong></div><div style="font-size:12px;color:#cbd5e1">Sem 4: <strong style="color:#3b82f6">R$ 2.080,00</strong></div>
+        <div style="font-size:12px;color:#cbd5e1">Sem 1: <strong style="color:#3b82f6">R$ 280,00</strong></div><div style="font-size:12px;color:#cbd5e1">Sem 2: <strong style="color:#3b82f6">R$ 240,00</strong></div><div style="font-size:12px;color:#cbd5e1">Sem 3: <strong style="color:#3b82f6">R$ 1.590,00</strong></div><div style="font-size:12px;color:#cbd5e1">Sem 4: <strong style="color:#3b82f6">R$ 1.835,00</strong></div>
       </div>
     </div>
   </div>
@@ -280,11 +280,11 @@ tr:hover td { background: #0f172a55; }
     <div class="row" style="margin-bottom:20px">
       <div class="card">
         <h2>📅 Vencimentos por Mês</h2>
-        <div class="chart-wrap"><canvas id="chartMes" style="box-sizing: border-box; display: block; height: 240px; width: 652px;" width="652" height="240"></canvas></div>
+        <div class="chart-wrap"><canvas id="chartMes" style="box-sizing: border-box; display: block; height: 0px; width: 0px;" width="0" height="0"></canvas></div>
       </div>
       <div class="card">
         <h2>💰 Receita vs Custo (últimos 6 meses)</h2>
-        <div class="chart-wrap"><canvas id="chartCustoReceita" style="box-sizing: border-box; display: block; height: 240px; width: 652px;" width="652" height="240"></canvas></div>
+        <div class="chart-wrap"><canvas id="chartCustoReceita" style="box-sizing: border-box; display: block; height: 0px; width: 0px;" width="0" height="0"></canvas></div>
       </div>
     </div>
 
@@ -336,7 +336,7 @@ tr:hover td { background: #0f172a55; }
     <!-- LISTA CLIENTES -->
     <div class="card">
       <div class="topbar">
-        <h2>📋 Lista de Clientes (<span id="count-clientes">3</span>)</h2>
+        <h2>📋 Lista de Clientes (<span id="count-clientes">139</span>)</h2>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn btn-green" onclick="abrirImportacao()">📥 Importar</button>
           <button class="btn btn-blue" id="btn-renovar-massa" onclick="abrirRenovarMassa()" style="display:none">🔄 Renovar Selecionados (<span id="count-selecionados">0</span>)</button>
@@ -364,7 +364,827 @@ tr:hover td { background: #0f172a55; }
             <th style="cursor:pointer" onclick="ordenarPor('valor')">Valor <span id="sort-valor"></span></th>
             <th>App</th><th>Plano</th><th>WhatsApp</th><th>Status</th><th>Renov.</th><th>Ação</th>
           </tr></thead>
-          <tbody id="tbody-clientes"><tr style="">
+          <tbody id="tbody-clientes"><tr style="background:rgba(239,68,68,0.08)">
+      <td><input type="checkbox" class="chk-cliente" data-idx="0" onchange="toggleSelecao(0, this.checked)"></td>
+      <td>
+        <strong>Reginaldo hbf</strong>
+        
+      </td>
+      <td>25/10/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-vencido">Vencido</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(0)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(0)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(0)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(0)">🗑</button>
+      </td>
+    </tr><tr style="background:rgba(239,68,68,0.15)">
+      <td><input type="checkbox" class="chk-cliente" data-idx="1" onchange="toggleSelecao(1, this.checked)"></td>
+      <td>
+        <strong>Reginaldo</strong>
+        
+      </td>
+      <td>26/10/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-hoje">Hoje</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">2x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(1)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(1)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(1)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(1)">🗑</button>
+      </td>
+    </tr><tr style="background:rgba(245,158,11,0.10)">
+      <td><input type="checkbox" class="chk-cliente" data-idx="2" onchange="toggleSelecao(2, this.checked)"></td>
+      <td>
+        <strong>Ronaldo Castelli Sogro</strong>
+        
+      </td>
+      <td>27/10/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-semana">1d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(2)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(2)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(2)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(2)">🗑</button>
+      </td>
+    </tr><tr style="background:rgba(234,179,8,0.07)">
+      <td><input type="checkbox" class="chk-cliente" data-idx="3" onchange="toggleSelecao(3, this.checked)"></td>
+      <td>
+        <strong>Giovani Mendes</strong>
+        
+      </td>
+      <td>30/10/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-semana">4d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">2x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(3)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(3)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(3)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(3)">🗑</button>
+      </td>
+    </tr><tr style="background:rgba(234,179,8,0.07)">
+      <td><input type="checkbox" class="chk-cliente" data-idx="4" onchange="toggleSelecao(4, this.checked)"></td>
+      <td>
+        <strong>Rafael Silva</strong>
+        
+      </td>
+      <td>01/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-semana">6d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">2x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(4)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(4)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(4)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(4)">🗑</button>
+      </td>
+    </tr><tr style="background:rgba(234,179,8,0.07)">
+      <td><input type="checkbox" class="chk-cliente" data-idx="5" onchange="toggleSelecao(5, this.checked)"></td>
+      <td>
+        <strong>Kelly Ponto 2</strong>
+        
+      </td>
+      <td>01/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-semana">6d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(5)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(5)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(5)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(5)">🗑</button>
+      </td>
+    </tr><tr style="background:rgba(234,179,8,0.07)">
+      <td><input type="checkbox" class="chk-cliente" data-idx="6" onchange="toggleSelecao(6, this.checked)"></td>
+      <td>
+        <strong>Nickolas</strong>
+        
+      </td>
+      <td>01/11/2026</td>
+      <td>R$ 0,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-semana">6d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(6)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(6)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(6)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(6)">🗑</button>
+      </td>
+    </tr><tr style="background:rgba(234,179,8,0.07)">
+      <td><input type="checkbox" class="chk-cliente" data-idx="7" onchange="toggleSelecao(7, this.checked)"></td>
+      <td>
+        <strong>Fagner</strong>
+        
+      </td>
+      <td>01/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-semana">6d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">2x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(7)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(7)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(7)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(7)">🗑</button>
+      </td>
+    </tr><tr style="background:rgba(234,179,8,0.07)">
+      <td><input type="checkbox" class="chk-cliente" data-idx="8" onchange="toggleSelecao(8, this.checked)"></td>
+      <td>
+        <strong>Kelly Ponto 1</strong>
+        
+      </td>
+      <td>01/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-semana">6d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(8)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(8)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(8)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(8)">🗑</button>
+      </td>
+    </tr><tr style="background:rgba(234,179,8,0.07)">
+      <td><input type="checkbox" class="chk-cliente" data-idx="9" onchange="toggleSelecao(9, this.checked)"></td>
+      <td>
+        <strong>Gabrielli</strong>
+        
+      </td>
+      <td>02/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-semana">7d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(9)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(9)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(9)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(9)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="10" onchange="toggleSelecao(10, this.checked)"></td>
+      <td>
+        <strong>Navarro</strong>
+        
+      </td>
+      <td>05/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">10d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">2x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(10)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(10)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(10)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(10)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="11" onchange="toggleSelecao(11, this.checked)"></td>
+      <td>
+        <strong>Sidney</strong>
+        
+      </td>
+      <td>07/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">12d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(11)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(11)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(11)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(11)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="12" onchange="toggleSelecao(12, this.checked)"></td>
+      <td>
+        <strong>Vinícius Nilton</strong>
+        
+      </td>
+      <td>07/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">12d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(12)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(12)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(12)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(12)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="13" onchange="toggleSelecao(13, this.checked)"></td>
+      <td>
+        <strong>Bento</strong>
+        
+      </td>
+      <td>07/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">12d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(13)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(13)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(13)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(13)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="14" onchange="toggleSelecao(14, this.checked)"></td>
+      <td>
+        <strong>Léo Igreja</strong>
+        
+      </td>
+      <td>08/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">13d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">2x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(14)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(14)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(14)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(14)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="15" onchange="toggleSelecao(15, this.checked)"></td>
+      <td>
+        <strong>Nando</strong>
+        
+      </td>
+      <td>09/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">14d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(15)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(15)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(15)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(15)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="16" onchange="toggleSelecao(16, this.checked)"></td>
+      <td>
+        <strong>Juan Santana</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 0,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(16)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(16)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(16)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(16)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="17" onchange="toggleSelecao(17, this.checked)"></td>
+      <td>
+        <strong>Sara</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(17)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(17)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(17)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(17)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="18" onchange="toggleSelecao(18, this.checked)"></td>
+      <td>
+        <strong>Luciano Orlando</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(18)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(18)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(18)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(18)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="19" onchange="toggleSelecao(19, this.checked)"></td>
+      <td>
+        <strong>Bianca</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(19)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(19)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(19)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(19)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="20" onchange="toggleSelecao(20, this.checked)"></td>
+      <td>
+        <strong>Leonardo Premero</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(20)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(20)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(20)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(20)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="21" onchange="toggleSelecao(21, this.checked)"></td>
+      <td>
+        <strong>Elvys Rick</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(21)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(21)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(21)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(21)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="22" onchange="toggleSelecao(22, this.checked)"></td>
+      <td>
+        <strong>Alessandra</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(22)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(22)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(22)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(22)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="23" onchange="toggleSelecao(23, this.checked)"></td>
+      <td>
+        <strong>Jacqueline</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(23)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(23)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(23)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(23)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="24" onchange="toggleSelecao(24, this.checked)"></td>
+      <td>
+        <strong>Rosângela</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(24)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(24)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(24)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(24)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="25" onchange="toggleSelecao(25, this.checked)"></td>
+      <td>
+        <strong>Rodrigo Evaristo</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(25)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(25)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(25)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(25)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="26" onchange="toggleSelecao(26, this.checked)"></td>
+      <td>
+        <strong>Francisco</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(26)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(26)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(26)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(26)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="27" onchange="toggleSelecao(27, this.checked)"></td>
+      <td>
+        <strong>Ademilso</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(27)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(27)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(27)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(27)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="28" onchange="toggleSelecao(28, this.checked)"></td>
+      <td>
+        <strong>Silvio</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(28)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(28)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(28)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(28)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="29" onchange="toggleSelecao(29, this.checked)"></td>
+      <td>
+        <strong>Sueli Ponto 2</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(29)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(29)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(29)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(29)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="30" onchange="toggleSelecao(30, this.checked)"></td>
+      <td>
+        <strong>Janaina</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(30)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(30)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(30)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(30)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="31" onchange="toggleSelecao(31, this.checked)"></td>
+      <td>
+        <strong>Alexandre Ponto 2</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(31)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(31)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(31)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(31)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="32" onchange="toggleSelecao(32, this.checked)"></td>
+      <td>
+        <strong>Thayna</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(32)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(32)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(32)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(32)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="33" onchange="toggleSelecao(33, this.checked)"></td>
+      <td>
+        <strong>Maria Aparecida</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(33)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(33)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(33)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(33)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="34" onchange="toggleSelecao(34, this.checked)"></td>
+      <td>
+        <strong>Minzon</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 0,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(34)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(34)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(34)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(34)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="35" onchange="toggleSelecao(35, this.checked)"></td>
+      <td>
+        <strong>Marcelo Motta Ponto 2</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(35)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(35)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(35)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(35)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="36" onchange="toggleSelecao(36, this.checked)"></td>
+      <td>
+        <strong>Rose Moreno</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(36)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(36)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(36)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(36)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="37" onchange="toggleSelecao(37, this.checked)"></td>
+      <td>
+        <strong>Leonardo Ponto 2</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 35,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(37)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(37)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(37)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(37)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="38" onchange="toggleSelecao(38, this.checked)"></td>
+      <td>
+        <strong>Leonardo Ponto 1</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 35,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(38)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(38)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(38)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(38)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="39" onchange="toggleSelecao(39, this.checked)"></td>
+      <td>
+        <strong>Leandro</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(39)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(39)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(39)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(39)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="40" onchange="toggleSelecao(40, this.checked)"></td>
+      <td>
+        <strong>Denise Alves</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(40)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(40)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(40)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(40)">🗑</button>
+      </td>
+    </tr><tr style="">
       <td><input type="checkbox" class="chk-cliente" data-idx="41" onchange="toggleSelecao(41, this.checked)"></td>
       <td>
         <strong>Natalia Ponto 3</strong>
@@ -383,6 +1203,106 @@ tr:hover td { background: #0f172a55; }
         
         <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(41)" title="Histórico de pagamentos">📜</button>
         <button class="btn btn-red" onclick="excluirCliente(41)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="42" onchange="toggleSelecao(42, this.checked)"></td>
+      <td>
+        <strong>Elaine</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(42)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(42)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(42)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(42)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="43" onchange="toggleSelecao(43, this.checked)"></td>
+      <td>
+        <strong>Darley</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(43)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(43)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(43)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(43)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="44" onchange="toggleSelecao(44, this.checked)"></td>
+      <td>
+        <strong>Roberto Gonçalves</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(44)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(44)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(44)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(44)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="45" onchange="toggleSelecao(45, this.checked)"></td>
+      <td>
+        <strong>Alexandre</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(45)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(45)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(45)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(45)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="46" onchange="toggleSelecao(46, this.checked)"></td>
+      <td>
+        <strong>Gabriela</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(46)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(46)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(46)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(46)">🗑</button>
       </td>
     </tr><tr style="">
       <td><input type="checkbox" class="chk-cliente" data-idx="47" onchange="toggleSelecao(47, this.checked)"></td>
@@ -405,6 +1325,66 @@ tr:hover td { background: #0f172a55; }
         <button class="btn btn-red" onclick="excluirCliente(47)">🗑</button>
       </td>
     </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="48" onchange="toggleSelecao(48, this.checked)"></td>
+      <td>
+        <strong>Julio Simonelli</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(48)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(48)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(48)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(48)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="49" onchange="toggleSelecao(49, this.checked)"></td>
+      <td>
+        <strong>Carol Pires</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">2x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(49)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(49)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(49)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(49)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="50" onchange="toggleSelecao(50, this.checked)"></td>
+      <td>
+        <strong>Diego Silva</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 0,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(50)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(50)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(50)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(50)">🗑</button>
+      </td>
+    </tr><tr style="">
       <td><input type="checkbox" class="chk-cliente" data-idx="51" onchange="toggleSelecao(51, this.checked)"></td>
       <td>
         <strong>Natalia Ultra Player</strong>
@@ -423,6 +1403,1746 @@ tr:hover td { background: #0f172a55; }
         
         <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(51)" title="Histórico de pagamentos">📜</button>
         <button class="btn btn-red" onclick="excluirCliente(51)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="52" onchange="toggleSelecao(52, this.checked)"></td>
+      <td>
+        <strong>Marcelo Motta Ponto 1</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(52)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(52)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(52)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(52)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="53" onchange="toggleSelecao(53, this.checked)"></td>
+      <td>
+        <strong>Sueli Ponto 1</strong>
+        
+      </td>
+      <td>10/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">15d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(53)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(53)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(53)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(53)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="54" onchange="toggleSelecao(54, this.checked)"></td>
+      <td>
+        <strong>Larissa Serafim</strong>
+        
+      </td>
+      <td>11/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">16d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(54)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(54)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(54)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(54)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="55" onchange="toggleSelecao(55, this.checked)"></td>
+      <td>
+        <strong>Magali</strong>
+        
+      </td>
+      <td>13/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">18d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(55)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(55)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(55)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(55)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="56" onchange="toggleSelecao(56, this.checked)"></td>
+      <td>
+        <strong>Du QIC</strong>
+        
+      </td>
+      <td>15/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">20d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(56)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(56)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(56)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(56)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="57" onchange="toggleSelecao(57, this.checked)"></td>
+      <td>
+        <strong>Gabriela RD</strong>
+        
+      </td>
+      <td>15/11/2026</td>
+      <td>R$ 30,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">20d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">4x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(57)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(57)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(57)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(57)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="58" onchange="toggleSelecao(58, this.checked)"></td>
+      <td>
+        <strong>Maria Amalia</strong>
+        
+      </td>
+      <td>15/11/2026</td>
+      <td>R$ 30,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">20d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(58)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(58)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(58)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(58)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="59" onchange="toggleSelecao(59, this.checked)"></td>
+      <td>
+        <strong>Gabriel Coelho</strong>
+        
+      </td>
+      <td>16/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">21d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(59)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(59)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(59)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(59)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="60" onchange="toggleSelecao(60, this.checked)"></td>
+      <td>
+        <strong>Gilberto</strong>
+        
+      </td>
+      <td>17/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">22d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(60)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(60)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(60)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(60)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="61" onchange="toggleSelecao(61, this.checked)"></td>
+      <td>
+        <strong>Eliana</strong>
+        
+      </td>
+      <td>17/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">22d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(61)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(61)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(61)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(61)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="62" onchange="toggleSelecao(62, this.checked)"></td>
+      <td>
+        <strong>Val</strong>
+        
+      </td>
+      <td>17/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">22d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">4x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(62)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(62)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(62)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(62)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="63" onchange="toggleSelecao(63, this.checked)"></td>
+      <td>
+        <strong>Lucas Machado</strong>
+        
+      </td>
+      <td>17/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">22d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(63)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(63)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(63)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(63)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="64" onchange="toggleSelecao(64, this.checked)"></td>
+      <td>
+        <strong>Cátia</strong>
+        
+      </td>
+      <td>18/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">23d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(64)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(64)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(64)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(64)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="65" onchange="toggleSelecao(65, this.checked)"></td>
+      <td>
+        <strong>Aline</strong>
+        
+      </td>
+      <td>18/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">23d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(65)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(65)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(65)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(65)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="66" onchange="toggleSelecao(66, this.checked)"></td>
+      <td>
+        <strong>Carlos Lima</strong>
+        
+      </td>
+      <td>19/11/2026</td>
+      <td>R$ 0,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">24d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(66)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(66)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(66)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(66)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="67" onchange="toggleSelecao(67, this.checked)"></td>
+      <td>
+        <strong>Wedson</strong>
+        
+      </td>
+      <td>19/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">24d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(67)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(67)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(67)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(67)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="68" onchange="toggleSelecao(68, this.checked)"></td>
+      <td>
+        <strong>Sonia</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(68)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(68)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(68)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(68)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="69" onchange="toggleSelecao(69, this.checked)"></td>
+      <td>
+        <strong>Lucas Barreto</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(69)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(69)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(69)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(69)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="70" onchange="toggleSelecao(70, this.checked)"></td>
+      <td>
+        <strong>Homero Ponto 1</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 35,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">2x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(70)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(70)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(70)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(70)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="71" onchange="toggleSelecao(71, this.checked)"></td>
+      <td>
+        <strong>Anderson</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">2x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(71)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(71)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(71)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(71)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="72" onchange="toggleSelecao(72, this.checked)"></td>
+      <td>
+        <strong>Homero Ponto 2</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 35,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">2x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(72)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(72)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(72)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(72)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="73" onchange="toggleSelecao(73, this.checked)"></td>
+      <td>
+        <strong>Cintia Ponto 1</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 35,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">2x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(73)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(73)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(73)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(73)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="74" onchange="toggleSelecao(74, this.checked)"></td>
+      <td>
+        <strong>Cintia Ponto 2 Duplecast</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(74)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(74)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(74)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(74)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="75" onchange="toggleSelecao(75, this.checked)"></td>
+      <td>
+        <strong>Lucas Miranda Ponto 1</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(75)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(75)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(75)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(75)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="76" onchange="toggleSelecao(76, this.checked)"></td>
+      <td>
+        <strong>Fabio Pereira Ponto 2</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(76)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(76)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(76)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(76)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="77" onchange="toggleSelecao(77, this.checked)"></td>
+      <td>
+        <strong>Camila Alves</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(77)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(77)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(77)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(77)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="78" onchange="toggleSelecao(78, this.checked)"></td>
+      <td>
+        <strong>Igão</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(78)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(78)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(78)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(78)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="79" onchange="toggleSelecao(79, this.checked)"></td>
+      <td>
+        <strong>Rebeka</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(79)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(79)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(79)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(79)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="80" onchange="toggleSelecao(80, this.checked)"></td>
+      <td>
+        <strong>Heudes</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">2x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(80)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(80)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(80)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(80)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="81" onchange="toggleSelecao(81, this.checked)"></td>
+      <td>
+        <strong>Joana</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(81)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(81)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(81)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(81)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="82" onchange="toggleSelecao(82, this.checked)"></td>
+      <td>
+        <strong>Rogerio</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(82)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(82)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(82)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(82)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="83" onchange="toggleSelecao(83, this.checked)"></td>
+      <td>
+        <strong>Danilo Ponto 1</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 0,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(83)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(83)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(83)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(83)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="84" onchange="toggleSelecao(84, this.checked)"></td>
+      <td>
+        <strong>Danilo Ponto 2</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 0,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(84)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(84)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(84)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(84)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="85" onchange="toggleSelecao(85, this.checked)"></td>
+      <td>
+        <strong>Danilo Ponto 3</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 0,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(85)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(85)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(85)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(85)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="86" onchange="toggleSelecao(86, this.checked)"></td>
+      <td>
+        <strong>Jessica Duplecast</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(86)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(86)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(86)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(86)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="87" onchange="toggleSelecao(87, this.checked)"></td>
+      <td>
+        <strong>Vini Ponto 2</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 30,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(87)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(87)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(87)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(87)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="88" onchange="toggleSelecao(88, this.checked)"></td>
+      <td>
+        <strong>Gilvane</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">2x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(88)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(88)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(88)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(88)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="89" onchange="toggleSelecao(89, this.checked)"></td>
+      <td>
+        <strong>Vini Ponto 1</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 30,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(89)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(89)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(89)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(89)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="90" onchange="toggleSelecao(90, this.checked)"></td>
+      <td>
+        <strong>João Pedro</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(90)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(90)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(90)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(90)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="91" onchange="toggleSelecao(91, this.checked)"></td>
+      <td>
+        <strong>Marcelo</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(91)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(91)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(91)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(91)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="92" onchange="toggleSelecao(92, this.checked)"></td>
+      <td>
+        <strong>Janete Rogério</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(92)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(92)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(92)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(92)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="93" onchange="toggleSelecao(93, this.checked)"></td>
+      <td>
+        <strong>Matheus Filho</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 0,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">2x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(93)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(93)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(93)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(93)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="94" onchange="toggleSelecao(94, this.checked)"></td>
+      <td>
+        <strong>Erika</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(94)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(94)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(94)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(94)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="95" onchange="toggleSelecao(95, this.checked)"></td>
+      <td>
+        <strong>Tabata Lage</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(95)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(95)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(95)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(95)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="96" onchange="toggleSelecao(96, this.checked)"></td>
+      <td>
+        <strong>Fabio Pereira Ponto 1</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(96)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(96)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(96)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(96)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="97" onchange="toggleSelecao(97, this.checked)"></td>
+      <td>
+        <strong>Lucas Miranda Ponto 2</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(97)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(97)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(97)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(97)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="98" onchange="toggleSelecao(98, this.checked)"></td>
+      <td>
+        <strong>Fernando Moreira</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(98)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(98)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(98)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(98)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="99" onchange="toggleSelecao(99, this.checked)"></td>
+      <td>
+        <strong>Jefferson Santos</strong>
+        
+      </td>
+      <td>20/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">25d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(99)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(99)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(99)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(99)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="100" onchange="toggleSelecao(100, this.checked)"></td>
+      <td>
+        <strong>Graziela Tomaz</strong>
+        
+      </td>
+      <td>21/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">26d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(100)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(100)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(100)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(100)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="101" onchange="toggleSelecao(101, this.checked)"></td>
+      <td>
+        <strong>Tais Ramazoti</strong>
+        
+      </td>
+      <td>21/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">26d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(101)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(101)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(101)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(101)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="102" onchange="toggleSelecao(102, this.checked)"></td>
+      <td>
+        <strong>Lidia Abreu</strong>
+        
+      </td>
+      <td>23/11/2026</td>
+      <td>R$ 35,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">28d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">2x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(102)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(102)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(102)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(102)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="103" onchange="toggleSelecao(103, this.checked)"></td>
+      <td>
+        <strong>Edgar</strong>
+        
+      </td>
+      <td>23/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">28d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(103)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(103)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(103)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(103)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="104" onchange="toggleSelecao(104, this.checked)"></td>
+      <td>
+        <strong>João Vinicius</strong>
+        
+      </td>
+      <td>23/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">28d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(104)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(104)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(104)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(104)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="105" onchange="toggleSelecao(105, this.checked)"></td>
+      <td>
+        <strong>Lidia Abreu Ponto 2</strong>
+        
+      </td>
+      <td>23/11/2026</td>
+      <td>R$ 35,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">28d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(105)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(105)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(105)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(105)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="106" onchange="toggleSelecao(106, this.checked)"></td>
+      <td>
+        <strong>Efigênia</strong>
+        
+      </td>
+      <td>23/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">28d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(106)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(106)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(106)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(106)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="107" onchange="toggleSelecao(107, this.checked)"></td>
+      <td>
+        <strong>José Nilton / Giovani</strong>
+        
+      </td>
+      <td>24/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">29d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(107)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(107)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(107)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(107)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="108" onchange="toggleSelecao(108, this.checked)"></td>
+      <td>
+        <strong>Caio Felipe</strong>
+        
+      </td>
+      <td>25/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">30d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">2x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(108)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(108)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(108)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(108)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="109" onchange="toggleSelecao(109, this.checked)"></td>
+      <td>
+        <strong>Isabelly Celular</strong>
+        
+      </td>
+      <td>25/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">30d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(109)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(109)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(109)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(109)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="110" onchange="toggleSelecao(110, this.checked)"></td>
+      <td>
+        <strong>Isabelly</strong>
+        
+      </td>
+      <td>25/11/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">30d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(110)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(110)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(110)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(110)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="111" onchange="toggleSelecao(111, this.checked)"></td>
+      <td>
+        <strong>Juan Santana Ponto 2</strong>
+        
+      </td>
+      <td>29/11/2026</td>
+      <td>R$ 0,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">34d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(111)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(111)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(111)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(111)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="112" onchange="toggleSelecao(112, this.checked)"></td>
+      <td>
+        <strong>Juan Santana Ponto 3</strong>
+        
+      </td>
+      <td>29/11/2026</td>
+      <td>R$ 0,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">34d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(112)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(112)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(112)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(112)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="113" onchange="toggleSelecao(113, this.checked)"></td>
+      <td>
+        <strong>Juan Santana Ponto 4</strong>
+        
+      </td>
+      <td>29/11/2026</td>
+      <td>R$ 0,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">34d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(113)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(113)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(113)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(113)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="114" onchange="toggleSelecao(114, this.checked)"></td>
+      <td>
+        <strong>Ed</strong>
+        
+      </td>
+      <td>01/12/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">36d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(114)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(114)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(114)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(114)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="115" onchange="toggleSelecao(115, this.checked)"></td>
+      <td>
+        <strong>Lucas Augusto</strong>
+        
+      </td>
+      <td>10/12/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">45d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(115)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(115)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(115)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(115)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="116" onchange="toggleSelecao(116, this.checked)"></td>
+      <td>
+        <strong>Anderson Amplitude</strong>
+        
+      </td>
+      <td>11/12/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">46d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(116)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(116)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(116)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(116)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="117" onchange="toggleSelecao(117, this.checked)"></td>
+      <td>
+        <strong>Jéssica Aparecida</strong>
+        
+      </td>
+      <td>12/12/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">47d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(117)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(117)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(117)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(117)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="118" onchange="toggleSelecao(118, this.checked)"></td>
+      <td>
+        <strong>Rafael</strong>
+        
+      </td>
+      <td>13/12/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">48d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(118)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(118)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(118)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(118)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="119" onchange="toggleSelecao(119, this.checked)"></td>
+      <td>
+        <strong>Luciano Kennupp</strong>
+        
+      </td>
+      <td>13/12/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">48d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(119)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(119)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(119)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(119)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="120" onchange="toggleSelecao(120, this.checked)"></td>
+      <td>
+        <strong>Matheus Passos</strong>
+        
+      </td>
+      <td>16/12/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">51d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">2x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(120)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(120)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(120)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(120)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="121" onchange="toggleSelecao(121, this.checked)"></td>
+      <td>
+        <strong>Fernando Teixeira</strong>
+        
+      </td>
+      <td>20/12/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">55d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(121)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(121)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(121)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(121)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="122" onchange="toggleSelecao(122, this.checked)"></td>
+      <td>
+        <strong>Renato</strong>
+        
+      </td>
+      <td>23/12/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">58d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(122)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(122)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(122)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(122)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="123" onchange="toggleSelecao(123, this.checked)"></td>
+      <td>
+        <strong>Kelven Ponto 2</strong>
+        
+      </td>
+      <td>24/12/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">59d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(123)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(123)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(123)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(123)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="124" onchange="toggleSelecao(124, this.checked)"></td>
+      <td>
+        <strong>Gustavo Zeni</strong>
+        
+      </td>
+      <td>27/12/2026</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">62d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(124)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(124)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(124)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(124)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="125" onchange="toggleSelecao(125, this.checked)"></td>
+      <td>
+        <strong>Kaio</strong>
+        
+      </td>
+      <td>01/01/2027</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">67d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(125)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(125)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(125)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(125)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="126" onchange="toggleSelecao(126, this.checked)"></td>
+      <td>
+        <strong>Osvaldo</strong>
+        
+      </td>
+      <td>10/01/2027</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">76d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(126)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(126)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(126)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(126)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="127" onchange="toggleSelecao(127, this.checked)"></td>
+      <td>
+        <strong>Kelven Ponto 1</strong>
+        
+      </td>
+      <td>11/01/2027</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">77d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(127)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(127)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(127)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(127)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="128" onchange="toggleSelecao(128, this.checked)"></td>
+      <td>
+        <strong>Percival</strong>
+        
+      </td>
+      <td>11/01/2027</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">77d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(128)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(128)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(128)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(128)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="129" onchange="toggleSelecao(129, this.checked)"></td>
+      <td>
+        <strong>Caroline Pereira</strong>
+        
+      </td>
+      <td>11/01/2027</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">77d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">4x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(129)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(129)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(129)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(129)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="130" onchange="toggleSelecao(130, this.checked)"></td>
+      <td>
+        <strong>Flavio</strong>
+        
+      </td>
+      <td>13/01/2027</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">79d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(130)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(130)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(130)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(130)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="131" onchange="toggleSelecao(131, this.checked)"></td>
+      <td>
+        <strong>Leandro Rodrigues</strong>
+        
+      </td>
+      <td>14/01/2027</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">80d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">3x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(131)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(131)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(131)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(131)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="132" onchange="toggleSelecao(132, this.checked)"></td>
+      <td>
+        <strong>Victor</strong>
+        
+      </td>
+      <td>19/01/2027</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">85d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(132)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(132)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(132)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(132)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="133" onchange="toggleSelecao(133, this.checked)"></td>
+      <td>
+        <strong>Edmilson</strong>
+        
+      </td>
+      <td>20/01/2027</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">86d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(133)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(133)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(133)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(133)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="134" onchange="toggleSelecao(134, this.checked)"></td>
+      <td>
+        <strong>Antônio Vermelho (Mac...)</strong>
+        
+      </td>
+      <td>29/01/2027</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">95d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(134)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(134)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(134)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(134)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="135" onchange="toggleSelecao(135, this.checked)"></td>
+      <td>
+        <strong>Maciel Bonfim</strong>
+        
+      </td>
+      <td>13/03/2027</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">138d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(135)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(135)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(135)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(135)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="136" onchange="toggleSelecao(136, this.checked)"></td>
+      <td>
+        <strong>André</strong>
+        
+      </td>
+      <td>22/04/2027</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">178d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(136)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(136)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(136)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(136)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="137" onchange="toggleSelecao(137, this.checked)"></td>
+      <td>
+        <strong>Vitão</strong>
+        
+      </td>
+      <td>20/05/2027</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">206d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">0x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(137)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(137)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(137)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(137)">🗑</button>
+      </td>
+    </tr><tr style="">
+      <td><input type="checkbox" class="chk-cliente" data-idx="138" onchange="toggleSelecao(138, this.checked)"></td>
+      <td>
+        <strong>Ronaldo Castelli</strong>
+        
+      </td>
+      <td>25/09/2027</td>
+      <td>R$ 40,00</td>
+      <td>—</td>
+      <td><span style="font-size:11px;color:#94a3b8">Mensal · 1 cr.</span></td>
+      <td style="font-size:11px;color:#25d366">—</td>
+      <td><span class="tag tag-ok">334d</span></td>
+      <td style="text-align:center"><span style="font-size:12px;color:#f59e0b;font-weight:600">1x</span></td>
+      <td>
+        <button class="btn btn-edit btn-sm" onclick="editarCliente(138)" style="margin-right:4px">✏️</button>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(138)" style="margin-right:4px">🔄</button>
+        
+        <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(138)" title="Histórico de pagamentos">📜</button>
+        <button class="btn btn-red" onclick="excluirCliente(138)">🗑</button>
       </td>
     </tr></tbody>
         </table>
@@ -1767,69 +4487,69 @@ tr:hover td { background: #0f172a55; }
     </tr><tr style="">
       <td><strong>Novembro de 2026</strong></td>
       <td style="font-weight:700">114</td>
-      <td style="color:#10b981;font-weight:600">R$ 4.520,00</td>
+      <td style="color:#10b981;font-weight:600">R$ 3.985,00</td>
       <td style="color:#ef4444">R$ 741,00</td>
-      <td style="color:#10b981;font-weight:700">R$ 3.779,00</td>
+      <td style="color:#10b981;font-weight:700">R$ 3.244,00</td>
     </tr><tr style="">
       <td><strong>Dezembro de 2026</strong></td>
       <td style="font-weight:700">125</td>
-      <td style="color:#10b981;font-weight:600">R$ 4.960,00</td>
+      <td style="color:#10b981;font-weight:600">R$ 4.425,00</td>
       <td style="color:#ef4444">R$ 812,50</td>
-      <td style="color:#10b981;font-weight:700">R$ 4.147,50</td>
+      <td style="color:#10b981;font-weight:700">R$ 3.612,50</td>
     </tr><tr style="">
       <td><strong>Janeiro de 2027</strong></td>
       <td style="font-weight:700">135</td>
-      <td style="color:#10b981;font-weight:600">R$ 5.360,00</td>
+      <td style="color:#10b981;font-weight:600">R$ 4.825,00</td>
       <td style="color:#ef4444">R$ 877,50</td>
-      <td style="color:#10b981;font-weight:700">R$ 4.482,50</td>
+      <td style="color:#10b981;font-weight:700">R$ 3.947,50</td>
     </tr><tr style="">
       <td><strong>Fevereiro de 2027</strong></td>
       <td style="font-weight:700">135</td>
-      <td style="color:#10b981;font-weight:600">R$ 5.360,00</td>
+      <td style="color:#10b981;font-weight:600">R$ 4.825,00</td>
       <td style="color:#ef4444">R$ 877,50</td>
-      <td style="color:#10b981;font-weight:700">R$ 4.482,50</td>
+      <td style="color:#10b981;font-weight:700">R$ 3.947,50</td>
     </tr><tr style="">
       <td><strong>Março de 2027</strong></td>
       <td style="font-weight:700">136</td>
-      <td style="color:#10b981;font-weight:600">R$ 5.400,00</td>
+      <td style="color:#10b981;font-weight:600">R$ 4.865,00</td>
       <td style="color:#ef4444">R$ 884,00</td>
-      <td style="color:#10b981;font-weight:700">R$ 4.516,00</td>
+      <td style="color:#10b981;font-weight:700">R$ 3.981,00</td>
     </tr><tr style="">
       <td><strong>Abril de 2027</strong></td>
       <td style="font-weight:700">137</td>
-      <td style="color:#10b981;font-weight:600">R$ 5.440,00</td>
+      <td style="color:#10b981;font-weight:600">R$ 4.905,00</td>
       <td style="color:#ef4444">R$ 890,50</td>
-      <td style="color:#10b981;font-weight:700">R$ 4.549,50</td>
+      <td style="color:#10b981;font-weight:700">R$ 4.014,50</td>
     </tr><tr style="">
       <td><strong>Maio de 2027</strong></td>
       <td style="font-weight:700">138</td>
-      <td style="color:#10b981;font-weight:600">R$ 5.480,00</td>
+      <td style="color:#10b981;font-weight:600">R$ 4.945,00</td>
       <td style="color:#ef4444">R$ 897,00</td>
-      <td style="color:#10b981;font-weight:700">R$ 4.583,00</td>
+      <td style="color:#10b981;font-weight:700">R$ 4.048,00</td>
     </tr><tr style="">
       <td><strong>Junho de 2027</strong></td>
       <td style="font-weight:700">138</td>
-      <td style="color:#10b981;font-weight:600">R$ 5.480,00</td>
+      <td style="color:#10b981;font-weight:600">R$ 4.945,00</td>
       <td style="color:#ef4444">R$ 897,00</td>
-      <td style="color:#10b981;font-weight:700">R$ 4.583,00</td>
+      <td style="color:#10b981;font-weight:700">R$ 4.048,00</td>
     </tr><tr style="">
       <td><strong>Julho de 2027</strong></td>
       <td style="font-weight:700">138</td>
-      <td style="color:#10b981;font-weight:600">R$ 5.480,00</td>
+      <td style="color:#10b981;font-weight:600">R$ 4.945,00</td>
       <td style="color:#ef4444">R$ 897,00</td>
-      <td style="color:#10b981;font-weight:700">R$ 4.583,00</td>
+      <td style="color:#10b981;font-weight:700">R$ 4.048,00</td>
     </tr><tr style="">
       <td><strong>Agosto de 2027</strong></td>
       <td style="font-weight:700">138</td>
-      <td style="color:#10b981;font-weight:600">R$ 5.480,00</td>
+      <td style="color:#10b981;font-weight:600">R$ 4.945,00</td>
       <td style="color:#ef4444">R$ 897,00</td>
-      <td style="color:#10b981;font-weight:700">R$ 4.583,00</td>
+      <td style="color:#10b981;font-weight:700">R$ 4.048,00</td>
     </tr><tr style="">
       <td><strong>Setembro de 2027</strong></td>
       <td style="font-weight:700">139</td>
-      <td style="color:#10b981;font-weight:600">R$ 5.520,00</td>
+      <td style="color:#10b981;font-weight:600">R$ 4.985,00</td>
       <td style="color:#ef4444">R$ 903,50</td>
-      <td style="color:#10b981;font-weight:700">R$ 4.616,50</td>
+      <td style="color:#10b981;font-weight:700">R$ 4.081,50</td>
     </tr></tbody>
         </table>
       </div>
@@ -2641,9 +5361,9 @@ tr:hover td { background: #0f172a55; }
           </tr></thead>
           <tbody id="tbody-previsao"><tr style="">
       <td><strong>01/11/2026</strong></td>
-      <td style="font-weight:700">5 <span style="color:#94a3b8;font-size:11px">(+1 gratuidade)</span></td>
+      <td style="font-weight:700">5</td>
       <td style="color:#10b981;font-weight:600">R$ 160,00</td>
-      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rafael Silva</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Kelly Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Fagner</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Kelly Ponto 1</span></td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rafael Silva</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Kelly Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Nickolas</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Fagner</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Kelly Ponto 1</span></td>
     </tr><tr style="">
       <td><strong>02/11/2026</strong></td>
       <td style="font-weight:700">1</td>
@@ -2671,9 +5391,9 @@ tr:hover td { background: #0f172a55; }
       <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Nando</span></td>
     </tr><tr style="">
       <td><strong>10/11/2026</strong></td>
-      <td style="font-weight:700">38 <span style="color:#94a3b8;font-size:11px">(+5 gratuidade)</span></td>
+      <td style="font-weight:700">38</td>
       <td style="color:#10b981;font-weight:600">R$ 1.370,00</td>
-      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Sara</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Luciano Orlando</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Bianca</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Leonardo Premero</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Elvys Rick</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Alessandra</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Jacqueline</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rosângela</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rodrigo Evaristo</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Francisco</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Ademilso</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Silvio</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Sueli Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Janaina</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Alexandre Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Thayna</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Maria Aparecida</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Marcelo Motta Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rose Moreno</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Leonardo Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Leonardo Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Leandro</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Denise Alves</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Elaine</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Darley</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Roberto Gonçalves</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Alexandre</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Gabriela</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Julio Simonelli</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Carol Pires</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Natalia Ultra Player</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Marcelo Motta Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Sueli Ponto 1</span></td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Juan Santana</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Sara</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Luciano Orlando</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Bianca</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Leonardo Premero</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Elvys Rick</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Alessandra</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Jacqueline</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rosângela</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rodrigo Evaristo</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Francisco</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Ademilso</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Silvio</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Sueli Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Janaina</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Alexandre Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Thayna</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Maria Aparecida</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Minzon</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Marcelo Motta Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rose Moreno</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Leonardo Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Leonardo Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Leandro</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Denise Alves</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Natalia Ponto 3</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Elaine</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Darley</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Roberto Gonçalves</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Alexandre</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Gabriela</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Natalia Smart STB</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Julio Simonelli</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Carol Pires</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Diego Silva</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Natalia Ultra Player</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Marcelo Motta Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Sueli Ponto 1</span></td>
     </tr><tr style="">
       <td><strong>11/11/2026</strong></td>
       <td style="font-weight:700">1</td>
@@ -2706,14 +5426,14 @@ tr:hover td { background: #0f172a55; }
       <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Cátia</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Aline</span></td>
     </tr><tr style="">
       <td><strong>19/11/2026</strong></td>
-      <td style="font-weight:700">2 <span style="color:#94a3b8;font-size:11px">(+1 gratuidade)</span></td>
+      <td style="font-weight:700">2</td>
       <td style="color:#10b981;font-weight:600">R$ 40,00</td>
-      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Wedson</span></td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Carlos Lima</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Wedson</span></td>
     </tr><tr style="">
       <td><strong>20/11/2026</strong></td>
-      <td style="font-weight:700">32 <span style="color:#94a3b8;font-size:11px">(+4 gratuidade)</span></td>
+      <td style="font-weight:700">32</td>
       <td style="color:#10b981;font-weight:600">R$ 1.085,00</td>
-      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Sonia</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Lucas Barreto</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Homero Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Anderson</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Homero Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Cintia Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Cintia Ponto 2 Duplecast</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Lucas Miranda Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Fabio Pereira Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Camila Alves</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Igão</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rebeka</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Heudes</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Joana</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rogerio</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Jessica Duplecast</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Vini Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Gilvane</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Vini Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">João Pedro</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Marcelo</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Janete Rogério</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Erika</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Tabata Lage</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Fabio Pereira Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Lucas Miranda Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Fernando Moreira</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Jefferson Santos</span></td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Sonia</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Lucas Barreto</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Homero Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Anderson</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Homero Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Cintia Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Cintia Ponto 2 Duplecast</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Lucas Miranda Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Fabio Pereira Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Camila Alves</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Igão</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rebeka</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Heudes</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Joana</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Rogerio</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Danilo Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Danilo Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Danilo Ponto 3</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Jessica Duplecast</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Vini Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Gilvane</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Vini Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">João Pedro</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Marcelo</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Janete Rogério</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Matheus Filho</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Erika</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Tabata Lage</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Fabio Pereira Ponto 1</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Lucas Miranda Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Fernando Moreira</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Jefferson Santos</span></td>
     </tr><tr style="">
       <td><strong>21/11/2026</strong></td>
       <td style="font-weight:700">2</td>
@@ -2736,9 +5456,9 @@ tr:hover td { background: #0f172a55; }
       <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Caio Felipe</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Isabelly Celular</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Isabelly</span></td>
     </tr><tr style="">
       <td><strong>29/11/2026</strong></td>
-      <td style="font-weight:700">3 <span style="color:#94a3b8;font-size:11px">(+3 gratuidade)</span></td>
+      <td style="font-weight:700">3</td>
       <td style="color:#10b981;font-weight:600">R$ 0,00</td>
-      <td style="line-height:1.8"></td>
+      <td style="line-height:1.8"><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Juan Santana Ponto 2</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Juan Santana Ponto 3</span><span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">Juan Santana Ponto 4</span></td>
     </tr><tr style="border-top:2px solid #334155;background:#0f172a">
     <td><strong>TOTAL</strong></td>
     <td><strong>110</strong></td>
@@ -4686,6 +7406,7 @@ function refreshAll() {
   }
 })();
 </script>
+
 
 
 </body></html>
