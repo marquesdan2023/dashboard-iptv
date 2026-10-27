@@ -7274,7 +7274,6 @@ function renderPrevisao() {
   const totalDias = Object.keys(dias).length;
 
   const _set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
-  const _set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
   const totalGratuitos = todosDoMes.filter(c => (+c.valor||0) === 0).length;
   const elPrev = document.getElementById('prev-clientes');
   if (elPrev) elPrev.innerHTML = totalClientes + (totalGratuitos > 0 ? ' <span style="font-size:13px;color:#94a3b8;font-weight:400">(' + totalGratuitos + ' gratuidade)</span>' : '');
