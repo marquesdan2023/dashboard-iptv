@@ -7260,21 +7260,21 @@ function renderPrevisao() {
   const mesSel = sel.value;
   if (!mesSel) return;
 
-  const lista = clientes.filter(c => c.venc && c.venc.slice(0,7) === mesSel);
+  const todosDoMes = clientes.filter(c => c.venc && c.venc.slice(0,7) === mesSel);
   const dias = {};
-  lista.forEach(c => {
+  todosDoMes.forEach(c => {
     const dia = c.venc;
-    if (!dias[dia]) dias[dia] = {clientes:[], total:0};
-    dias[dia].clientes.push(c);
-    dias[dia].total += +c.valor||0;
+    if (!dias[dia]) dias[dia] = {pagantes:[], gratuitos:[], total:0};
+    if ((+c.valor||0) > 0) { dias[dia].pagantes.push(c); dias[dia].total += +c.valor; }
+    else { dias[dia].gratuitos.push(c); }
   });
 
-  const totalClientes = lista.length;
-  const totalValor = lista.reduce((s,c) => s + (+c.valor||0), 0);
+  const totalClientes = todosDoMes.length;
+  const totalValor = todosDoMes.reduce((s,c) => s + (+c.valor||0), 0);
   const totalDias = Object.keys(dias).length;
+  const totalGratuitos = todosDoMes.filter(c => (+c.valor||0) === 0).length;
 
   const _set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
-  const totalGratuitos = todosDoMes.filter(c => (+c.valor||0) === 0).length;
   const elPrev = document.getElementById('prev-clientes');
   if (elPrev) elPrev.innerHTML = totalClientes + (totalGratuitos > 0 ? ' <span style="font-size:13px;color:#94a3b8;font-weight:400">(' + totalGratuitos + ' gratuidade)</span>' : '');
   _set('prev-total', brl(totalValor));
@@ -7295,22 +7295,15 @@ function renderPrevisao() {
     const isPast = dia < hoje;
     const rowStyle = isHoje ? 'background:#1e3a5f33' : isPast ? 'opacity:0.6' : '';
     const badge = isHoje ? ' <span style="background:#10b981;color:#fff;font-size:10px;padding:1px 6px;border-radius:4px;margin-left:4px">hoje</span>' : '';
-    const nomes = d.clientes.map(c => `<span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">${c.cliente}</span>`).join('');
-    return `<tr style="${rowStyle}">
-      <td><strong>${fmtDate(dia)}${badge}</strong></td>
-      <td style="font-weight:700">${d.clientes.length}</td>
-      <td style="color:#10b981;font-weight:600">${brl(d.total)}</td>
-      <td style="line-height:1.8">${nomes}</td>
-    </tr>`;
+    const nomes = d.pagantes.map(c => '<span style="font-size:11px;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:4px;margin:2px;display:inline-block">' + c.cliente + '</span>').join('');
+    const totalDia = d.pagantes.length + d.gratuitos.length;
+    const gratInfo = d.gratuitos.length > 0 ? ' <span style="color:#94a3b8;font-size:11px">(+' + d.gratuitos.length + ' gratuidade)</span>' : '';
+    return '<tr style="' + rowStyle + '"><td><strong>' + fmtDate(dia) + badge + '</strong></td><td style="font-weight:700">' + totalDia + gratInfo + '</td><td style="color:#10b981;font-weight:600">' + brl(d.total) + '</td><td style="line-height:1.8">' + nomes + '</td></tr>';
   }).join('');
 
-  tbody.innerHTML += `<tr style="border-top:2px solid #334155;background:#0f172a">
-    <td><strong>TOTAL</strong></td>
-    <td><strong>${totalClientes}</strong></td>
-    <td style="color:#10b981;font-weight:700">${brl(totalValor)}</td>
-    <td></td>
-  </tr>`;
+  tbody.innerHTML += '<tr style="border-top:2px solid #334155;background:#0f172a"><td><strong>TOTAL</strong></td><td><strong>' + totalClientes + '</strong></td><td style="color:#10b981;font-weight:700">' + brl(totalValor) + '</td><td></td></tr>';
 }
+
 
 // ============================================================
 // HISTÓRICO MENSAL DE CRÉDITOS
