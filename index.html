@@ -7141,9 +7141,8 @@ function renderProjecao() {
     const label = m.label.charAt(0).toUpperCase() + m.label.slice(1);
 
     const novosHtml = novos.length > 0 ? '<div style="margin-top:4px">' + novos.map(c => '<span style="font-size:10px;background:#10b98122;color:#10b981;padding:1px 6px;border-radius:4px;margin:1px;display:inline-block">+' + c.cliente + '</span>').join('') + '</div>' : '';
-    const saindoHtml = saindo.length > 0 ? '<div style="margin-top:2px">' + saindo.map(c => '<span style="font-size:10px;background:#ef444422;color:#ef4444;padding:1px 6px;border-radius:4px;margin:1px;display:inline-block">-' + c.cliente + '</span>').join('') + '</div>' : '';
 
-    return '<tr style="' + rowStyle + '"><td><strong>' + label + badge + '</strong>' + novosHtml + saindoHtml + '</td><td style="font-weight:700">' + m.lista.length + '</td><td style="color:#10b981;font-weight:600">' + brl(receita) + '</td><td style="color:#ef4444">' + brl(custo) + '</td><td style="color:' + lucroColor + ';font-weight:700">' + brl(lucro) + '</td></tr>';
+    return '<tr style="' + rowStyle + '"><td><strong>' + label + badge + '</strong>' + novosHtml + '</td><td style="font-weight:700">' + m.lista.length + '</td><td style="color:#10b981;font-weight:600">' + brl(receita) + '</td><td style="color:#ef4444">' + brl(custo) + '</td><td style="color:' + lucroColor + ';font-weight:700">' + brl(lucro) + '</td></tr>';
   }).join('');
 }
 
