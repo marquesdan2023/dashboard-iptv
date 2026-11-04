@@ -7366,7 +7366,7 @@ function moverParaInativo(idx){
   inativos.push({
     id:Date.now(),
     nome:c.cliente||'',
-    tel:c.fone||'',
+    tel:c.fone||c.telefone||'',
     plano:c.valor?'R$ '+c.valor:'',
     data:today(),
     motivo:'Nao renovou',
@@ -7374,8 +7374,11 @@ function moverParaInativo(idx){
   });
   salvarInativos();
   clientes.splice(idx,1);
-  saveC();
-  refreshAll();
+  localStorage.setItem(CL_KEY, JSON.stringify(clientes));
+  fbSave('clientes', clientes);
+  renderClientes();
+  renderInativos();
+  updateKPIs();
   alert(c.cliente+' movido para inativos!');
 }
 function adicionarInativo(){
