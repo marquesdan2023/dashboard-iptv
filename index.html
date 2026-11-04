@@ -5914,7 +5914,7 @@ function renderClientes() {
         <button class="btn btn-green btn-sm" onclick="abrirRenovar(${idx})" style="margin-right:4px">🔄</button>
         ${c.fone ? `<button class="btn btn-sm" style="background:#25d366;margin-right:4px" onclick="abrirWhats(${idx})">📲</button>` : ''}
         <button class="btn btn-sm" style="background:#8b5cf6;margin-right:4px" onclick="abrirHistorico(${idx})" title="Histórico de pagamentos">📜</button>
-        <button class="btn btn-red" onclick="excluirCliente(${idx})">🗑</button>
+        <button class="btn btn-sm" style="background:#f59e0b;color:#fff;margin-right:4px" onclick="moverParaInativo(${idx})" title="Mover para inativos">🚫</button><button class="btn btn-red" onclick="excluirCliente(${idx})">🗑</button>
       </td>
     </tr>`;
   }).join('');
@@ -7359,6 +7359,26 @@ function renderHistoricoCreditos() {
 const IN_KEY = 'inativos_v1';
 let inativos = JSON.parse(localStorage.getItem(IN_KEY) || '[]');
 function salvarInativos(){localStorage.setItem(IN_KEY,JSON.stringify(inativos));fbSave('inativos',inativos);}
+function moverParaInativo(idx){
+  var c=clientes[idx];
+  if(!c)return;
+  if(!confirm('Mover '+c.cliente+' para inativos?'))return;
+  inativos.push({
+    id:Date.now(),
+    nome:c.cliente||'',
+    tel:c.fone||'',
+    plano:c.valor?'R$ '+c.valor:'',
+    data:today(),
+    motivo:'Nao renovou',
+    obs:c.obs||''
+  });
+  salvarInativos();
+  clientes.splice(idx,1);
+  salvarClientes();
+  renderClientes();
+  renderInativos();
+  alert(c.cliente+' movido para inativos!');
+}
 function adicionarInativo(){
   var nome=document.getElementById('in-nome').value.trim();
   if(!nome){alert('Nome obrigatorio');return;}
