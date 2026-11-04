@@ -7355,7 +7355,7 @@ function renderHistoricoCreditos() {
 // REFRESH GERAL
 // ============================================================
 
-const IN_KEY='inativos_v1';
+cconst IN_KEY='inativos_v1';
 let inativos=JSON.parse(localStorage.getItem(IN_KEY)||'[]');
 function salvarInativos(){localStorage.setItem(IN_KEY,JSON.stringify(inativos));fbSave('inativos',inativos);}
 function adicionarInativo(){const nome=document.getElementById('in-nome').value.trim();if(!nome){alert('Nome obrigatorio');return;}const tel=document.getElementById('in-tel').value.trim();const plano=document.getElementById('in-plano').value.trim();const data=document.getElementById('in-data').value||today();const motivo=document.getElementById('in-motivo').value.trim();const obs=document.getElementById('in-obs').value.trim();inativos.push({id:Date.now(),nome,tel,plano,data,motivo,obs});salvarInativos();['in-nome','in-tel','in-plano','in-data','in-motivo','in-obs'].forEach(function(id){const el=document.getElementById(id);if(el)el.value='';});renderInativos();}
