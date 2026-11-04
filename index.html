@@ -7374,9 +7374,8 @@ function moverParaInativo(idx){
   });
   salvarInativos();
   clientes.splice(idx,1);
-  salvarClientes();
-  renderClientes();
-  renderInativos();
+  saveC();
+  refreshAll();
   alert(c.cliente+' movido para inativos!');
 }
 function adicionarInativo(){
