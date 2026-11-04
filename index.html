@@ -218,7 +218,6 @@ tr:hover td { background: #0f172a55; }
     <button class="tab" onclick="switchTab('projecao')">📈 Projeção</button>
     <button class="tab" onclick="switchTab('controle')">📒 Controle do Mês</button>
     <button class="tab active" onclick="switchTab('previsao')">📅 Previsão Diária</button>
-    <button class="tab" onclick="switchTab('inativos')">🚫 Inativos</button>
   </div>
 
   <!-- ========== ABA CLIENTES ========== -->
@@ -6019,9 +6018,7 @@ function exportPDF() {
     + '<p>Gerado em '+fmtDate(today())+' — '+list.length+' clientes</p>'
     + '<table><thead><tr><th>Cliente</th><th>Vencimento</th><th>Valor</th><th>Aplicativo</th><th>Status</th><th>Obs</th></tr></thead>'
     + '<tbody>'+rows+'</tbody></table>'
-    + '<script>window.onload=function(){window.print()}<' + '/script>
-  <div id="tab-inativos" class="tab-content"><div class="card"><div class="topbar"><h2>🚫 Clientes Inativos</h2><div style="display:flex;gap:8px;align-items:center"><input id="busca-inativos" type="text" placeholder="Buscar..." style="padding:6px 12px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:13px;width:160px" oninput="renderInativos()"><span id="inativos-count" style="font-size:13px;color:#94a3b8"></span></div></div><div style="background:#1e293b;border-radius:10px;padding:16px;margin-bottom:20px"><h3 style="font-size:14px;color:#94a3b8;margin-bottom:12px">➕ Adicionar inativo</h3><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px"><input id="in-nome" type="text" placeholder="Nome *" style="padding:7px 10px;border-radius:7px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:12px"><input id="in-tel" type="text" placeholder="Telefone/WhatsApp" style="padding:7px 10px;border-radius:7px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:12px"><input id="in-plano" type="text" placeholder="Plano/valor" style="padding:7px 10px;border-radius:7px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:12px"><input id="in-data" type="date" style="padding:7px 10px;border-radius:7px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:12px"><input id="in-motivo" type="text" placeholder="Motivo" style="padding:7px 10px;border-radius:7px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:12px"><input id="in-obs" type="text" placeholder="Obs" style="padding:7px 10px;border-radius:7px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:12px"></div><button onclick="adicionarInativo()" style="margin-top:10px;padding:7px 18px;background:#3b82f6;color:#fff;border:none;border-radius:7px;cursor:pointer;font-size:12px">Salvar</button></div><table style="width:100%;border-collapse:collapse"><thead><tr><th style="text-align:left;padding:9px 7px;border-bottom:1px solid #334155;font-size:11px;color:#94a3b8">CLIENTE</th><th style="text-align:left;padding:9px 7px;border-bottom:1px solid #334155;font-size:11px;color:#94a3b8">FONE</th><th style="text-align:left;padding:9px 7px;border-bottom:1px solid #334155;font-size:11px;color:#94a3b8">PLANO</th><th style="text-align:left;padding:9px 7px;border-bottom:1px solid #334155;font-size:11px;color:#94a3b8">SAIU</th><th style="text-align:left;padding:9px 7px;border-bottom:1px solid #334155;font-size:11px;color:#94a3b8">MOTIVO</th><th style="text-align:left;padding:9px 7px;border-bottom:1px solid #334155;font-size:11px;color:#94a3b8">OBS</th><th style="text-align:left;padding:9px 7px;border-bottom:1px solid #334155;font-size:11px;color:#94a3b8">ACOES</th></tr></thead><tbody id="tbody-inativos"><tr><td colspan="7" style="text-align:center;padding:28px;color:#475569">Nenhum cliente inativo.</td></tr></tbody></table></div></div>
-</body></html>';
+    + '<script>window.onload=function(){window.print()}<' + '/script></body></html>';
 
   const w = window.open('', '_blank');
   w.document.write(html);
@@ -7354,15 +7351,6 @@ function renderHistoricoCreditos() {
 // ============================================================
 // REFRESH GERAL
 // ============================================================
-
-cconst IN_KEY='inativos_v1';
-let inativos=JSON.parse(localStorage.getItem(IN_KEY)||'[]');
-function salvarInativos(){localStorage.setItem(IN_KEY,JSON.stringify(inativos));fbSave('inativos',inativos);}
-function adicionarInativo(){const nome=document.getElementById('in-nome').value.trim();if(!nome){alert('Nome obrigatorio');return;}const tel=document.getElementById('in-tel').value.trim();const plano=document.getElementById('in-plano').value.trim();const data=document.getElementById('in-data').value||today();const motivo=document.getElementById('in-motivo').value.trim();const obs=document.getElementById('in-obs').value.trim();inativos.push({id:Date.now(),nome,tel,plano,data,motivo,obs});salvarInativos();['in-nome','in-tel','in-plano','in-data','in-motivo','in-obs'].forEach(function(id){const el=document.getElementById(id);if(el)el.value='';});renderInativos();}
-function removerInativo(id){if(!confirm('Remover?'))return;inativos=inativos.filter(function(x){return x.id!==id;});salvarInativos();renderInativos();}
-function reativarInativo(id){const c=inativos.find(function(x){return x.id===id;});if(!c)return;if(!confirm('Reativar '+c.nome+'?'))return;clientes.push({cliente:c.nome,venc:'',valor:'',meses:1});salvarClientes();inativos=inativos.filter(function(x){return x.id!==id;});salvarInativos();renderInativos();renderClientes();alert(c.nome+' reativado!');}
-function whatsappInativo(tel,nome){const num=tel.replace(/\D/g,'');if(!num){alert('Sem numero');return;}window.open('https://wa.me/55'+num+'?text='+encodeURIComponent('Ola '+nome+'! Passando para ver se tem interesse em renovar o plano IPTV.'),'_blank');}
-function renderInativos(){const tbody=document.getElementById('tbody-inativos');if(!tbody)return;const buscaEl=document.getElementById('busca-inativos');const busca=buscaEl?buscaEl.value.toLowerCase():'';const lista=inativos.filter(function(c){return!busca||c.nome.toLowerCase().includes(busca);});lista.sort(function(a,b){return(b.data||'').localeCompare(a.data||'');});const countEl=document.getElementById('inativos-count');if(countEl)countEl.textContent=lista.length+' cliente'+(lista.length!==1?'s':'');if(lista.length===0){tbody.innerHTML='<tr><td colspan=7 style="text-align:center;padding:28px;color:#475569">Nenhum.'+(busca?' Sem resultado.':'')+'</td></tr>';return;}tbody.innerHTML=lista.map(function(c){const df=c.data?c.data.split('-').reverse().join('/'):'-';const temTel=c.tel&&c.tel.replace(/\D/g,'').length>=8;return'<tr style="border-bottom:1px solid #1e293b"><td style="padding:9px 7px;font-size:13px"><strong>'+c.nome+'</strong></td><td style="padding:9px 7px;font-size:12px;color:#94a3b8">'+(c.tel||'-')+'</td><td style="padding:9px 7px;font-size:12px;color:#94a3b8">'+(c.plano||'-')+'</td><td style="padding:9px 7px;font-size:12px;color:#f59e0b">'+df+'</td><td style="padding:9px 7px;font-size:12px;color:#94a3b8">'+(c.motivo||'-')+'</td><td style="padding:9px 7px;font-size:12px;color:#94a3b8">'+(c.obs||'-')+'</td><td style="padding:9px 7px;white-space:nowrap">'+(temTel?'<button onclick="whatsappInativo(''+c.tel+'\',\''+c.nome+'')" style="padding:3px 8px;background:#25d366;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:11px;margin-right:3px">WA</button>':'')+'<button onclick="reativarInativo('+c.id+')" style="padding:3px 8px;background:#10b98122;color:#10b981;border:1px solid #10b98144;border-radius:5px;cursor:pointer;font-size:11px;margin-right:3px">Reativar</button><button onclick="removerInativo('+c.id+')" style="padding:3px 8px;background:#ef444422;color:#ef4444;border:1px solid #ef444444;border-radius:5px;cursor:pointer;font-size:11px">Excluir</button></td></tr>';}).join('');}
 function refreshAll() {
   updateKPIs();
   updateCharts();
@@ -7378,7 +7366,6 @@ function refreshAll() {
   renderMetaRenovacoes();
   renderProjecaoCaixa();
   renderHistoricoCaixa();
-  renderInativos();
 }
 
 // ============================================================
@@ -7398,8 +7385,6 @@ function refreshAll() {
     if (pg !== null) { pagamentos = pg; localStorage.setItem(PG_KEY, JSON.stringify(pg)); }
     const bn = await fbLoad('bonus');
     if (bn !== null) { bonusList = bn; localStorage.setItem(BN_KEY, JSON.stringify(bn)); }
-    const inat=await fbLoad('inativos');
-    if(inat!==null){inativos=inat;localStorage.setItem(IN_KEY,JSON.stringify(inat));}
     const si = await fbLoad('saldo_inicial');
     if (si !== null && si.length > 0) { saldoInicial = parseFloat(si[0]||0); localStorage.setItem(SI_KEY, saldoInicial.toString()); }
 
