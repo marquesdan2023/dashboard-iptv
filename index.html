@@ -212,6 +212,7 @@ tr:hover td { background: #0f172a55; }
 
   <!-- TABS -->
   <div class="tabs">
+    <button class="tab" onclick="switchTab('resumo')">📊 Resumo</button>
     <button class="tab" onclick="switchTab('clientes')">📋 Clientes</button>
     <button class="tab" onclick="switchTab('dns')">🌐 Alterar DNS</button>
     <button class="tab" onclick="switchTab('creditos')">🪙 Créditos</button>
@@ -222,9 +223,8 @@ tr:hover td { background: #0f172a55; }
   </div>
 
   <!-- ========== ABA CLIENTES ========== -->
-  <div id="tab-clientes" class="tab-content">
-
-    <!-- KPIs -->
+  <div <div id="tab-resumo" class="tab-content">
+   <!-- KPIs -->
     <div class="kpis">
       <div class="kpi green" style="cursor:pointer" onclick="abrirKpiModal('ativos')" title="Ver clientes ativos"><div class="kpi-label">✅ Clientes Ativos</div><div class="kpi-value" id="kpi-ativos">138</div><div class="kpi-sub">ativos</div></div>
       <div class="kpi red" style="cursor:pointer" onclick="abrirKpiModal('expirados')" title="Ver clientes expirados"><div class="kpi-label">🔴 Clientes Expirados</div><div class="kpi-value" id="kpi-vencidos">1</div><div class="kpi-sub" id="kpi-vencidos-val">R$ 40,00</div></div>
@@ -290,6 +290,10 @@ tr:hover td { background: #0f172a55; }
 
 
 
+    
+</div>
+
+  <div id="tab-clientes" class="tab-content">
     <!-- FORM CADASTRO -->
     <div class="card">
       <div class="topbar">
@@ -3150,9 +3154,9 @@ tr:hover td { background: #0f172a55; }
       <p class="muted">💾 Dados salvos automaticamente no seu navegador. Use "Exportar PDF" para backup.</p>
     </div>
   </div>
+</div>
 
-  <!-- ========== ABA DNS ========== -->
-  <div id="tab-dns" class="tab-content">
+  id="tab-dns" class="tab-content">
     <div class="card dns-card">
       <div class="topbar">
         <h2>🌐 Alterar DNS — Clientes (<span id="count-dns">14</span>)</h2>
