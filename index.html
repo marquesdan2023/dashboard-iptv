@@ -365,7 +365,6 @@ tr:hover td { background: #0f172a55; }
             <th><input type="checkbox" id="chk-todos" onchange="toggleTodos(this.checked)" title="Selecionar todos"></th>
             <th style="cursor:pointer" onclick="ordenarPor('cliente')">Cliente <span id="sort-cliente"></span></th>
             <th style="cursor:pointer" onclick="ordenarPor('venc')">Vencimento <span id="sort-venc">▲</span></th>
-            <th style="cursor:pointer" onclick="ordenarPor('valor')">Valor <span id="sort-valor"></span></th>
             <th>App</th><th>Plano</th><th>WhatsApp</th><th>Status</th><th>Renov.</th><th>Ação</th>
           </tr></thead>
           <tbody id="tbody-clientes"><tr style="background:rgba(239,68,68,0.08)">
@@ -5906,7 +5905,6 @@ function renderClientes() {
         ${c.indicacao ? `<br><span style="font-size:10px;color:#8b5cf6">👤 ${c.indicacao}</span>` : ''}
       </td>
       <td>${fmtDate(c.venc)}</td>
-      <td>${brl(+c.valor||0)}</td>
       <td>${c.app||'—'}</td>
       <td><span style="font-size:11px;color:#94a3b8">${planoLabel} · ${cred} cr.</span></td>
       <td style="font-size:11px;color:#25d366">${c.fone||'—'}</td>
