@@ -6727,10 +6727,31 @@ function toggleTodos(checked) {
 
 function atualizarBotaoMassa() {
   const btn = document.getElementById('btn-renovar-massa');
+  const btnExcluir = document.getElementById('btn-excluir-massa');
   const cnt = document.getElementById('count-selecionados');
   if (!btn) return;
-  if (selecionados.size > 0) { btn.style.display = ''; if(cnt) cnt.textContent = selecionados.size; }
-  else btn.style.display = 'none';
+  if (selecionados.size > 0) {
+    btn.style.display = '';
+    if (btnExcluir) btnExcluir.style.display = '';
+    if (cnt) cnt.textContent = selecionados.size;
+  } else {
+    btn.style.display = 'none';
+    if (btnExcluir) btnExcluir.style.display = 'none';
+  }
+}
+
+function excluirSelecionados() {
+  if (selecionados.size === 0) return;
+  const nomes = [...selecionados].map(idx => clientes[idx]?.nome).filter(Boolean);
+  if (!confirm(`Excluir ${selecionados.size} cliente(s) permanentemente?\n\n${nomes.join('\n')}\n\nEssa ação não pode ser desfeita.`)) return;
+  // remove do maior índice para o menor para não deslocar posições
+  const indices = [...selecionados].sort((a,b) => b - a);
+  indices.forEach(idx => { if (idx >= 0 && idx < clientes.length) clientes.splice(idx, 1); });
+  selecionados.clear();
+  salvarDados();
+  updateKPIs();
+  renderClientes();
+  atualizarBotaoMassa();
 }
 
 function abrirRenovarMassa() {
