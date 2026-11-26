@@ -5722,6 +5722,11 @@ Maria Santos ; 10/09/2026 ; 35 ; 11999999999"></textarea>
       <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Nova data de vencimento</label>
       <input type="date" id="renovar-data" style="width:100%">
     </div>
+    <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 0;border-top:1px solid #334155;margin-bottom:10px">
+      <input type="checkbox" id="renovar-pagar-depois" style="width:18px;height:18px;accent-color:#f59e0b;cursor:pointer">
+      <span style="font-size:13px;color:#fbbf24;font-weight:600">🕐 Vai pagar depois</span>
+      <span style="font-size:12px;color:#94a3b8">(ainda não pagou)</span>
+    </label>
     <div class="modal-actions">
       <button class="btn btn-green" onclick="confirmarRenovar()">💾 Renovar</button>
       <button class="btn btn-gray" onclick="fecharModal('modal-renovar')">Cancelar</button>
@@ -5760,11 +5765,6 @@ Maria Santos ; 10/09/2026 ; 35 ; 11999999999"></textarea>
       <input type="text" id="ec-fone" placeholder="WhatsApp (ex: 11999999999)" style="grid-column:span 2">
       <input type="text" id="ec-obs" placeholder="Observações" style="grid-column:span 2">
       <input type="text" id="ec-indicacao" placeholder="Indicado por (opcional)" style="grid-column:span 2">
-      <label style="grid-column:span 2;display:flex;align-items:center;gap:10px;cursor:pointer;padding:8px 0;border-top:1px solid #334155;margin-top:4px">
-        <input type="checkbox" id="ec-pagar-depois" style="width:18px;height:18px;accent-color:#f59e0b;cursor:pointer">
-        <span style="font-size:13px;color:#fbbf24;font-weight:600">🕐 Vai pagar depois</span>
-        <span style="font-size:12px;color:#94a3b8">(marcar para controlar quem ainda não pagou)</span>
-      </label>
     </div>
     <div class="modal-actions">
       <button class="btn btn-green" onclick="salvarEdicaoCliente()">💾 Salvar alterações</button>
@@ -5963,6 +5963,7 @@ function abrirRenovar(idx) {
   document.getElementById('renovar-pgto').value = today();
   document.getElementById('renovar-valor').value = '';
   document.getElementById('renovar-meses').value = c.meses || 1;
+  document.getElementById('renovar-pagar-depois').checked = !!c.pagarDepois;
   atualizarInfoRenovar();
   document.getElementById('modal-renovar').classList.add('open');
 }
@@ -5991,10 +5992,14 @@ function confirmarRenovar() {
   const cred = creditosPorMeses(meses);
   const valorDigitado = document.getElementById('renovar-valor').value;
   const valorPago = valorDigitado !== '' ? +valorDigitado : +c.valor||0;
-  pagamentos.push({ data: dataPgto, cliente: c.cliente, valor: valorPago, meses: meses, creditos: cred });
-  savePG();
+  const pagarDepois = document.getElementById('renovar-pagar-depois').checked;
+  if (!pagarDepois) {
+    pagamentos.push({ data: dataPgto, cliente: c.cliente, valor: valorPago, meses: meses, creditos: cred });
+    savePG();
+  }
   clientes[renovarIdx].venc = novaData;
   clientes[renovarIdx].meses = meses;
+  clientes[renovarIdx].pagarDepois = pagarDepois;
   saveC();
   fecharModal('modal-renovar');
   refreshAll();
