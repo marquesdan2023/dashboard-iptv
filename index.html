@@ -5693,21 +5693,32 @@ Maria Santos ; 10/09/2026 ; 35 ; 11999999999"></textarea>
 
 <!-- MODAL RENOVAR -->
 <div class="modal-overlay" id="modal-renovar">
-  <div class="modal" style="border-top-color:#10b981">
-    <h3>🔄 Renovar Cliente</h3>
+  <div class="modal" id="modal-renovar-inner" style="border-top-color:#10b981">
+    <h3 id="renovar-titulo">🔄 Renovar Cliente</h3>
     <p style="font-size:13px;color:#94a3b8;margin-bottom:14px" id="renovar-nome"></p>
-    <div style="margin-bottom:14px">
-      <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Plano</label>
-      <select id="renovar-meses" style="width:100%" onchange="atualizarInfoRenovar()">
-        <option value="1">Mensal — 1 crédito</option>
-        <option value="3">Trimestral — 2.5 créditos</option>
-        <option value="6">Semestral — 5 créditos</option>
-        <option value="12">Anual — 10 créditos</option>
-      <option value="0">Gratuidade — 1 crédito</option></select>
+    <!-- Aviso modo "registrar pagamento" -->
+    <div id="renovar-aviso-pgdepois" style="display:none;background:#422006;border:1px solid #f59e0b;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;color:#fbbf24">
+      🕐 Este cliente está marcado como <strong>vai pagar depois</strong>. Clique em <strong>✅ Registrar Pagamento</strong> para confirmar o recebimento e removê-lo da lista.
     </div>
-    <div style="margin-bottom:14px;padding:10px;background:#0f172a;border-radius:8px;font-size:13px" id="renovar-info">
-      <span style="color:#94a3b8">Créditos a descontar: </span><strong id="renovar-creditos-info" style="color:#ef4444">1</strong>
-      <span style="color:#94a3b8;margin-left:12px">Disponível após: </span><strong id="renovar-saldo-info" style="color:#10b981">0</strong>
+    <div id="renovar-campos-normais">
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Plano</label>
+        <select id="renovar-meses" style="width:100%" onchange="atualizarInfoRenovar()">
+          <option value="1">Mensal — 1 crédito</option>
+          <option value="3">Trimestral — 2.5 créditos</option>
+          <option value="6">Semestral — 5 créditos</option>
+          <option value="12">Anual — 10 créditos</option>
+          <option value="0">Gratuidade — 1 crédito</option>
+        </select>
+      </div>
+      <div style="margin-bottom:14px;padding:10px;background:#0f172a;border-radius:8px;font-size:13px" id="renovar-info">
+        <span style="color:#94a3b8">Créditos a descontar: </span><strong id="renovar-creditos-info" style="color:#ef4444">1</strong>
+        <span style="color:#94a3b8;margin-left:12px">Disponível após: </span><strong id="renovar-saldo-info" style="color:#10b981">0</strong>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Nova data de vencimento</label>
+        <input type="date" id="renovar-data" style="width:100%">
+      </div>
     </div>
     <div style="margin-bottom:14px">
       <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Data do pagamento</label>
@@ -5718,17 +5729,13 @@ Maria Santos ; 10/09/2026 ; 35 ; 11999999999"></textarea>
       <input type="number" id="renovar-valor" placeholder="Ex: 105.00" step="0.01" min="0" style="width:100%">
       <div style="font-size:11px;color:#64748b;margin-top:4px">Deixe em branco para usar o valor cadastrado do cliente.</div>
     </div>
-    <div style="margin-bottom:14px">
-      <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Nova data de vencimento</label>
-      <input type="date" id="renovar-data" style="width:100%">
-    </div>
-    <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 0;border-top:1px solid #334155;margin-bottom:10px">
+    <label id="renovar-label-pgdepois" style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 0;border-top:1px solid #334155;margin-bottom:10px">
       <input type="checkbox" id="renovar-pagar-depois" style="width:18px;height:18px;accent-color:#f59e0b;cursor:pointer">
       <span style="font-size:13px;color:#fbbf24;font-weight:600">🕐 Vai pagar depois</span>
       <span style="font-size:12px;color:#94a3b8">(ainda não pagou)</span>
     </label>
-    <div class="modal-actions">
-      <button class="btn btn-green" onclick="confirmarRenovar()">💾 Renovar</button>
+    <div class="modal-actions" id="renovar-acoes">
+      <button class="btn btn-green" id="btn-confirmar-renovar" onclick="confirmarRenovar()">💾 Renovar</button>
       <button class="btn btn-gray" onclick="fecharModal('modal-renovar')">Cancelar</button>
     </div>
   </div>
@@ -5964,6 +5971,14 @@ function abrirRenovar(idx) {
   document.getElementById('renovar-valor').value = '';
   document.getElementById('renovar-meses').value = c.meses || 1;
   document.getElementById('renovar-pagar-depois').checked = !!c.pagarDepois;
+  // Modo: registrar pagamento (já tem pagarDepois) vs renovar normal
+  const modoPgDepois = !!c.pagarDepois;
+  document.getElementById('renovar-aviso-pgdepois').style.display = modoPgDepois ? '' : 'none';
+  document.getElementById('renovar-campos-normais').style.display = modoPgDepois ? 'none' : '';
+  document.getElementById('renovar-label-pgdepois').style.display = modoPgDepois ? 'none' : '';
+  document.getElementById('renovar-titulo').textContent = modoPgDepois ? '✅ Registrar Pagamento' : '🔄 Renovar Cliente';
+  document.getElementById('btn-confirmar-renovar').textContent = modoPgDepois ? '✅ Confirmar Pagamento' : '💾 Renovar';
+  document.getElementById('modal-renovar-inner').style.borderTopColor = modoPgDepois ? '#f59e0b' : '#10b981';
   atualizarInfoRenovar();
   document.getElementById('modal-renovar').classList.add('open');
 }
@@ -5985,22 +6000,33 @@ function atualizarInfoRenovar() {
 function confirmarRenovar() {
   if (renovarIdx < 0) return;
   const novaData = document.getElementById('renovar-data').value;
-  if (!novaData) return alert('Informe a nova data de vencimento!');
   const c = clientes[renovarIdx];
   const dataPgto = document.getElementById('renovar-pgto').value || today();
   const meses = +document.getElementById('renovar-meses').value || c.meses || 1;
   const cred = creditosPorMeses(meses);
   const valorDigitado = document.getElementById('renovar-valor').value;
   const valorPago = valorDigitado !== '' ? +valorDigitado : +c.valor||0;
-  const pagarDepois = document.getElementById('renovar-pagar-depois').checked;
-  if (!pagarDepois) {
-    pagamentos.push({ data: dataPgto, cliente: c.cliente, valor: valorPago, meses: meses, creditos: cred });
+  const eraVaiPagarDepois = !!c.pagarDepois;
+  const pagarDepois = eraVaiPagarDepois ? false : document.getElementById('renovar-pagar-depois').checked;
+
+  if (eraVaiPagarDepois) {
+    // Modo registrar pagamento: só registra o valor, não muda a data de vencimento
+    pagamentos.push({ data: dataPgto, cliente: c.cliente, valor: valorPago, meses: c.meses||1, creditos: creditosPorMeses(c.meses||1) });
     savePG();
+    clientes[renovarIdx].pagarDepois = false;
+    saveC();
+  } else {
+    // Modo renovação normal
+    if (!novaData) return alert('Informe a nova data de vencimento!');
+    if (!pagarDepois) {
+      pagamentos.push({ data: dataPgto, cliente: c.cliente, valor: valorPago, meses: meses, creditos: cred });
+      savePG();
+    }
+    clientes[renovarIdx].venc = novaData;
+    clientes[renovarIdx].meses = meses;
+    clientes[renovarIdx].pagarDepois = pagarDepois;
+    saveC();
   }
-  clientes[renovarIdx].venc = novaData;
-  clientes[renovarIdx].meses = meses;
-  clientes[renovarIdx].pagarDepois = pagarDepois;
-  saveC();
   fecharModal('modal-renovar');
   refreshAll();
 }
