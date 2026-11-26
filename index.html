@@ -220,6 +220,7 @@ tr:hover td { background: #0f172a55; }
     <button class="tab" onclick="switchTab('controle')">📒 Controle do Mês</button>
     <button class="tab active" onclick="switchTab('previsao')">📅 Previsão Diária</button>
     <button class="tab" onclick="switchTab('inativos')">🚫 Inativos</button>
+    <button class="tab" onclick="switchTab('pagardepois')">🕐 Vão Pagar</button>
   </div>
 
   <!-- ========== ABA CLIENTES ========== -->
@@ -7502,6 +7503,32 @@ function whatsappInativo(tel,nome){
   if(!num){alert('Sem numero');return;}
   window.open('https://wa.me/55'+num+'?text='+encodeURIComponent('Ola '+nome+'! Passando para ver se tem interesse em renovar o plano IPTV.'),'_blank');
 }
+function renderPagarDepois(){
+  const lista = clientes.map((c,i)=>({...c,_idx:i})).filter(c=>c.pagarDepois);
+  const tbody = document.getElementById('tbody-pagardepois');
+  const vazio = document.getElementById('pagardepois-vazio');
+  const resumo = document.getElementById('pagardepois-resumo');
+  if(!tbody) return;
+  if(lista.length === 0){
+    tbody.innerHTML='';
+    if(vazio) vazio.style.display='';
+    if(resumo) resumo.textContent='';
+    return;
+  }
+  if(vazio) vazio.style.display='none';
+  const total = lista.reduce((s,c)=>s+(+c.valor||0),0);
+  if(resumo) resumo.textContent = lista.length + ' cliente(s) — Total: ' + brl(total);
+  tbody.innerHTML = lista.map(c=>`
+    <tr>
+      <td><strong>${c.cliente}</strong></td>
+      <td>${fmtDate(c.venc)}</td>
+      <td style="color:#10b981;font-weight:600">${brl(+c.valor||0)}</td>
+      <td>
+        <button class="btn btn-green btn-sm" onclick="abrirRenovar(${c._idx})" title="Registrar pagamento">✅ Registrar Pagamento</button>
+      </td>
+    </tr>`).join('');
+}
+
 function renderInativos(){
   var tbody=document.getElementById('tbody-inativos');
   if(!tbody)return;
@@ -7548,6 +7575,7 @@ function refreshAll() {
   updateKPIs();
   updateCharts();
   renderClientes();
+  renderPagarDepois();
   renderAlertBanner();
   atualizarAutocompleteApp();
   renderCreditos();
@@ -7597,6 +7625,27 @@ function refreshAll() {
   }
 })();
 </script>
+
+  <div id="tab-pagardepois" class="tab-content">
+    <div class="card">
+      <div class="topbar">
+        <h2>🕐 Vão Pagar Depois</h2>
+        <div style="font-size:13px;color:#94a3b8" id="pagardepois-resumo"></div>
+      </div>
+      <table class="table" id="tabela-pagardepois">
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Vencimento</th>
+            <th>Valor</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-pagardepois"></tbody>
+      </table>
+      <p id="pagardepois-vazio" style="text-align:center;color:#64748b;padding:30px;display:none">Nenhum cliente marcado como "vai pagar depois" 🎉</p>
+    </div>
+  </div>
 
   <div id="tab-inativos" class="tab-content">
     <div class="card">
