@@ -5781,6 +5781,14 @@ Maria Santos ; 10/09/2026 ; 35 ; 11999999999"></textarea>
       </div>
       <div id="renovar-api-status" style="font-size:12px;color:#64748b;min-height:16px"></div>
     </div>
+    <!-- WhatsApp -->
+    <div id="renovar-whats-section" style="display:none;border-top:1px solid #334155;padding-top:12px;margin-bottom:10px">
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:8px">
+        <input type="checkbox" id="renovar-enviar-whats" style="width:18px;height:18px;accent-color:#25d366;cursor:pointer" checked>
+        <span style="font-size:13px;color:#25d366;font-weight:600">📲 Enviar mensagem no WhatsApp</span>
+      </label>
+      <textarea id="renovar-whats-msg" rows="3" style="width:100%;font-size:12px;resize:vertical;background:#0f172a;color:#e2e8f0;border:1px solid #334155;border-radius:6px;padding:8px"></textarea>
+    </div>
     <label id="renovar-label-pgdepois" style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 0;border-top:1px solid #334155;margin-bottom:10px">
       <input type="checkbox" id="renovar-pagar-depois" style="width:18px;height:18px;accent-color:#f59e0b;cursor:pointer">
       <span style="font-size:13px;color:#fbbf24;font-weight:600">🕐 Vai pagar depois</span>
@@ -6042,7 +6050,27 @@ function abrirRenovar(idx) {
   } else {
     apiSection.style.display = 'none';
   }
+  // Seção WhatsApp
+  const whatsSection = document.getElementById('renovar-whats-section');
+  if(c.fone && !modoPgDepois) {
+    whatsSection.style.display = '';
+    document.getElementById('renovar-enviar-whats').checked = true;
+    document.getElementById('renovar-whats-msg').value = montarMsgRenovacao(c.cliente, '');
+  } else {
+    whatsSection.style.display = 'none';
+  }
   document.getElementById('modal-renovar').classList.add('open');
+}
+
+function montarMsgRenovacao(nome, novaData) {
+  const dataFmt = novaData ? fmtDate(novaData) : '';
+  return `Olá ${nome}! ✅ Sua assinatura foi renovada com sucesso!${dataFmt ? '\n📅 Novo vencimento: ' + dataFmt : ''}\nQualquer dúvida é só chamar! 😊`;
+}
+
+function abrirWhatsRenovacao(fone, msg) {
+  const num = fone.replace(/\D/g, '');
+  const full = num.startsWith('55') ? num : '55' + num;
+  window.open('https://wa.me/' + full + '?text=' + encodeURIComponent(msg), '_blank');
 }
 
 function atualizarHintData() {
@@ -6139,6 +6167,12 @@ function confirmarRenovar() {
   }
   fecharModal('modal-renovar');
   refreshAll();
+  // WhatsApp — renovação manual
+  const enviarWhats = document.getElementById('renovar-enviar-whats');
+  if(c.fone && enviarWhats && enviarWhats.checked && !eraVaiPagarDepois) {
+    const msg = document.getElementById('renovar-whats-msg').value || montarMsgRenovacao(c.cliente, novaData);
+    abrirWhatsRenovacao(c.fone, msg);
+  }
 }
 
 async function confirmarRenovarComAPI(planId) {
@@ -6178,7 +6212,17 @@ async function confirmarRenovarComAPI(planId) {
     saveC();
     fecharModal('modal-renovar');
     refreshAll();
-    alert('✅ Renovado na API! Novo vencimento: ' + (novaVenc ? fmtDate(novaVenc) : 'ver na API'));
+    // WhatsApp — renovação via API (usa a data real retornada)
+    const enviarWhats = document.getElementById('renovar-enviar-whats');
+    if(c.fone && enviarWhats && enviarWhats.checked) {
+      const msgBase = document.getElementById('renovar-whats-msg').value;
+      const msg = msgBase || montarMsgRenovacao(c.cliente, novaVenc);
+      // Atualiza a data na mensagem se ainda estava vazia
+      const msgFinal = msg.replace('(data)', novaVenc ? fmtDate(novaVenc) : '');
+      abrirWhatsRenovacao(c.fone, msgFinal);
+    } else {
+      alert('✅ Renovado na API! Novo vencimento: ' + (novaVenc ? fmtDate(novaVenc) : 'ver na API'));
+    }
   } catch(e) {
     if(statusEl) { statusEl.textContent = '❌ Erro: ' + e.message; statusEl.style.color = '#ef4444'; }
     alert('❌ Erro ao renovar na API: ' + e.message);
