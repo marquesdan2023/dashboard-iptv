@@ -7384,10 +7384,11 @@ function renderPrevisao() {
     else { dias[dia].gratuitos.push(c); }
   });
 
+  const totalGratuitos = todosDoMes.filter(c => (+c.valor||0) === 0).length;
+  const totalPagantes = todosDoMes.filter(c => (+c.valor||0) > 0).length;
   const totalClientes = todosDoMes.length;
   const totalValor = todosDoMes.reduce((s,c) => s + (+c.valor||0), 0);
   const totalDias = Object.keys(dias).length;
-  const totalGratuitos = todosDoMes.filter(c => (+c.valor||0) === 0).length;
 
   const _set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
   const elPrev = document.getElementById('prev-clientes');
@@ -7416,7 +7417,7 @@ function renderPrevisao() {
     return '<tr style="' + rowStyle + '"><td><strong>' + fmtDate(dia) + badge + '</strong></td><td style="font-weight:700">' + totalDia + gratInfo + '</td><td style="color:#10b981;font-weight:600">' + brl(d.total) + '</td><td style="line-height:1.8">' + nomes + '</td></tr>';
   }).join('');
 
-  tbody.innerHTML += '<tr style="border-top:2px solid #334155;background:#1e293b"><td><strong>TOTAL</strong></td><td><strong>' + totalClientes + '</strong></td><td style="color:#10b981;font-weight:700">' + brl(totalValor) + '</td><td></td></tr>';
+  tbody.innerHTML += '<tr style="border-top:2px solid #334155;background:#1e293b"><td><strong>TOTAL</strong></td><td><strong>' + totalPagantes + '</strong>' + (totalGratuitos > 0 ? ' <span style="font-size:11px;color:#94a3b8">(+' + totalGratuitos + ' gratuidade)</span>' : '') + '</td><td style="color:#10b981;font-weight:700">' + brl(totalValor) + '</td><td></td></tr>';
 }
 
 
