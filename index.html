@@ -203,6 +203,12 @@ tr:hover td { background: #0f172a55; }
       <p class="subtitle" style="margin:0">Gestão de clientes — sincronizado na nuvem ☁️</p>
     </div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <!-- Saldo API -->
+      <div id="api-saldo-box" style="display:none;background:#1e1b4b;border:1px solid #4c1d95;border-radius:8px;padding:6px 12px;font-size:12px;line-height:1.5;cursor:pointer" onclick="atualizarSaldoAPI()" title="Clique para atualizar">
+        <span style="color:#a78bfa">🪙 Créditos: </span><strong id="api-creditos" style="color:#fff">—</strong>
+        <span id="api-bonus-wrap" style="display:none"> &nbsp;|&nbsp; <span style="color:#fbbf24">🎁 Bônus: </span><strong id="api-bonus" style="color:#fff">—</strong></span>
+        <span style="color:#64748b;font-size:10px;margin-left:6px" id="api-online-wrap"><span id="api-online">—</span> 🟢 online</span>
+      </div>
       <button class="btn btn-gray" onclick="abrirLembrete()" id="btn-lembrete" style="">🔔 <span id="lembrete-count">1</span> vencem amanhã</button>
       <button class="btn btn-gray" onclick="toggleTema()" id="btn-tema">☀️ Claro</button>
       <button class="btn btn-gray" onclick="abrirBackup()">💾 Backup</button>
@@ -351,6 +357,7 @@ tr:hover td { background: #0f172a55; }
           <button class="btn" id="btn-excluir-massa" onclick="excluirSelecionados()" style="display:none;background:#ef4444">🗑️ Excluir Selecionados</button>
           <button class="btn btn-blue" onclick="exportPDF()">⬇ Exportar PDF</button>
           <button class="btn" style="background:#6366f1" onclick="gerarRelatorioMensal()">📊 Relatório</button>
+          <button class="btn" onclick="abrirNovoClienteAPI()" style="background:linear-gradient(135deg,#059669,#10b981);color:#fff">➕ Novo na API</button>
           <button class="btn" id="btn-sync-clientes" onclick="sincronizarClientes()" style="background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff">🔄 Sincronizar API</button>
         </div>
       </div>
@@ -5694,6 +5701,37 @@ Maria Santos ; 10/09/2026 ; 35 ; 11999999999"></textarea>
   </div>
 </div>
 
+<!-- MODAL NOVO CLIENTE NA API -->
+<div class="modal-overlay" id="modal-novo-api">
+  <div class="modal" style="border-top-color:#10b981;max-width:500px">
+    <h3>➕ Novo Cliente na API</h3>
+    <p style="font-size:13px;color:#94a3b8;margin-bottom:14px">Cria o cliente no fornecedor e cadastra no dashboard automaticamente.</p>
+    <div style="margin-bottom:14px">
+      <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Nome do cliente *</label>
+      <input type="text" id="novo-api-nome" placeholder="Nome completo do cliente" style="width:100%">
+    </div>
+    <div style="margin-bottom:14px">
+      <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Plano *</label>
+      <select id="novo-api-plano" style="width:100%">
+        <option value="">⏳ Carregando planos...</option>
+      </select>
+    </div>
+    <div style="margin-bottom:14px">
+      <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">WhatsApp (opcional)</label>
+      <input type="text" id="novo-api-fone" placeholder="Ex: 11999999999" style="width:100%">
+    </div>
+    <div style="margin-bottom:14px">
+      <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Valor cobrado R$ (opcional)</label>
+      <input type="number" id="novo-api-valor" placeholder="Ex: 35.00" step="0.01" min="0" style="width:100%">
+    </div>
+    <div id="novo-api-status" style="font-size:12px;min-height:16px;margin-bottom:10px"></div>
+    <div class="modal-actions">
+      <button class="btn btn-green" id="btn-confirmar-novo-api" onclick="confirmarNovoClienteAPI()">✅ Criar Cliente</button>
+      <button class="btn btn-gray" onclick="fecharModal('modal-novo-api')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL RENOVAR -->
 <div class="modal-overlay" id="modal-renovar">
   <div class="modal" id="modal-renovar-inner" style="border-top-color:#10b981">
@@ -5954,7 +5992,7 @@ function renderClientes() {
     return `<tr style="${rowStyle}">
       <td><input type="checkbox" class="chk-cliente" data-idx="${idx}" ${selecionados.has(idx)?'checked':''} onchange="toggleSelecao(${idx}, this.checked)"></td>
       <td>
-        <strong>${c.cliente}</strong>
+        <strong>${c.cliente}</strong>${c.apiId && apiOnlineIds.has(c.apiId) ? ' <span title="Assistindo agora" style="color:#22c55e;font-size:11px">🟢</span>' : ''}
         ${c.indicacao ? `<br><span style="font-size:10px;color:#8b5cf6">👤 ${c.indicacao}</span>` : ''}
       </td>
       <td>${fmtDate(c.venc)}</td>
@@ -6468,6 +6506,106 @@ async function sincronizarCreditos() {
     if(status) status.textContent = '❌ Erro ao sincronizar: ' + e.message;
   } finally {
     if(btn) { btn.disabled = false; btn.textContent = '🔄 Sincronizar com fornecedor'; }
+  }
+}
+
+// Set de IDs online da API (atualizado pelo atualizarSaldoAPI)
+let apiOnlineIds = new Set();
+
+async function atualizarSaldoAPI() {
+  try {
+    const [meRes, connRes] = await Promise.all([
+      fetch(HPLUS_API_URL + '/me', { headers: { 'X-API-Key': HPLUS_API_KEY } }),
+      fetch(HPLUS_API_URL + '/iptv/connections', { headers: { 'X-API-Key': HPLUS_API_KEY } })
+    ]);
+    if(meRes.ok) {
+      const me = await meRes.json();
+      document.getElementById('api-creditos').textContent = me.credits ?? '—';
+      const bonus = me.redeemable_credits || 0;
+      const bonusWrap = document.getElementById('api-bonus-wrap');
+      if(bonus > 0) {
+        document.getElementById('api-bonus').textContent = bonus;
+        bonusWrap.style.display = '';
+      } else {
+        bonusWrap.style.display = 'none';
+      }
+      document.getElementById('api-saldo-box').style.display = '';
+    }
+    if(connRes.ok && connRes.status !== 204) {
+      const conns = await connRes.json();
+      apiOnlineIds = new Set((conns || []).map(c => c.id));
+      document.getElementById('api-online').textContent = apiOnlineIds.size;
+      renderClientes();
+    } else {
+      apiOnlineIds = new Set();
+      document.getElementById('api-online').textContent = '0';
+    }
+  } catch(e) { /* silencioso */ }
+}
+
+async function abrirNovoClienteAPI() {
+  document.getElementById('novo-api-nome').value = '';
+  document.getElementById('novo-api-fone').value = '';
+  document.getElementById('novo-api-valor').value = '';
+  document.getElementById('novo-api-status').textContent = '';
+  document.getElementById('novo-api-status').style.color = '';
+  const btn = document.getElementById('btn-confirmar-novo-api');
+  if(btn) { btn.disabled = false; btn.textContent = '✅ Criar Cliente'; }
+  // Carregar planos
+  const sel = document.getElementById('novo-api-plano');
+  sel.innerHTML = '<option value="">⏳ Carregando planos...</option>';
+  sel.disabled = true;
+  document.getElementById('modal-novo-api').classList.add('open');
+  try {
+    const r = await fetch(HPLUS_API_URL + '/iptv/plans', { headers: { 'X-API-Key': HPLUS_API_KEY } });
+    if(!r.ok) throw new Error('HTTP ' + r.status);
+    const planos = await r.json();
+    sel.innerHTML = '<option value="">— Selecione um plano —</option>' +
+      planos.map(p => {
+        const dur = p.official ? p.official.duration + ' ' + (p.official.duration_in === 'months' ? 'mês(es)' : p.official.duration_in) : '';
+        const cred = p.official ? ' · ' + p.official.credits + ' cr.' : '';
+        return `<option value="${p.id}">${p.name}${dur ? ' (' + dur + ')' : ''}${cred}</option>`;
+      }).join('');
+    sel.disabled = false;
+  } catch(e) {
+    sel.innerHTML = '<option value="">❌ Erro ao carregar planos</option>';
+    sel.disabled = false;
+  }
+}
+
+async function confirmarNovoClienteAPI() {
+  const nome = document.getElementById('novo-api-nome').value.trim();
+  const planId = document.getElementById('novo-api-plano').value;
+  const fone = document.getElementById('novo-api-fone').value.trim();
+  const valor = document.getElementById('novo-api-valor').value;
+  const statusEl = document.getElementById('novo-api-status');
+  const btn = document.getElementById('btn-confirmar-novo-api');
+  if(!nome) return alert('Informe o nome do cliente!');
+  if(!planId) return alert('Selecione um plano!');
+  btn.disabled = true; btn.textContent = '⏳ Criando...';
+  statusEl.textContent = 'Enviando para a API...'; statusEl.style.color = '#a855f7';
+  try {
+    const r = await fetch(HPLUS_API_URL + '/iptv/clients', {
+      method: 'POST',
+      headers: { 'X-API-Key': HPLUS_API_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan_id: +planId, reseller_notes: nome, ...(fone ? { contact: { name: nome, whatsapp: fone } } : {}) })
+    });
+    if(!r.ok) {
+      const errText = await r.text().catch(() => '');
+      throw new Error('HTTP ' + r.status + (errText ? ': ' + errText : ''));
+    }
+    const data = await r.json();
+    const novaVenc = (data.exp_date || '').slice(0, 10);
+    // Cadastrar no dashboard
+    clientes.push({ cliente: nome, venc: novaVenc, valor: +valor||0, app: '', tec: '', meses: 1, fone: fone, obs: '', indicacao: '', apiId: data.id });
+    saveC();
+    refreshAll();
+    fecharModal('modal-novo-api');
+    atualizarSaldoAPI();
+    alert('✅ Cliente criado na API!\n👤 ' + nome + '\n📅 Vence: ' + (novaVenc ? fmtDate(novaVenc) : '—') + '\n🔑 Usuário: ' + (data.username||'—') + ' | Senha: ' + (data.password||'—'));
+  } catch(e) {
+    statusEl.textContent = '❌ Erro: ' + e.message; statusEl.style.color = '#ef4444';
+    btn.disabled = false; btn.textContent = '✅ Criar Cliente';
   }
 }
 
@@ -7804,6 +7942,9 @@ function refreshAll() {
     carregarTema();
     carregarSaldoInicial();
     checarSenhaInicio();
+    atualizarSaldoAPI();
+    // Atualizar saldo e online a cada 2 minutos
+    setInterval(atualizarSaldoAPI, 120000);
   }
 })();
 </script>
