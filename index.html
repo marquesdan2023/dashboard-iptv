@@ -6307,7 +6307,7 @@ function renderCreditos() {
   _sc('cr-comprados-val', brl(compradosMes * CUSTO_CREDITO));
   _sc('cr-usados-mes', usadosMes.toFixed(2));
   _sc('cr-usados-mes-val', brl(usadosMes * CUSTO_CREDITO));
-  _sc('cr-disponiveis', +disponiveis % 1 === 0 ? disponiveis.toFixed(0) : String(Math.round(disponiveis * 10) / 10));
+  _sc('cr-disponiveis', +disponiveis % 1 === 0 ? disponiveis.toFixed(0) : disponiveis.toFixed(2).replace(/\.?0+$/, '').replace(/(\.\d)$/, '$10'));
   _sc('cr-disponiveis-val', brl(disponiveis * CUSTO_CREDITO));
 
   // Tabela de compras
