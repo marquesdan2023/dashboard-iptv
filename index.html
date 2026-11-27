@@ -172,7 +172,6 @@ tr:hover td { background: #0f172a55; }
 /* FORM GRIDS */
 .form-row { display: grid; gap: 8px; margin-bottom: 10px; }
 .form-5 { grid-template-columns: 2fr 1fr 1fr 1fr 1fr; }
-.form-5dns { grid-template-columns: 1.5fr 1.2fr 1.5fr 1fr 1fr; }
 .form-actions { display: flex; gap: 8px; }
 
 /* MISC */
@@ -180,7 +179,6 @@ tr:hover td { background: #0f172a55; }
 .muted { color: #475569; font-size: 12px; margin-top: 10px; }
 .obs-warn { color: #f59e0b; font-weight: 600; }
 .form-box { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
-.dns-card { border-top: 3px solid #f59e0b; }
 </style>
 </head>
 <body class="tema-claro">
@@ -220,7 +218,6 @@ tr:hover td { background: #0f172a55; }
   <div class="tabs">
     <button class="tab" onclick="switchTab('resumo')">📊 Resumo</button>
     <button class="tab" onclick="switchTab('clientes')">📋 Clientes</button>
-    <button class="tab" onclick="switchTab('dns')">🌐 Alterar DNS</button>
     <button class="tab" onclick="switchTab('creditos')">🪙 Créditos</button>
     <button class="tab" onclick="switchTab('projecao')">📈 Projeção</button>
     <button class="tab" onclick="switchTab('controle')">📒 Controle do Mês</button>
@@ -3169,258 +3166,6 @@ tr:hover td { background: #0f172a55; }
   </div>
 </div>
 
-  <div id="tab-dns" class="tab-content">
-    <div class="card dns-card">
-      <div class="topbar">
-        <h2>🌐 Alterar DNS — Clientes (<span id="count-dns">14</span>)</h2>
-        <button class="btn btn-yellow" onclick="toggleForm('form-dns')">➕ Adicionar Cliente DNS</button>
-      </div>
-
-      <!-- FORM DNS -->
-      <div id="form-dns" class="form-box" style="display:none">
-        <p style="font-size:13px;color:#94a3b8;margin-bottom:10px">Preencha os dados do novo cliente DNS:</p>
-        <div class="form-row form-5dns">
-          <input type="text" id="df-nome" placeholder="Nome do cliente *">
-          <input type="text" id="df-app" placeholder="Aplicativo">
-          <input type="text" id="df-mac" placeholder="MAC Address">
-          <input type="text" id="df-senha" placeholder="Senha">
-          <input type="date" id="df-venc" title="Data de vencimento">
-        </div>
-        <div class="form-row" style="grid-template-columns:1fr auto">
-          <input type="text" id="df-obs" placeholder="Observações (ex: Enviar novo DNS)">
-          <button class="btn btn-green" onclick="addDns()">💾 Salvar</button>
-        </div>
-        <button class="btn btn-gray btn-sm" style="margin-top:6px" onclick="toggleForm('form-dns')">Cancelar</button>
-      </div>
-
-      <!-- BUSCA DNS -->
-      <div class="toolbar">
-        <input type="text" id="search-dns" placeholder="🔍 Buscar cliente, app, MAC, obs..." oninput="renderDns()">
-        <select id="filter-dns-venc" onchange="renderDns()">
-          <option value="">Todos os vencimentos</option>
-          <option value="mes">📅 Vencem este mês</option>
-          <option value="proximo">📅 Vencem mês que vem</option>
-          <option value="vencido">🔴 Já vencidos</option>
-          <option value="sem">— Sem vencimento</option>
-        </select>
-      </div>
-
-      <!-- KPI vencimentos DNS -->
-      <div id="dns-venc-banner" style="display:none;background:#1e3a5f;border-radius:8px;padding:12px 16px;margin-bottom:12px;font-size:13px;color:#bfdbfe;display:flex;gap:20px;flex-wrap:wrap;align-items:center">
-    <span>📅 <strong>Este mês:</strong> 0 clientes</span>
-    <span>🗓 <strong>Mês que vem:</strong> 0 clientes</span>
-    <span style="color:#fecaca">🔴 <strong>Vencidos:</strong> 2 clientes</span>
-  </div>
-
-      <!-- TABELA DNS -->
-      <div class="table-wrap">
-        <table>
-          <thead><tr>
-            <th>Cliente</th><th>Aplicativo</th><th>MAC Address</th><th>Senha</th><th>Data Venc.</th><th>Obs</th><th>Ação</th>
-          </tr></thead>
-          <tbody id="tbody-dns"><tr>
-      <td><strong>Léo</strong></td>
-      <td>IBO</td>
-      <td>
-        <span style="font-family:monospace;font-size:12px">c8:a6:ef:7a:54:5e</span>
-        <button class="copy-btn" id="cm0" onclick="copyText('c8:a6:ef:7a:54:5e','cm0')">📋</button>
-      </td>
-      <td>
-        <span style="font-family:monospace">329747</span>
-        <button class="copy-btn" id="cs0" onclick="copyText('329747','cs0')">📋</button>
-      </td>
-      <td><span style="color:#fca5a5">22/10/2026</span></td>
-      <td style="color:#64748b;font-size:12px"></td>
-      <td><button class="btn btn-edit btn-sm" onclick="editarDns(9)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(9)">🗑</button></td>
-    </tr><tr>
-      <td><strong>Cintia</strong></td>
-      <td>Duplecast</td>
-      <td>
-        <span style="font-family:monospace;font-size:12px">70:B1:3D:38:1A:38</span>
-        <button class="copy-btn" id="cm1" onclick="copyText('70:B1:3D:38:1A:38','cm1')">📋</button>
-      </td>
-      <td>
-        <span style="font-family:monospace">1665541299</span>
-        <button class="copy-btn" id="cs1" onclick="copyText('1665541299','cs1')">📋</button>
-      </td>
-      <td><span style="color:#fca5a5">24/10/2026</span></td>
-      <td style="color:#64748b;font-size:12px"></td>
-      <td><button class="btn btn-edit btn-sm" onclick="editarDns(10)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(10)">🗑</button></td>
-    </tr><tr>
-      <td><strong>Rogério</strong></td>
-      <td>Duplecast</td>
-      <td>
-        <span style="font-family:monospace;font-size:12px">d0c24e750930</span>
-        <button class="copy-btn" id="cm2" onclick="copyText('d0c24e750930','cm2')">📋</button>
-      </td>
-      <td>
-        <span style="font-family:monospace">1707264632</span>
-        <button class="copy-btn" id="cs2" onclick="copyText('1707264632','cs2')">📋</button>
-      </td>
-      <td><span style="color:#94a3b8">07/02/2027</span></td>
-      <td style="color:#64748b;font-size:12px"></td>
-      <td><button class="btn btn-edit btn-sm" onclick="editarDns(1)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(1)">🗑</button></td>
-    </tr><tr>
-      <td><strong>Gilberto</strong></td>
-      <td>Quick Player</td>
-      <td>
-        <span style="font-family:monospace;font-size:12px">79735823792b</span>
-        <button class="copy-btn" id="cm3" onclick="copyText('79735823792b','cm3')">📋</button>
-      </td>
-      <td>
-        <span style="font-family:monospace">769901</span>
-        <button class="copy-btn" id="cs3" onclick="copyText('769901','cs3')">📋</button>
-      </td>
-      <td><span style="color:#94a3b8">22/02/2027</span></td>
-      <td style="color:#64748b;font-size:12px"></td>
-      <td><button class="btn btn-edit btn-sm" onclick="editarDns(0)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(0)">🗑</button></td>
-    </tr><tr>
-      <td><strong>Francisco</strong></td>
-      <td>IBO</td>
-      <td>
-        <span style="font-family:monospace;font-size:12px">9C:8C:6E:8E:A0:60</span>
-        <button class="copy-btn" id="cm4" onclick="copyText('9C:8C:6E:8E:A0:60','cm4')">📋</button>
-      </td>
-      <td>
-        <span style="font-family:monospace">210312</span>
-        <button class="copy-btn" id="cs4" onclick="copyText('210312','cs4')">📋</button>
-      </td>
-      <td><span style="color:#94a3b8">27/02/2027</span></td>
-      <td style="color:#64748b;font-size:12px"></td>
-      <td><button class="btn btn-edit btn-sm" onclick="editarDns(11)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(11)">🗑</button></td>
-    </tr><tr>
-      <td><strong>Juan Santana</strong></td>
-      <td>Duplecast</td>
-      <td>
-        <span style="font-family:monospace;font-size:12px">E0:9D:13:BE:EF:79</span>
-        <button class="copy-btn" id="cm5" onclick="copyText('E0:9D:13:BE:EF:79','cm5')">📋</button>
-      </td>
-      <td>
-        <span style="font-family:monospace">1738440347</span>
-        <button class="copy-btn" id="cs5" onclick="copyText('1738440347','cs5')">📋</button>
-      </td>
-      <td><span style="color:#94a3b8">10/04/2027</span></td>
-      <td style="color:#64748b;font-size:12px"></td>
-      <td><button class="btn btn-edit btn-sm" onclick="editarDns(13)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(13)">🗑</button></td>
-    </tr><tr>
-      <td><strong>Navarro</strong></td>
-      <td>Bay iptv</td>
-      <td>
-        <span style="font-family:monospace;font-size:12px">68fcca28851c</span>
-        <button class="copy-btn" id="cm6" onclick="copyText('68fcca28851c','cm6')">📋</button>
-      </td>
-      <td>
-        <span style="font-family:monospace">NYRU46</span>
-        <button class="copy-btn" id="cs6" onclick="copyText('NYRU46','cs6')">📋</button>
-      </td>
-      <td>—</td>
-      <td style="color:#64748b;font-size:12px"></td>
-      <td><button class="btn btn-edit btn-sm" onclick="editarDns(2)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(2)">🗑</button></td>
-    </tr><tr>
-      <td><strong>Caio</strong></td>
-      <td>Smartone</td>
-      <td>
-        <span style="font-family:monospace;font-size:12px">bcc2d905a3c7</span>
-        <button class="copy-btn" id="cm7" onclick="copyText('bcc2d905a3c7','cm7')">📋</button>
-      </td>
-      <td>
-        <span style="font-family:monospace">—</span>
-        
-      </td>
-      <td>—</td>
-      <td style="color:#64748b;font-size:12px"></td>
-      <td><button class="btn btn-edit btn-sm" onclick="editarDns(3)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(3)">🗑</button></td>
-    </tr><tr>
-      <td><strong>Kaio</strong></td>
-      <td>Duplecast</td>
-      <td>
-        <span style="font-family:monospace;font-size:12px">20174275f0f8</span>
-        <button class="copy-btn" id="cm8" onclick="copyText('20174275f0f8','cm8')">📋</button>
-      </td>
-      <td>
-        <span style="font-family:monospace">1710012774</span>
-        <button class="copy-btn" id="cs8" onclick="copyText('1710012774','cs8')">📋</button>
-      </td>
-      <td>—</td>
-      <td style="color:#64748b;font-size:12px"></td>
-      <td><button class="btn btn-edit btn-sm" onclick="editarDns(4)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(4)">🗑</button></td>
-    </tr><tr>
-      <td><strong>Jefferson Santos</strong></td>
-      <td>Smartone</td>
-      <td>
-        <span style="font-family:monospace;font-size:12px">b8b40973f343</span>
-        <button class="copy-btn" id="cm9" onclick="copyText('b8b40973f343','cm9')">📋</button>
-      </td>
-      <td>
-        <span style="font-family:monospace">—</span>
-        
-      </td>
-      <td>—</td>
-      <td style="color:#64748b;font-size:12px"></td>
-      <td><button class="btn btn-edit btn-sm" onclick="editarDns(5)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(5)">🗑</button></td>
-    </tr><tr>
-      <td><strong>Gustavo Zeni</strong></td>
-      <td>Duplecast</td>
-      <td>
-        <span style="font-family:monospace;font-size:12px">58fdb1c7e40f</span>
-        <button class="copy-btn" id="cm10" onclick="copyText('58fdb1c7e40f','cm10')">📋</button>
-      </td>
-      <td>
-        <span style="font-family:monospace">1703279801</span>
-        <button class="copy-btn" id="cs10" onclick="copyText('1703279801','cs10')">📋</button>
-      </td>
-      <td>—</td>
-      <td style="color:#64748b;font-size:12px"></td>
-      <td><button class="btn btn-edit btn-sm" onclick="editarDns(6)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(6)">🗑</button></td>
-    </tr><tr>
-      <td><strong>Jessica</strong></td>
-      <td>Duplecast</td>
-      <td>
-        <span style="font-family:monospace;font-size:12px">1c869a7f9e4a</span>
-        <button class="copy-btn" id="cm11" onclick="copyText('1c869a7f9e4a','cm11')">📋</button>
-      </td>
-      <td>
-        <span style="font-family:monospace">1676918947</span>
-        <button class="copy-btn" id="cs11" onclick="copyText('1676918947','cs11')">📋</button>
-      </td>
-      <td>—</td>
-      <td style="color:#64748b;font-size:12px"></td>
-      <td><button class="btn btn-edit btn-sm" onclick="editarDns(7)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(7)">🗑</button></td>
-    </tr><tr>
-      <td><strong>Maria Aparecida</strong></td>
-      <td>Duplecast</td>
-      <td>
-        <span style="font-family:monospace;font-size:12px">fc039f74ca96</span>
-        <button class="copy-btn" id="cm12" onclick="copyText('fc039f74ca96','cm12')">📋</button>
-      </td>
-      <td>
-        <span style="font-family:monospace">1679176586</span>
-        <button class="copy-btn" id="cs12" onclick="copyText('1679176586','cs12')">📋</button>
-      </td>
-      <td>—</td>
-      <td style="color:#64748b;font-size:12px"></td>
-      <td><button class="btn btn-edit btn-sm" onclick="editarDns(8)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(8)">🗑</button></td>
-    </tr><tr>
-      <td><strong>Carlos Lima</strong></td>
-      <td>—</td>
-      <td>
-        <span style="font-family:monospace;font-size:12px">—</span>
-        
-      </td>
-      <td>
-        <span style="font-family:monospace">—</span>
-        
-      </td>
-      <td>—</td>
-      <td style="color:#f59e0b;font-weight:600;font-size:12px">Enviar novo DNS</td>
-      <td><button class="btn btn-edit btn-sm" onclick="editarDns(12)" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(12)">🗑</button></td>
-    </tr></tbody>
-        </table>
-      </div>
-      <p class="muted">💡 Clique em 📋 para copiar o MAC ou Senha rapidamente. Dados salvos no navegador.</p>
-    </div>
-  </div>
-
   <!-- ========== ABA CRÉDITOS ========== -->
   <div id="tab-creditos" class="tab-content">
 
@@ -5683,24 +5428,6 @@ Maria Santos ; 10/09/2026 ; 35 ; 11999999999"></textarea>
   </div>
 </div>
 
-<!-- MODAL EDITAR DNS -->
-<div class="modal-overlay" id="modal-dns">
-  <div class="modal">
-    <h3>✏️ Editar Cliente DNS</h3>
-    <div class="modal-grid">
-      <input type="text" id="edit-nome" placeholder="Nome *">
-      <input type="text" id="edit-app" placeholder="Aplicativo">
-      <input type="text" id="edit-mac" placeholder="MAC Address">
-      <input type="text" id="edit-senha" placeholder="Senha">
-      <input type="date" id="edit-venc" title="Data de vencimento">
-      <input type="text" id="edit-obs" placeholder="Observações">
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-green" onclick="salvarEdicaoDns()">💾 Salvar alterações</button>
-      <button class="btn btn-gray" onclick="fecharModal('modal-dns')">Cancelar</button>
-    </div>
-  </div>
-</div>
 
 <!-- MODAL NOVO CLIENTE NA API -->
 <div class="modal-overlay" id="modal-novo-api">
@@ -5867,7 +5594,6 @@ Maria Santos ; 10/09/2026 ; 35 ; 11999999999"></textarea>
 // DADOS
 // ============================================================
 const CL_KEY = 'iptv_clientes_v1';
-const DN_KEY = 'iptv_dns_v1';
 const CP_KEY = 'iptv_compras_v1';
 const PG_KEY = 'iptv_pagamentos_v1';
 const BN_KEY = 'iptv_bonus_v1';
@@ -5880,7 +5606,6 @@ const PLANOS = {1: 1, 3: 2.5, 6: 5, 12: 10};
 function creditosPorMeses(m) { return PLANOS[+m] || 1; }
 
 const CL_SEED = [];
-const DN_SEED = [];
 
 // ============================================================
 // STATE
@@ -5897,7 +5622,6 @@ function loadOrSeed(key, seed) {
 }
 
 let clientes = loadOrSeed(CL_KEY, CL_SEED);
-let dnsLista = loadOrSeed(DN_KEY, DN_SEED);
 let compras    = loadOrSeed(CP_KEY, []);
 let pagamentos = loadOrSeed(PG_KEY, []);
 let bonusList    = loadOrSeed(BN_KEY, []);
@@ -5913,7 +5637,6 @@ let kpiModalLista = [];
 const savePG = () => { localStorage.setItem(PG_KEY, JSON.stringify(pagamentos)); fbSave('pagamentos', pagamentos); };
 const saveBN = () => { localStorage.setItem(BN_KEY, JSON.stringify(bonusList)); fbSave('bonus', bonusList); };
 const saveC = () => { localStorage.setItem(CL_KEY, JSON.stringify(clientes)); fbSave('clientes', clientes); };
-const saveD = () => { localStorage.setItem(DN_KEY, JSON.stringify(dnsLista)); fbSave('dns', dnsLista); };
 const saveCP = () => { localStorage.setItem(CP_KEY, JSON.stringify(compras)); fbSave('compras', compras); };
 const brl = n => 'R$ ' + (+n||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const fmtDate = iso => { if(!iso) return '—'; const [y,m,d]=iso.split('-'); return `${d}/${m}/${y}`; };
@@ -6323,144 +6046,6 @@ function exportPDF() {
   w.document.close();
 }
 
-// ============================================================
-// DNS
-// ============================================================
-function getDnsVencStatus(venc) {
-  if (!venc) return 'sem';
-  const dd = diffDays(venc);
-  if (dd < 0) return 'vencido';
-  const now = new Date(today()+'T00:00:00');
-  const d = new Date(venc+'T00:00:00');
-  if (d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth()) return 'mes';
-  const next = new Date(now.getFullYear(), now.getMonth()+1, 1);
-  const nextEnd = new Date(now.getFullYear(), now.getMonth()+2, 0);
-  if (d >= next && d <= nextEnd) return 'proximo';
-  return 'outro';
-}
-
-function renderDns() {
-  const q = document.getElementById('search-dns').value.toLowerCase();
-  const fv = document.getElementById('filter-dns-venc').value;
-  let list = dnsLista.slice();
-  if(q) list = list.filter(c=>(c.cliente+' '+c.app+' '+c.mac+' '+c.obs).toLowerCase().includes(q));
-  if(fv) list = list.filter(c => getDnsVencStatus(c.venc) === fv);
-  list.sort((a,b) => { if(!a.venc && !b.venc) return 0; if(!a.venc) return 1; if(!b.venc) return -1; return a.venc.localeCompare(b.venc); });
-
-  const banner = document.getElementById('dns-venc-banner');
-  const mesList = dnsLista.filter(c => getDnsVencStatus(c.venc) === 'mes');
-  const proximoList = dnsLista.filter(c => getDnsVencStatus(c.venc) === 'proximo');
-  const vencidoList = dnsLista.filter(c => getDnsVencStatus(c.venc) === 'vencido');
-  banner.style.display = 'flex';
-  banner.innerHTML = `
-    <span>📅 <strong>Este mês:</strong> ${mesList.length} cliente${mesList.length!==1?'s':''}</span>
-    <span>🗓 <strong>Mês que vem:</strong> ${proximoList.length} cliente${proximoList.length!==1?'s':''}</span>
-    <span style="color:#fecaca">🔴 <strong>Vencidos:</strong> ${vencidoList.length} cliente${vencidoList.length!==1?'s':''}</span>
-  `;
-
-  document.getElementById('tbody-dns').innerHTML = list.map((c,i) => {
-    const idx = dnsLista.indexOf(c);
-    const obsStyle = c.obs ? 'color:#f59e0b;font-weight:600' : 'color:#64748b';
-    return `<tr>
-      <td><strong>${c.cliente}</strong></td>
-      <td>${c.app||'—'}</td>
-      <td>
-        <span style="font-family:monospace;font-size:12px">${c.mac||'—'}</span>
-        ${c.mac?`<button class="copy-btn" id="cm${i}" onclick="copyText('${c.mac}','cm${i}')">📋</button>`:''}
-      </td>
-      <td>
-        <span style="font-family:monospace">${c.senha||'—'}</span>
-        ${c.senha?`<button class="copy-btn" id="cs${i}" onclick="copyText('${c.senha}','cs${i}')">📋</button>`:''}
-      </td>
-      <td>${c.venc ? (() => { const s = getDnsVencStatus(c.venc); const colors = {vencido:'color:#fca5a5', mes:'color:#6ee7b7;font-weight:600', proximo:'color:#fde68a', outro:'color:#94a3b8'}; return `<span style="${colors[s]||''}">${fmtDate(c.venc)}</span>`; })() : '—'}</td>
-      <td style="${obsStyle};font-size:12px">${c.obs||''}</td>
-      <td><button class="btn btn-edit btn-sm" onclick="editarDns(${idx})" style="margin-right:4px">✏️</button><button class="btn btn-red" onclick="excluirDns(${idx})">🗑</button></td>
-    </tr>`;
-  }).join('');
-  document.getElementById('count-dns').textContent = list.length;
-}
-
-function copyText(text, btnId) {
-  navigator.clipboard.writeText(text).then(()=>{
-    const btn = document.getElementById(btnId);
-    if(!btn) return;
-    btn.textContent='✓'; btn.classList.add('ok');
-    setTimeout(()=>{btn.textContent='📋'; btn.classList.remove('ok');},1500);
-  });
-}
-
-function addDns() {
-  const nome = document.getElementById('df-nome').value.trim();
-  if(!nome) return alert('Informe o nome do cliente!');
-  dnsLista.push({
-    cliente:nome,
-    app:document.getElementById('df-app').value.trim(),
-    mac:document.getElementById('df-mac').value.trim(),
-    senha:document.getElementById('df-senha').value.trim(),
-    venc:document.getElementById('df-venc').value,
-    obs:document.getElementById('df-obs').value.trim()
-  });
-  ['df-nome','df-app','df-mac','df-senha','df-venc','df-obs'].forEach(id=>document.getElementById(id).value='');
-  saveD(); renderDns();
-  document.getElementById('form-dns').style.display='none';
-}
-
-function excluirDns(idx) {
-  if(!confirm('Excluir '+dnsLista[idx].cliente+' da lista DNS?')) return;
-  dnsLista.splice(idx,1);
-  saveD(); renderDns();
-}
-
-let editIdx = -1;
-let editType = '';
-
-function editarDns(idx) {
-  editIdx = idx; editType = 'dns';
-  const c = dnsLista[idx];
-  document.getElementById('edit-nome').value  = c.cliente||'';
-  document.getElementById('edit-app').value   = c.app||'';
-  document.getElementById('edit-mac').value   = c.mac||'';
-  document.getElementById('edit-senha').value = c.senha||'';
-  document.getElementById('edit-venc').value  = c.venc||'';
-  document.getElementById('edit-obs').value   = c.obs||'';
-  document.getElementById('modal-dns').classList.add('open');
-}
-
-function editarCliente(idx) {
-  editIdx = idx; editType = 'cliente';
-  const c = clientes[idx];
-  document.getElementById('ec-nome').value  = c.cliente||'';
-  document.getElementById('ec-venc').value  = c.venc||'';
-  document.getElementById('ec-valor').value = c.valor||'';
-  document.getElementById('ec-app').value   = c.app||'';
-  document.getElementById('ec-tec').value   = c.tec||'IPTV';
-  document.getElementById('ec-meses').value = c.meses||1;
-  document.getElementById('ec-obs').value   = c.obs||'';
-  document.getElementById('ec-fone').value  = c.fone||'';
-  document.getElementById('ec-indicacao').value = c.indicacao||'';
-  document.getElementById('ec-pagar-depois').checked = !!c.pagarDepois;
-  document.getElementById('modal-cliente').classList.add('open');
-}
-
-function fecharModal(id) {
-  document.getElementById(id).classList.remove('open');
-  editIdx = -1;
-}
-
-function salvarEdicaoDns() {
-  if(editIdx < 0) return;
-  const nome = document.getElementById('edit-nome').value.trim();
-  if(!nome) return alert('Informe o nome do cliente!');
-  dnsLista[editIdx] = {
-    cliente: nome,
-    app:     document.getElementById('edit-app').value.trim(),
-    mac:     document.getElementById('edit-mac').value.trim(),
-    senha:   document.getElementById('edit-senha').value.trim(),
-    venc:    document.getElementById('edit-venc').value,
-    obs:     document.getElementById('edit-obs').value.trim(),
-  };
-  saveD(); renderDns(); fecharModal('modal-dns');
-}
 
 function salvarEdicaoCliente() {
   if(editIdx < 0) return;
@@ -6481,7 +6066,6 @@ function salvarEdicaoCliente() {
   saveC(); refreshAll(); fecharModal('modal-cliente');
 }
 
-document.getElementById('modal-dns').addEventListener('click', function(e){ if(e.target===this) fecharModal('modal-dns'); });
 document.getElementById('modal-cliente').addEventListener('click', function(e){ if(e.target===this) fecharModal('modal-cliente'); });
 document.getElementById('modal-renovar').addEventListener('click', function(e){ if(e.target===this) fecharModal('modal-renovar'); });
 
@@ -8029,12 +7613,10 @@ function refreshAll() {
   document.getElementById('sync-status').textContent = '🔄 Sincronizando...';
   try {
     const cl = await fbLoad('clientes');
-    const dn = await fbLoad('dns');
     const cp = await fbLoad('compras');
     const pg = await fbLoad('pagamentos');
 
     if (cl && cl.length > 0) { clientes = cl; localStorage.setItem(CL_KEY, JSON.stringify(cl)); }
-    if (dn && dn.length > 0) { dnsLista = dn; localStorage.setItem(DN_KEY, JSON.stringify(dn)); }
     if (cp !== null) { compras = cp; localStorage.setItem(CP_KEY, JSON.stringify(cp)); }
     if (pg !== null) { pagamentos = pg; localStorage.setItem(PG_KEY, JSON.stringify(pg)); }
     const bn = await fbLoad('bonus');
@@ -8050,7 +7632,6 @@ function refreshAll() {
     document.getElementById('sync-status').textContent = '⚠️ Offline';
   } finally {
     refreshAll();
-    renderDns();
     carregarTema();
     carregarSaldoInicial();
     checarSenhaInicio();
