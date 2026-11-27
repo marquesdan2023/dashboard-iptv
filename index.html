@@ -351,6 +351,7 @@ tr:hover td { background: #0f172a55; }
           <button class="btn" id="btn-excluir-massa" onclick="excluirSelecionados()" style="display:none;background:#ef4444">🗑️ Excluir Selecionados</button>
           <button class="btn btn-blue" onclick="exportPDF()">⬇ Exportar PDF</button>
           <button class="btn" style="background:#6366f1" onclick="gerarRelatorioMensal()">📊 Relatório</button>
+          <button class="btn" id="btn-sync-clientes" onclick="sincronizarClientes()" style="background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff">🔄 Sincronizar API</button>
         </div>
       </div>
       <div class="toolbar">
@@ -6353,6 +6354,41 @@ async function sincronizarCreditos() {
     if(status) status.textContent = '❌ Erro ao sincronizar: ' + e.message;
   } finally {
     if(btn) { btn.disabled = false; btn.textContent = '🔄 Sincronizar com fornecedor'; }
+  }
+}
+
+async function sincronizarClientes() {
+  const btn = document.getElementById('btn-sync-clientes');
+  if(btn) { btn.disabled = true; btn.textContent = '⏳ Sincronizando...'; }
+  try {
+    const r = await fetch(HPLUS_API_URL + '/iptv/clients', {
+      headers: { 'X-API-Key': HPLUS_API_KEY }
+    });
+    if(!r.ok) throw new Error('HTTP ' + r.status);
+    const apiClientes = await r.json();
+    let atualizados = 0, criados = 0;
+    apiClientes.forEach(ac => {
+      const nome = (ac.reseller_notes || '').trim();
+      if(!nome || !ac.exp_date) return;
+      const novaData = ac.exp_date.slice(0, 10);
+      const idx = clientes.findIndex(c => c.cliente.trim() === nome);
+      if(idx >= 0) {
+        clientes[idx].venc = novaData;
+        atualizados++;
+      } else {
+        clientes.push({ cliente: nome, venc: novaData, valor: 0, app: '', tec: '', meses: 1, fone: '', obs: '', indicacao: '' });
+        criados++;
+      }
+    });
+    saveC();
+    refreshAll();
+    let msg = '✅ ' + atualizados + ' clientes atualizados!';
+    if(criados) msg += '\n➕ ' + criados + ' clientes novos criados!';
+    alert(msg);
+  } catch(e) {
+    alert('❌ Erro ao sincronizar clientes: ' + e.message);
+  } finally {
+    if(btn) { btn.disabled = false; btn.textContent = '🔄 Sincronizar API'; }
   }
 }
 
