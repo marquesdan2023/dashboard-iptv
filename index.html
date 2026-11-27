@@ -5758,7 +5758,7 @@ Maria Santos ; 10/09/2026 ; 35 ; 11999999999"></textarea>
       </div>
       <div style="margin-bottom:14px" id="renovar-data-bloco">
         <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Nova data de vencimento <span id="renovar-data-hint" style="color:#a855f7;font-style:italic"></span></label>
-        <input type="date" id="renovar-data" style="width:100%">
+        <input type="date" id="renovar-data" style="width:100%" oninput="atualizarMsgWhats()">
       </div>
     </div>
     <div style="margin-bottom:14px">
@@ -6063,8 +6063,17 @@ function abrirRenovar(idx) {
 }
 
 function montarMsgRenovacao(nome, novaData) {
-  const dataFmt = novaData ? fmtDate(novaData) : '';
-  return `Olá ${nome}! ✅ Sua assinatura foi renovada com sucesso!${dataFmt ? '\n📅 Novo vencimento: ' + dataFmt : ''}\nQualquer dúvida é só chamar! 😊`;
+  const dataFmt = novaData ? fmtDate(novaData) : '___/___/______';
+  return `Olá ${nome}! ✅ Sua assinatura foi renovada com sucesso!\n📅 Novo vencimento: ${dataFmt}\nQualquer dúvida é só chamar! 😊`;
+}
+
+function atualizarMsgWhats() {
+  const whatsSection = document.getElementById('renovar-whats-section');
+  if(!whatsSection || whatsSection.style.display === 'none') return;
+  const c = clientes[renovarIdx];
+  if(!c) return;
+  const novaData = document.getElementById('renovar-data').value;
+  document.getElementById('renovar-whats-msg').value = montarMsgRenovacao(c.cliente, novaData);
 }
 
 function abrirWhatsRenovacao(fone, msg) {
