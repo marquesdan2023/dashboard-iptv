@@ -5718,8 +5718,8 @@ Maria Santos ; 10/09/2026 ; 35 ; 11999999999"></textarea>
         <span style="color:#94a3b8">Créditos a descontar: </span><strong id="renovar-creditos-info" style="color:#ef4444">1</strong>
         <span style="color:#94a3b8;margin-left:12px">Disponível após: </span><strong id="renovar-saldo-info" style="color:#10b981">0</strong>
       </div>
-      <div style="margin-bottom:14px">
-        <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Nova data de vencimento</label>
+      <div style="margin-bottom:14px" id="renovar-data-bloco">
+        <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Nova data de vencimento <span id="renovar-data-hint" style="color:#a855f7;font-style:italic"></span></label>
         <input type="date" id="renovar-data" style="width:100%">
       </div>
     </div>
@@ -5731,6 +5731,17 @@ Maria Santos ; 10/09/2026 ; 35 ; 11999999999"></textarea>
       <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Valor pago pelo cliente (R$)</label>
       <input type="number" id="renovar-valor" placeholder="Ex: 105.00" step="0.01" min="0" style="width:100%">
       <div style="font-size:11px;color:#64748b;margin-top:4px">Deixe em branco para usar o valor cadastrado do cliente.</div>
+    </div>
+    <!-- Seção renovação via API -->
+    <div id="renovar-api-section" style="display:none;border-top:1px solid #334155;padding-top:14px;margin-bottom:14px">
+      <div style="font-size:13px;color:#a855f7;font-weight:600;margin-bottom:10px">🔄 Renovar na API do fornecedor</div>
+      <div style="margin-bottom:10px">
+        <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Plano da API</label>
+        <select id="renovar-api-plano" style="width:100%" onchange="atualizarHintData()">
+          <option value="">⏳ Carregando planos...</option>
+        </select>
+      </div>
+      <div id="renovar-api-status" style="font-size:12px;color:#64748b;min-height:16px"></div>
     </div>
     <label id="renovar-label-pgdepois" style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px 0;border-top:1px solid #334155;margin-bottom:10px">
       <input type="checkbox" id="renovar-pagar-depois" style="width:18px;height:18px;accent-color:#f59e0b;cursor:pointer">
@@ -5984,7 +5995,55 @@ function abrirRenovar(idx) {
   document.getElementById('btn-confirmar-renovar').textContent = modoPgDepois ? '✅ Confirmar Pagamento' : '💾 Renovar';
   document.getElementById('modal-renovar-inner').style.borderTopColor = modoPgDepois ? '#f59e0b' : '#10b981';
   atualizarInfoRenovar();
+  // Seção API: mostrar se cliente tem apiId
+  const apiSection = document.getElementById('renovar-api-section');
+  if(c.apiId && !modoPgDepois) {
+    apiSection.style.display = '';
+    document.getElementById('renovar-api-status').textContent = '';
+    carregarPlanosAPI();
+  } else {
+    apiSection.style.display = 'none';
+  }
   document.getElementById('modal-renovar').classList.add('open');
+}
+
+function atualizarHintData() {
+  const sel = document.getElementById('renovar-api-plano');
+  const hint = document.getElementById('renovar-data-hint');
+  const dataInput = document.getElementById('renovar-data');
+  if(sel && sel.value) {
+    if(hint) hint.textContent = '(será preenchida pela API)';
+    if(dataInput) { dataInput.disabled = true; dataInput.style.opacity = '0.4'; }
+  } else {
+    if(hint) hint.textContent = '';
+    if(dataInput) { dataInput.disabled = false; dataInput.style.opacity = '1'; }
+  }
+}
+
+async function carregarPlanosAPI() {
+  const sel = document.getElementById('renovar-api-plano');
+  const status = document.getElementById('renovar-api-status');
+  sel.innerHTML = '<option value="">⏳ Carregando planos...</option>';
+  sel.disabled = true;
+  try {
+    const r = await fetch(HPLUS_API_URL + '/iptv/plans', { headers: { 'X-API-Key': HPLUS_API_KEY } });
+    if(!r.ok) throw new Error('HTTP ' + r.status);
+    const planos = await r.json();
+    sel.innerHTML = '<option value="">— Não renovar na API —</option>' +
+      planos.map(p => {
+        const dur = p.official ? p.official.duration + ' ' + (p.official.duration_in === 'months' ? 'mês(es)' : p.official.duration_in) : '';
+        return `<option value="${p.id}" data-plano='${JSON.stringify(p)}'>${p.name}${dur ? ' (' + dur + ')' : ''}</option>`;
+      }).join('');
+    sel.disabled = false;
+    status.textContent = planos.length + ' plano(s) disponível(is)';
+    status.style.color = '#10b981';
+    atualizarHintData();
+  } catch(e) {
+    sel.innerHTML = '<option value="">❌ Erro ao carregar planos</option>';
+    status.textContent = 'Erro: ' + e.message;
+    status.style.color = '#ef4444';
+    sel.disabled = false;
+  }
 }
 
 function atualizarInfoRenovar() {
@@ -6003,24 +6062,33 @@ function atualizarInfoRenovar() {
 
 function confirmarRenovar() {
   if (renovarIdx < 0) return;
-  const novaData = document.getElementById('renovar-data').value;
   const c = clientes[renovarIdx];
+  const eraVaiPagarDepois = !!c.pagarDepois;
+
+  // Verificar se vai renovar via API
+  const apiPlanSel = document.getElementById('renovar-api-plano');
+  const apiPlanId = apiPlanSel ? apiPlanSel.value : '';
+  if (!eraVaiPagarDepois && c.apiId && apiPlanId) {
+    // Renovação via API: chama endpoint e usa a data retornada
+    confirmarRenovarComAPI(apiPlanId);
+    return;
+  }
+
+  // Fluxo normal sem API
+  const novaData = document.getElementById('renovar-data').value;
   const dataPgto = document.getElementById('renovar-pgto').value || today();
   const meses = +document.getElementById('renovar-meses').value || c.meses || 1;
   const cred = creditosPorMeses(meses);
   const valorDigitado = document.getElementById('renovar-valor').value;
   const valorPago = valorDigitado !== '' ? +valorDigitado : +c.valor||0;
-  const eraVaiPagarDepois = !!c.pagarDepois;
   const pagarDepois = eraVaiPagarDepois ? false : document.getElementById('renovar-pagar-depois').checked;
 
   if (eraVaiPagarDepois) {
-    // Modo registrar pagamento: só registra o valor, não muda a data de vencimento
     pagamentos.push({ data: dataPgto, cliente: c.cliente, valor: valorPago, meses: c.meses||1, creditos: creditosPorMeses(c.meses||1) });
     savePG();
     clientes[renovarIdx].pagarDepois = false;
     saveC();
   } else {
-    // Modo renovação normal
     if (!novaData) return alert('Informe a nova data de vencimento!');
     if (!pagarDepois) {
       pagamentos.push({ data: dataPgto, cliente: c.cliente, valor: valorPago, meses: meses, creditos: cred });
@@ -6033,6 +6101,52 @@ function confirmarRenovar() {
   }
   fecharModal('modal-renovar');
   refreshAll();
+}
+
+async function confirmarRenovarComAPI(planId) {
+  const c = clientes[renovarIdx];
+  const btn = document.getElementById('btn-confirmar-renovar');
+  if(btn) { btn.disabled = true; btn.textContent = '⏳ Renovando...'; }
+  const statusEl = document.getElementById('renovar-api-status');
+  if(statusEl) { statusEl.textContent = 'Enviando para a API...'; statusEl.style.color = '#a855f7'; }
+  try {
+    const r = await fetch(HPLUS_API_URL + '/iptv/clients/' + c.apiId + '/extend', {
+      method: 'POST',
+      headers: { 'X-API-Key': HPLUS_API_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan_id: +planId })
+    });
+    if(!r.ok) {
+      const errText = await r.text().catch(() => '');
+      throw new Error('HTTP ' + r.status + (errText ? ': ' + errText : ''));
+    }
+    const data = await r.json();
+    if(!data.result) throw new Error('API retornou result=false');
+    // Pegar nova data da resposta da API
+    const novaVenc = (data.exp_date || '').slice(0, 10);
+    const dataPgto = document.getElementById('renovar-pgto').value || today();
+    const meses = +document.getElementById('renovar-meses').value || c.meses || 1;
+    const valorDigitado = document.getElementById('renovar-valor').value;
+    const valorPago = valorDigitado !== '' ? +valorDigitado : +c.valor||0;
+    const pagarDepois = document.getElementById('renovar-pagar-depois').checked;
+    // Registrar pagamento
+    if (!pagarDepois) {
+      pagamentos.push({ data: dataPgto, cliente: c.cliente, valor: valorPago, meses: meses, creditos: creditosPorMeses(meses) });
+      savePG();
+    }
+    // Atualizar vencimento com a data da API
+    clientes[renovarIdx].venc = novaVenc;
+    clientes[renovarIdx].meses = meses;
+    clientes[renovarIdx].pagarDepois = pagarDepois;
+    saveC();
+    fecharModal('modal-renovar');
+    refreshAll();
+    alert('✅ Renovado na API! Novo vencimento: ' + (novaVenc ? fmtDate(novaVenc) : 'ver na API'));
+  } catch(e) {
+    if(statusEl) { statusEl.textContent = '❌ Erro: ' + e.message; statusEl.style.color = '#ef4444'; }
+    alert('❌ Erro ao renovar na API: ' + e.message);
+  } finally {
+    if(btn) { btn.disabled = false; btn.textContent = '💾 Renovar'; }
+  }
 }
 
 function excluirCliente(idx) {
@@ -6374,9 +6488,10 @@ async function sincronizarClientes() {
       const idx = clientes.findIndex(c => c.cliente.trim() === nome);
       if(idx >= 0) {
         clientes[idx].venc = novaData;
+        clientes[idx].apiId = ac.id;
         atualizados++;
       } else {
-        clientes.push({ cliente: nome, venc: novaData, valor: 0, app: '', tec: '', meses: 1, fone: '', obs: '', indicacao: '' });
+        clientes.push({ cliente: nome, venc: novaData, valor: 0, app: '', tec: '', meses: 1, fone: '', obs: '', indicacao: '', apiId: ac.id });
         criadosList.push(nome);
       }
     });
