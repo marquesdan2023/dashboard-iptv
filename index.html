@@ -6366,7 +6366,7 @@ async function sincronizarClientes() {
     });
     if(!r.ok) throw new Error('HTTP ' + r.status);
     const apiClientes = await r.json();
-    let atualizados = 0, criados = 0;
+    let atualizados = 0, criadosList = [];
     apiClientes.forEach(ac => {
       const nome = (ac.reseller_notes || '').trim();
       if(!nome || !ac.exp_date) return;
@@ -6377,13 +6377,13 @@ async function sincronizarClientes() {
         atualizados++;
       } else {
         clientes.push({ cliente: nome, venc: novaData, valor: 0, app: '', tec: '', meses: 1, fone: '', obs: '', indicacao: '' });
-        criados++;
+        criadosList.push(nome);
       }
     });
     saveC();
     refreshAll();
     let msg = '✅ ' + atualizados + ' clientes atualizados!';
-    if(criados) msg += '\n➕ ' + criados + ' clientes novos criados!';
+    if(criadosList.length) msg += '\n\n➕ ' + criadosList.length + ' cliente(s) novo(s) criado(s):\n• ' + criadosList.join('\n• ');
     alert(msg);
   } catch(e) {
     alert('❌ Erro ao sincronizar clientes: ' + e.message);
