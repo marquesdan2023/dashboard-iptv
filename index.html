@@ -5771,6 +5771,8 @@ function renderClientes() {
 }
 
 let renovarIdx = -1;
+let editIdx = -1;
+let editType = '';
 
 function abrirRenovar(idx) {
   renovarIdx = idx;
@@ -6051,6 +6053,22 @@ function exportPDF() {
   w.document.close();
 }
 
+
+function editarCliente(idx) {
+  editIdx = idx; editType = 'cliente';
+  const c = clientes[idx];
+  if(!c) return;
+  document.getElementById('ec-nome').value = c.cliente || '';
+  document.getElementById('ec-venc').value = c.venc || '';
+  document.getElementById('ec-valor').value = c.valor !== undefined ? c.valor : '';
+  document.getElementById('ec-app').value = c.app || '';
+  document.getElementById('ec-meses').value = c.meses || 1;
+  document.getElementById('ec-fone').value = c.fone || '';
+  document.getElementById('ec-obs').value = c.obs || '';
+  document.getElementById('ec-indicacao').value = c.indicacao || '';
+  document.getElementById('ec-pagar-depois').checked = !!c.pagarDepois;
+  document.getElementById('modal-cliente').classList.add('open');
+}
 
 function salvarEdicaoCliente() {
   if(editIdx < 0) return;
