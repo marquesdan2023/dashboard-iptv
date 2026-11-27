@@ -5634,7 +5634,12 @@ let kpiModalLista = [];
 // ============================================================
 // UTILS
 // ============================================================
-const savePG = () => { localStorage.setItem(PG_KEY, JSON.stringify(pagamentos)); fbSave('pagamentos', pagamentos); };
+const savePG = () => {
+  localStorage.setItem(PG_KEY, JSON.stringify(pagamentos));
+  fbSave('pagamentos', pagamentos);
+  // Após nova renovação, limpa o cache de sincronização (saldo mudou)
+  localStorage.removeItem('iptv_saldo_sincronizado');
+};
 const saveBN = () => { localStorage.setItem(BN_KEY, JSON.stringify(bonusList)); fbSave('bonus', bonusList); };
 const saveC = () => { localStorage.setItem(CL_KEY, JSON.stringify(clientes)); fbSave('clientes', clientes); };
 const saveCP = () => { localStorage.setItem(CP_KEY, JSON.stringify(compras)); fbSave('compras', compras); };
@@ -6112,11 +6117,15 @@ function renderCreditos() {
   const bonusMes = bonusList.filter(b => b.data.slice(0,7) === mesKey).reduce((s,b) => s + (+b.creditos||0), 0);
   const usadosMes = renovacoesMes + bonusMes;
 
-  // ✅ CORREÇÃO: Disponíveis = saldoInicial + comprados (todo histórico) + bônus - usados (todo histórico)
+  // ✅ CORREÇÃO: Se sincronizado com API, disponíveis = saldo real da API (já descontado pelo fornecedor)
+  // Caso contrário, calcula manualmente
   const totalComprado = compras.reduce((s,c) => s + (+c.creditos||0), 0);
   const totalUsado = pagamentos.reduce((s,p) => s + creditosPagamento(p), 0);
   const totalBonus = bonusList.reduce((s,b) => s + (+b.creditos||0), 0);
-  const disponiveis = parseFloat((saldoInicial + totalComprado + totalBonus - totalUsado).toFixed(2));
+  const saldoSincronizado = parseFloat(localStorage.getItem('iptv_saldo_sincronizado')||'NaN');
+  const disponiveis = !isNaN(saldoSincronizado)
+    ? saldoSincronizado
+    : parseFloat((saldoInicial + totalComprado + totalBonus - totalUsado).toFixed(2));
 
   const _sc = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
   _sc('cr-comprados', compradosMes.toFixed(2));
@@ -6160,6 +6169,7 @@ async function sincronizarCreditos() {
     if(isNaN(creditos)) throw new Error('Resposta inválida');
     saldoInicial = creditos;
     localStorage.setItem(SI_KEY, creditos.toString());
+    localStorage.setItem('iptv_saldo_sincronizado', creditos.toString());
     fbSave('saldo_inicial', [creditos]);
     document.getElementById('saldo-inicial').value = creditos;
     if(status) status.textContent = '✅ Sincronizado! Saldo real: ' + creditos + ' créditos';
@@ -6346,6 +6356,7 @@ function salvarSaldoInicial() {
   if (isNaN(val)) return alert('Informe um número válido!');
   saldoInicial = val;
   localStorage.setItem(SI_KEY, val.toString());
+  localStorage.removeItem('iptv_saldo_sincronizado');
   fbSave('saldo_inicial', [val]);
   const status = document.getElementById('saldo-inicial-status');
   if (status) status.textContent = '✅ Salvo! Saldo inicial: ' + val + ' créditos';
