@@ -239,6 +239,7 @@ tr:hover td { background: #0f172a55; }
       <div class="kpi" style="background:linear-gradient(135deg,#059669,#10b981);cursor:default"><div class="kpi-label">💰 Já entrou no mês</div><div class="kpi-value" id="kpi-entrou">R$ 0</div><div class="kpi-sub">renovações registradas</div></div>
       <div class="kpi" style="background:linear-gradient(135deg,#0369a1,#0ea5e9);cursor:default"><div class="kpi-label">⏳ Ainda vai entrar</div><div class="kpi-value" id="kpi-vai-entrar">R$ 0</div><div class="kpi-sub">vencem este mês</div></div>
       <div class="kpi" style="background:linear-gradient(135deg,#b45309,#f59e0b);cursor:default"><div class="kpi-label">🕐 Vai pagar depois</div><div class="kpi-value" id="kpi-pagar-depois">R$ 0</div><div class="kpi-sub" id="kpi-pagar-depois-cnt">0 clientes</div></div>
+      <div class="kpi" style="background:linear-gradient(135deg,#065f46,#22c55e);cursor:pointer" onclick="atualizarSaldoAPI()" title="Clique para atualizar"><div class="kpi-label">🟢 Online agora</div><div class="kpi-value" id="kpi-online-agora">—</div><div class="kpi-sub">assistindo agora</div></div>
     </div>
 
     <!-- META MENSAL + PROJEÇÃO -->
@@ -5770,6 +5771,15 @@ Maria Santos ; 10/09/2026 ; 35 ; 11999999999"></textarea>
       <input type="number" id="renovar-valor" placeholder="Ex: 105.00" step="0.01" min="0" style="width:100%">
       <div style="font-size:11px;color:#64748b;margin-top:4px">Deixe em branco para usar o valor cadastrado do cliente.</div>
     </div>
+    <div style="margin-bottom:14px">
+      <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Forma de pagamento</label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px"><input type="radio" name="renovar-pagto-tipo" value="Pix" id="pgto-pix" style="accent-color:#10b981"> <span>🟢 Pix</span></label>
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px"><input type="radio" name="renovar-pagto-tipo" value="Dinheiro" id="pgto-dinheiro" style="accent-color:#f59e0b"> <span>💵 Dinheiro</span></label>
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px"><input type="radio" name="renovar-pagto-tipo" value="Transferência" id="pgto-transf" style="accent-color:#3b82f6"> <span>🏦 Transferência</span></label>
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px"><input type="radio" name="renovar-pagto-tipo" value="" id="pgto-nenhum" checked style="accent-color:#64748b"> <span style="color:#64748b">Não informar</span></label>
+      </div>
+    </div>
     <!-- Seção renovação via API -->
     <div id="renovar-api-section" style="display:none;border-top:1px solid #334155;padding-top:14px;margin-bottom:14px">
       <div style="font-size:13px;color:#a855f7;font-weight:600;margin-bottom:10px">🔄 Renovar na API do fornecedor</div>
@@ -6030,6 +6040,8 @@ function abrirRenovar(idx) {
   document.getElementById('renovar-data').value = '';
   document.getElementById('renovar-pgto').value = today();
   document.getElementById('renovar-valor').value = '';
+  const pgtoNenhum = document.getElementById('pgto-nenhum');
+  if(pgtoNenhum) pgtoNenhum.checked = true;
   document.getElementById('renovar-meses').value = c.meses || 1;
   document.getElementById('renovar-pagar-depois').checked = !!c.pagarDepois;
   // Modo: registrar pagamento (já tem pagarDepois) vs renovar normal
@@ -6157,16 +6169,17 @@ function confirmarRenovar() {
   const valorDigitado = document.getElementById('renovar-valor').value;
   const valorPago = valorDigitado !== '' ? +valorDigitado : +c.valor||0;
   const pagarDepois = eraVaiPagarDepois ? false : document.getElementById('renovar-pagar-depois').checked;
+  const formaPgto = document.querySelector('input[name="renovar-pagto-tipo"]:checked')?.value || '';
 
   if (eraVaiPagarDepois) {
-    pagamentos.push({ data: dataPgto, cliente: c.cliente, valor: valorPago, meses: c.meses||1, creditos: creditosPorMeses(c.meses||1) });
+    pagamentos.push({ data: dataPgto, cliente: c.cliente, valor: valorPago, meses: c.meses||1, creditos: creditosPorMeses(c.meses||1), forma: formaPgto });
     savePG();
     clientes[renovarIdx].pagarDepois = false;
     saveC();
   } else {
     if (!novaData) return alert('Informe a nova data de vencimento!');
     if (!pagarDepois) {
-      pagamentos.push({ data: dataPgto, cliente: c.cliente, valor: valorPago, meses: meses, creditos: cred });
+      pagamentos.push({ data: dataPgto, cliente: c.cliente, valor: valorPago, meses: meses, creditos: cred, forma: formaPgto });
       savePG();
     }
     clientes[renovarIdx].venc = novaData;
@@ -6209,9 +6222,10 @@ async function confirmarRenovarComAPI(planId) {
     const valorDigitado = document.getElementById('renovar-valor').value;
     const valorPago = valorDigitado !== '' ? +valorDigitado : +c.valor||0;
     const pagarDepois = document.getElementById('renovar-pagar-depois').checked;
+    const formaPgto = document.querySelector('input[name="renovar-pagto-tipo"]:checked')?.value || '';
     // Registrar pagamento
     if (!pagarDepois) {
-      pagamentos.push({ data: dataPgto, cliente: c.cliente, valor: valorPago, meses: meses, creditos: creditosPorMeses(meses) });
+      pagamentos.push({ data: dataPgto, cliente: c.cliente, valor: valorPago, meses: meses, creditos: creditosPorMeses(meses), forma: formaPgto });
       savePG();
     }
     // Atualizar vencimento com a data da API
@@ -6588,6 +6602,8 @@ async function atualizarSaldoAPI() {
       const conns = await connRes.json();
       apiOnlineIds = new Set((conns || []).map(c => c.id));
       document.getElementById('api-online').textContent = apiOnlineIds.size;
+      const kpiOnline = document.getElementById('kpi-online-agora');
+      if(kpiOnline) kpiOnline.textContent = apiOnlineIds.size;
       renderClientes();
     } else {
       apiOnlineIds = new Set();
